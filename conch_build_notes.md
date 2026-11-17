@@ -187,6 +187,60 @@ Progress:
 - Words are waiting on vosk in the Python that runs the ear. The command was handed
   to Everett at 15:05.
 
+## Carbon against silicon: the senses coming in (researched 15:26 to 15:33, 17 Nov)
+
+Everett, 15:24: "go back and do the research about how the human structure is and how
+what we're building for the silicon." Each item: carbon, checked from the page; then
+what is built; then match or not, and what is done.
+
+C1. THE RELAY. Carbon: every sense but smell passes through the thalamus before it
+    reaches cortex; "in olfaction information reaches primary cortex directly" (Sela and
+    Sobel, Experimental Brain Research 205:13-29, 2010). Built: the Gateway is the
+    housing, his pairing (thalamus -> the Gateway). Match, with one difference: smell
+    goes around the relay in carbon. His definition puts the nose in the Gateway, and
+    that stands. Smell still ends a moment when it changes: a new smell is a shape never
+    lived, and the conch must see it.
+C2. THE EAR'S PATH. Carbon: hair cells, the nerve, the cochlear nuclei, the superior
+    olive, the inferior colliculus, the medial geniculate in the thalamus, then primary
+    auditory cortex; frequency keeps its place at every station (Lindgren, Foundations of
+    Neuroscience, ch. 32). Built: one organ that measures and gives shape, then the
+    Gateway. Match in what it carries: the note is the place; the Hz is kept whole.
+C3. A STEADY SOUND. Carbon: neurons answer a sound repeated or held less and less, and
+    keep answering one that is new; from the inferior colliculus up through the thalamus
+    to cortex (stimulus-specific adaptation: Ayala and Malmierca, Frontiers in Neural
+    Circuits, 2013). You hear the fan start, then stop hearing it. Built: one fixed onset,
+    so a fan keeps one event open (E8). NOT A MATCH. Fixed now: the ear adapts. Its floor
+    is the lowest level it has heard across the span carbon holds sound in the ear
+    (echoic memory, about three to four seconds: Darwin, Turvey and Crowder, Cognitive
+    Psychology 3:255-267, 1972). An event opens when the sound rises past the floor by
+    Corti's onset and closes when it falls back to the floor by Corti's offset. A fan
+    starting is heard as an event; once it is the floor, it is no longer an event.
+C4. THE ROOM STILL COUNTS. His: "Attention selects a target. Memory keeps the room."
+    Adaptation is not erasure: the fan is still in the room. Built: between events the
+    ear said quiet. Fixed now: between events the ear gives the room: quiet when the floor
+    is silence, and when it is not, the floor itself as the room's sound ("the room":
+    voiced or not, its note when YIN locks on it).
+C5. WHERE A MOMENT ENDS. Carbon: where what comes in changes and the forecast fails
+    (Zacks et al. 2007). Built: G4. Match.
+C6. THE SENSES BOUND INTO ONE. Carbon: things from different senses that arrive close in
+    time are taken as one event: the temporal binding window. It is wider for speech than
+    for flashes and beeps, narrows from childhood to adulthood, and is broader in autism
+    (Wallace and Stevenson, Neuropsychologia, 2014; they give no single width). Built:
+    the Gateway ends a moment on any one sense's change, so a voice and the face it comes
+    from, changing a beat apart, are two moments. NOT A MATCH. Decided: senses whose
+    events overlap in time are one moment. No fixed width: the overlap is the window,
+    so it follows the events themselves, the way carbon's widens for speech. Built when
+    the second organ connects; with one organ it cannot happen.
+C7. SOUNDS AS WORDS. Carbon: categorical perception (Liberman et al. 1957). Built: E5.
+    Match.
+C8. MANY SOURCES IN ONE ROOM. Carbon separates the mixture reaching the ears into one
+    stream per source (Bregman, Auditory Scene Analysis: The Perceptual Organization of
+    Sound, MIT Press, 1990). Built: the ear hears one mixture. NOT A MATCH; written as a
+    limit, not built now. Streams are not targets: picking among them is attention, the
+    Diamond Engine's.
+C9. WHAT GETS THROUGH. Carbon's thalamus also gates by attention. Built: the Gateway
+    filters nothing (G3); attention is the Diamond Engine. Match to his placement.
+
 ## Deciding the four open slots (12:00 onward, 17 Nov)
 
 His own writing answers part of each, so his words lead and carbon fills what they leave.
