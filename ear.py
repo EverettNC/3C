@@ -33,13 +33,27 @@ WHAT IT DOES  [build choices: the builder's to make, on Everett's ruling of
 - The microphone is opened when this Python has a way to open it
   (sounddevice). If not, live listening refuses with the reason. On the bench
   the ear hears a WAV file.
+- It adapts, as carbon does (C3 in the notes). Carbon answers a sound held or
+  repeated less and less and keeps answering one that is new (stimulus-specific
+  adaptation: Ayala and Malmierca, 2013). So the ear's floor is the lowest level
+  it has heard across the span carbon holds sound in the ear (echoic memory,
+  about three to four seconds: Darwin, Turvey and Crowder, 1972). An event opens
+  when the sound rises past the floor by Corti's onset and closes when it falls
+  back to the floor by Corti's offset. A fan starting is heard; once it is the
+  floor, it is no longer an event.
+- The room still counts (C4). "Attention selects a target. Memory keeps the
+  room." Between events the ear gives the room as it stands: quiet when the floor
+  is silence; otherwise the floor itself, as "the room", voiced or not, with its
+  note when YIN locks on it.
 
-LIMIT. A steady sound that never falls away (a fan) keeps one event open.
+LIMIT. The ear hears one mixture. It does not yet separate one source from
+another (Bregman's streams); picking among sources is attention, not the ear's.
 """
 
 from __future__ import annotations
 
 import array
+import collections
 import json
 import math
 import os
@@ -62,6 +76,7 @@ TAPE_CAP = 360          # frames kept on the tape; the tail beyond is not kept
 RATE = 16000            # the Filament's model hears 16 kHz mono
 FRAME = 1024            # samples measured together
 HOP = 256               # samples between one measurement and the next
+ECHOIC_MS = 4000        # the span the floor is taken over: echoic memory, three to four seconds
 
 NOTE_NAMES = ("C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B")
 MODEL_NAME = "vosk-model-en-us-0.22"
@@ -184,6 +199,8 @@ class Ear:
         self._pending = []                    # samples not yet measured
         self._t = 0                           # samples measured so far
         self._open = None                     # the utterance being heard, or None
+        self._levels = collections.deque(maxlen=max(1, ECHOIC_MS * RATE // (1000 * HOP)))
+        self._room = None                     # the shape the ear last gave for the room
         self._stream = None
         gateway.connect(self.ORGAN, "sound")
 
@@ -245,12 +262,17 @@ class Ear:
 
     # -- inside --
 
+    def _floor(self) -> float:
+        return min(self._levels) if self._levels else 0.0
+
     def _step(self, frame) -> list:
         level, crossings = rms(frame), zcr(frame)
         ms = 1000 * self._t / RATE
+        self._levels.append(level)
+        floor = self._floor()
         if self._open is None:
-            if level < ONSET:
-                return []
+            if level < floor + ONSET:
+                return self._the_room(frame, floor)
             self._open = {"start_ms": ms, "peak": level, "peak_ms": ms, "samples": [],
                           "f0s": [], "zcrs": [], "tape": []}
         u = self._open
@@ -266,11 +288,30 @@ class Ear:
             u["tape"].append({"t_ms": round(ms - u["start_ms"], 1), "rms": round(level, 5),
                               "zcr": round(crossings, 4),
                               "f0": None if f0 is None else round(f0, 2)})
-        if level < OFFSET and ms - u["start_ms"] >= MIN_MS:
-            return self._close(ms)
+        if level < floor + OFFSET and ms - u["start_ms"] >= MIN_MS:
+            return self._close(ms, frame, floor)
         return []
 
-    def _close(self, ms: float) -> list:
+    def _the_room(self, frame, floor: float) -> list:
+        """Between events: the room as it stands. Given only when it changes."""
+        if floor < OFFSET:
+            shape, reading = "quiet", None
+        else:
+            locked = yin(frame)
+            f0 = locked[0] if locked and locked[1] > LOCK else None
+            shape = {"heard": "the room", "voiced": f0 is not None,
+                     "note": note_of(f0) if f0 is not None else "no lock"}
+            reading = {"floor_rms": round(floor, 5),
+                       "f0_hz": None if f0 is None else round(f0, 2)}
+        if shape == self._room:
+            return []
+        self._room = shape
+        clock = "the ear " + now()
+        given = quiet(clock) if reading is None else gave(reading, shape, clock)
+        came = self._gateway.arrive(self.ORGAN, "sound", given)
+        return [] if came is None else [came]
+
+    def _close(self, ms: float, frame, floor: float) -> list:
         u, self._open = self._open, None
         voiced = len(u["f0s"]) >= 2
         f0 = statistics.median(u["f0s"]) if voiced else None
@@ -286,6 +327,7 @@ class Ear:
                 "zcr_mean": round(sum(u["zcrs"]) / len(u["zcrs"]), 4),
                 "voiced": voiced, "words": words, "tape": u["tape"]}
         clock = "the ear " + now()
-        came = [self._gateway.arrive(self.ORGAN, "sound", gave(what, shape, clock)),
-                self._gateway.arrive(self.ORGAN, "sound", quiet(clock))]
+        came = [self._gateway.arrive(self.ORGAN, "sound", gave(what, shape, clock))]
+        self._room = None                     # the room is given again after every event
+        came.extend(self._the_room(frame, floor))
         return [c for c in came if c is not None]

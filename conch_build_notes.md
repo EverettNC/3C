@@ -187,7 +187,7 @@ Progress:
 - Words are waiting on vosk in the Python that runs the ear. The command was handed
   to Everett at 15:05.
 
-## Carbon against silicon: the senses coming in (researched 15:26 to 15:33, 17 Nov)
+## Carbon against silicon: the senses coming in (researched 15:25 to 15:28, 17 Nov)
 
 Everett, 15:24: "go back and do the research about how the human structure is and how
 what we're building for the silicon." Each item: carbon, checked from the page; then
