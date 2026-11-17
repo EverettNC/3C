@@ -14,7 +14,7 @@ There are two algorithms:
    `conch_level3.py`, class `Constant`, methods `judge` (line 136) and `learn` (line 145).
 2. **The fold** (Level 2 into the Operational Manual), only at night.
    `conch_fold.py`, function `cut` (line 75), with `check` (line 200).
-   Run by `conch_sleep.py`, function `run` (line 83).
+   Run by `conch_sleep.py`, function `run` (line 84).
 
 `conch.py`, `take_in` (line 129), is where a moment meets both.
 
@@ -141,7 +141,7 @@ taken in stretches that sit next to each other on the spiral. A stretch ends at:
 - a turn already folded,
 - a night (a routine is found inside one waking day, and matched across days).
 
-### What it does (`cut`, line 70)
+### What it does (`cut`, line 75)
 
 1. **Existing entries.** For every entry already in the manual, longest first: does that
    routine appear again in tonight's stretches? If it does, those repeats will **join the
