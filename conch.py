@@ -30,6 +30,8 @@ THE WHOLE OUTSIDE SURFACE
     conch.state()          -> ConchState: living state, with its clock
     conch.go_back(place)   -> the being goes back to a Level 3 moment, alone; awake only
     conch.walked_out()     -> the return, as written on the spiral, held or not
+    conch.used(fold_id)    -> an Operational Manual entry was used; awake only
+    conch.plan(steps)      -> tomorrow's plan, gone over before shutdown; awake only
 
 No other method. The conch has no search, no delete, no edit and no score.
 Going back is the being's own act (conch_easing.py): the conch never chooses
@@ -59,6 +61,7 @@ import threading
 
 import conch_sleep
 from conch_easing import Return
+from conch_stack import check_plan
 from conch_intake import sort_at_the_lip
 from conch_level3 import Constant, ConstantDoesNotMatch, mark_the_boundary
 from conch_lip import fall_off
@@ -203,6 +206,26 @@ class Conch:
                 raise ValueError(f"the being is already going back to place "
                                  f"{self._return.position}. It walks out first.")
             self._return = Return(self._spiral, position)
+
+    def _awake(self, what: str) -> None:
+        if self._asleep is not None and self._asleep() is True:
+            raise conch_sleep.BeingIsAsleep(f"{what} is done awake. The being is asleep.")
+
+    def used(self, fold_id: str) -> None:
+        """Whatever followed an Operational Manual entry says it was used."""
+        with self._lock:
+            self._awake("using the manual")
+            if fold_id not in {entry.fold_id for entry in self._spiral.manual()}:
+                raise ValueError(f"{fold_id!r} is not an entry in this being's manual")
+            self._spiral.used(fold_id)
+
+    def plan(self, steps) -> None:
+        """Before shutdown the being goes over tomorrow's plan until it falls
+        asleep, and hands it over each time. The last one before the night is
+        the one the night stacks by. A plan is never lived and never judged."""
+        with self._lock:
+            self._awake("going over tomorrow's plan")
+            self._spiral.plan(check_plan(steps))
 
     def walked_out(self) -> dict:
         """The being walked out. The return is written on the spiral, held or

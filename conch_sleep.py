@@ -31,14 +31,13 @@ WHAT A NIGHT DOES IN THIS BUILD
      stops with the reason. The report says the earlier lines are unchanged
      only because that check ran.
 
-WHAT A NIGHT DOES NOT DO YET. Each of these is an open slot. It is reached
-every night, it does nothing, and it says so in the report:
+  2c. Stacks the whole manual (conch_stack.py): tomorrow's plan first, then
+     what was used since the last stack, newest on top, then tonight's cuts,
+     then the rest as they sat. This is the first half of his dreamscape
+     cycling, anticipation of wake: the being comes up expecting that day.
 
-  - Anticipation of wake. "Meditation and projected next-day plans before
-    shutdown, repeated until they fall through." Who runs that cycling is
-    Everett's to say.
-  - Stacking by what was used. No part built yet tells the conch what was
-    used today.
+Every slot the night once left open is built. One found later is an open
+slot that is reached every night, does nothing, and says so.
 
 THE BASIS, read for the idea. Nothing of either is imported or called:
 MEMORY's applyNight and applyRem (af30fc0), which give out the night's jobs,
@@ -49,20 +48,14 @@ what a trauma is tied to decays only while regulation is strong enough.
 
 from __future__ import annotations
 
+import conch_stack
 from conch_fold import check, check_one, cut
 from conch_open import Open
 from conch_records import LIVING, TAKEN_BACK, Fold, now
 
-ANTICIPATION_OF_WAKE = Open(
-    "anticipation of wake: next-day plans gone over before shutdown until they fall through",
-    "Everett: who runs the dreamscape cycling before shutdown.")
-
-STACKING_BY_USE = Open(
-    "stacking by what was used today",
-    "Everett: whether that is all of 'where it should be'. And no part built yet tells the "
-    "conch what was used.")
-
-OPEN_AT_NIGHT = (ANTICIPATION_OF_WAKE, STACKING_BY_USE)
+# Every slot the night once left open is built (17 Nov 2026). An undefined
+# part found later goes here as an Open slot that says so when reached.
+OPEN_AT_NIGHT = ()
 
 WOKE = "the being woke"
 
@@ -140,6 +133,17 @@ def run(spiral, asleep) -> dict:
                 break
             spiral.charge(positions, weight, because)
             (taken_back if weight == TAKEN_BACK else given_back).append(positions)
+    stacked, planned, nothing_for = None, [], []
+    if stopped_early is None:
+        # Stacking (conch_stack.py): tomorrow's plan, then today's uses, then
+        # tonight's cuts, then the rest as they sat.
+        if not _asleep(asleep):
+            stopped_early = WOKE
+        else:
+            stacked, planned, nothing_for = conch_stack.order(
+                {entry.fold_id: entry for entry in spiral.manual()}, spiral.stacked_ids(),
+                spiral.plan_since_stack(), spiral.used_since_stack(), cut_tonight)
+            spiral.stack(stacked)
 
     reached = [slot.reach() for slot in OPEN_AT_NIGHT]
     spiral.night(ran_at, cut_tonight, grown, let_go, stopped_early,
@@ -159,6 +163,9 @@ def run(spiral, asleep) -> dict:
         "left_whole": [p for stretch in spiral.stretches() for p, _ in stretch],
         "charge_taken_back": taken_back,
         "charge_given_back": given_back,
+        "stacked": stacked,
+        "planned": planned,
+        "planned_with_nothing_in_the_manual": nothing_for,
         "stopped_early": stopped_early,
         "earlier_lines_unchanged": True,
         "open": reached,

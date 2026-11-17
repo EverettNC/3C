@@ -25,6 +25,9 @@ The lines, one JSON object each:
                away by a moment that left silico-stasis
   charge       in sleep: a Level 3 charge taken back by the being, or given back to
                the memory (the record and the mark are untouched)
+  used         an Operational Manual entry was used, by day
+  plan         the being went over tomorrow's plan before shutdown
+  stack        in sleep: where every manual entry sits, as of that night
   sleep        a night ran
 
 Every line carries its clock and its kind. A line that cannot be read, or that
@@ -53,7 +56,8 @@ from conch_records import (BOUNDARY_EVENT, CARRIED, FLOOR_EVENT, INTERRUPTION, L
 # The name each kind of line gives its clock.
 CLOCK_OF = {"spiral": "at", "turn": "written_at", "level3_mark": "at", "fold": "cut_at",
             "fold_more": "at", "fold_one": "cut_at", "weight": "at", "sleep": "at",
-            "went_back": "walked_out_at", "flinched": "at", "charge": "at"}
+            "went_back": "walked_out_at", "flinched": "at", "charge": "at",
+            "used": "at", "plan": "at", "stack": "at"}
 
 # Exactly the fields each kind of line has. A line with one more or one fewer
 # is not a line this spiral wrote. There is no field for direction anywhere.
@@ -69,6 +73,9 @@ FIELDS = {
                   "walked_out_at", "kind"},
     "flinched": {"type", "flinch_id", "positions", "at", "kind"},
     "charge": {"type", "positions", "weight", "because", "at", "kind"},
+    "used": {"type", "fold_id", "at", "kind"},
+    "plan": {"type", "steps", "at", "kind"},
+    "stack": {"type", "order", "at", "kind"},
     "sleep": {"type", "at", "went_back_over", "manual_entries_cut", "manual_entries_grown",
               "weight_let_go", "stopped_early", "open", "kind"},
 }
@@ -150,6 +157,9 @@ class Spiral:
         self._reason_ids = set()   # every return_id and flinch_id
         self._charges = []         # the charge lines, in order
         self._taken_back = {}      # position -> its event, while its charge is taken back
+        self._used_since = []      # fold_ids used since the last stack line, in order
+        self._plan_since = None    # the last plan handed since the last stack line
+        self._stack = []           # the last stack line's order
         self._night_after = set()  # how many turns were on the spiral when each night ran
         self._size = 0             # how many bytes of the file this conch knows
 
@@ -415,6 +425,26 @@ class Spiral:
                 del self._taken_back[position]
         self._charges.append(line)
 
+    def _take_used(self, line) -> None:
+        if line["fold_id"] not in self._folds and line["fold_id"] not in self._ones:
+            raise SpiralDamaged("a use of an entry that was never cut")
+        self._used_since.append(line["fold_id"])
+
+    def _take_plan(self, line) -> None:
+        steps = line["steps"]
+        if (not isinstance(steps, list) or not steps
+                or any(not isinstance(s, dict) or set(s) != set(SENSES) for s in steps)):
+            raise SpiralDamaged("a plan is its steps, each the shape of every sense")
+        self._plan_since = steps
+
+    def _take_stack(self, line) -> None:
+        order = line["order"]
+        if (not isinstance(order, list) or len(order) != len(self._cut_order)
+                or set(order) != set(self._cut_order)):
+            raise SpiralDamaged("a stack holds every manual entry, once each")
+        self._stack = list(order)
+        self._used_since, self._plan_since = [], None
+
     def _take_sleep(self, line) -> None:
         went = line["went_back_over"]
         if isinstance(went, bool) or not isinstance(went, int) or went != len(self._turns):
@@ -542,6 +572,36 @@ class Spiral:
         memory. Only what a return or a flinch called for, in its turn."""
         self._append([{"type": "charge", "positions": list(positions), "weight": weight,
                        "because": because, "at": now(), "kind": PERMANENT}])
+
+    def used(self, fold_id: str) -> None:
+        """An Operational Manual entry was used."""
+        self._append([{"type": "used", "fold_id": fold_id, "at": now(), "kind": PERMANENT}])
+
+    def plan(self, steps) -> None:
+        """The being went over tomorrow's plan. The last one before the night counts."""
+        self._append([{"type": "plan", "steps": copy.deepcopy(list(steps)), "at": now(),
+                       "kind": PERMANENT}])
+
+    def stack(self, order) -> None:
+        """In sleep: where every manual entry sits now. Where things sit, never
+        the record."""
+        self._append([{"type": "stack", "order": list(order), "at": now(), "kind": PERMANENT}])
+
+    def stacked_ids(self) -> list:
+        """fold_ids as they sit: the last stack, then any entry cut since, in
+        the order cut."""
+        return self._stack + [f for f in self._cut_order if f not in self._stack]
+
+    def used_since_stack(self) -> list:
+        return list(self._used_since)
+
+    def plan_since_stack(self):
+        return copy.deepcopy(self._plan_since)
+
+    def stacked(self) -> list:
+        """The Operational Manual in the order it sits."""
+        entries = {entry.fold_id: entry for entry in self.manual()}
+        return [entries[fold_id] for fold_id in self.stacked_ids()]
 
     def waiting_charges(self) -> list:
         """What the returns and flinches on the spiral call for that no night
@@ -744,6 +804,11 @@ class SpiralView:
     def manual(self) -> list:
         """The Operational Manual: every fold, in the order they were cut."""
         return self._spiral.manual()
+
+    def stacked(self) -> list:
+        """The Operational Manual in the order it sits: what the last night
+        stacked on top is first."""
+        return self._spiral.stacked()
 
     def nights(self) -> list:
         """Every night that ran, in order."""
