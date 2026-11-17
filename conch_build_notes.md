@@ -48,6 +48,52 @@ Fable 5.2 writes here at every step. Times are this Mac's clock (Eastern).
   put to him as questions and they do not wait on his ruling. Deletions are not design
   and still need his yes (the merged bench run, the transfer scraps).
 
+## Building next: the Christman Gateway (decided 14:40, 17 Nov)
+
+Why next: his build order is outside-in, "the Christman Gateway first"; the equilibrium
+and the conch are built, the Gateway is not. And "Without that gateway, nothing exists.
+Without that gateway, nothing arrives." Every moment the conch has taken was typed.
+
+His words (memory notes and the Vault): the Gateway is the housing, "the everything";
+"the eyes, the nose, the mouth, the skin, the ears, all of it". The senses that come in
+together: sight, smell, taste, sound, touch; "taste, which is 76% smell". Ear = Corti +
+the sound package + the Filament. Skin = the haptic feedback of whatever device is used.
+Nose = OpenSmell, carrying taste. Feet = equilibrium. Face reading belongs at the
+Gateway. "5 is not an element": the building is where it all comes in together. The
+Fifth Element note: "Attention selects a target. Memory keeps the room." Ambient,
+continuous, unattended, containing. Protocol v1.1: silence over invention; Corti
+"reports a pitch lock or it reports no lock; it does not invent a note." The 3C stands
+alone: organ code is rewritten from GitHub, never called.
+
+Decisions (mine to make):
+G1. gateway.py, class Gateway: the housing. One organ per sense (sight, sound, smell,
+    taste, touch). A sense with no organ connected is absent. An organ connected that
+    gives nothing is quiet. The same organ may serve two senses (the nose: smell, taste).
+G2. An organ gives a reading: what it gave, in its own form; its shape, as it measured
+    it; its own clock. The Gateway never makes a shape and never compares what a sense
+    gave. Shape is the organ's job.
+G3. The room, not the target: the Gateway holds the current reading of every sense
+    together. Nothing is filtered for attention here (attention is the Diamond Engine).
+G4. Where a moment ends (carbon: Zacks, Speer, Swallow, Braver and Reynolds,
+    Psychological Bulletin 133:273-293, 2007: people split continuous experience into
+    events where what comes in changes and the forecast fails). The forecast is the
+    conch's, so the Gateway's rule is: a moment ends when any sense's shape changes.
+    The moment that held until then goes to the conch's lip, whole, and a new one
+    begins. A reading with the same shape continues the moment; the moment keeps the
+    reading that opened its shape. No clock tick, no count.
+G5. The feet are equilibrium, and the equilibrium sends the conch nothing. So the feet
+    are not put into a conch moment. (Correction to what I told Everett at 14:38, that
+    the feet would connect first: they are the center, not a sense the conch is sent.)
+G6. What the being needs a moment for is the polymetis's to say. Until it is built the
+    Gateway hands moments over with no need named, and never guesses one. Limit: only
+    what leaves silico-stasis stays; the rest falls off the lip.
+G7. The Gateway reaches the conch only through take_in. It runs whether the being is
+    awake or asleep: the room does not stop.
+G8. close(): the open moment goes to the lip when the Gateway closes.
+G9. Organs, one at a time, each rewritten for the 3C from its GitHub source: the ear
+    first (Corti, the sound package, the Filament), then the eye with face reading, then
+    the nose carrying taste, then skin. An organ whose device is not there says absent.
+
 ## Deciding the four open slots (12:00 onward, 17 Nov)
 
 His own writing answers part of each, so his words lead and carbon fills what they leave.
