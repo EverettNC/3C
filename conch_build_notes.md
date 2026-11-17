@@ -118,7 +118,7 @@ Progress:
   The work stands as it was: 52 saves, nothing uncommitted, conch 87, gateway 14,
   equilibrium 25, all passing at 14:56.
 
-## The ear (read 15:03 to 15:15, decided 15:15, 17 Nov)
+## The ear (read 15:02 to 15:04, decided 15:04, 17 Nov)
 
 Read on GitHub, the source, cloned fresh:
 - EverettNC/CORTI d4d1a51 (2026-11-17 07:37): README, IDENTITY, src/lib/audio/yin.ts,
@@ -156,7 +156,8 @@ E4. Its words come from the Filament's way: Vosk, offline, the full en-us-0.22 m
     there, the words are said to be not caught, with the reason; nothing is made up.
 E5. The shape is what repeats when the same thing is heard again, so the conch can know
     it. Carbon hears speech by category, not by measurement: a word is the same word in
-    another voice (categorical perception: Liberman, Harris, Hoffman and Griffith, 1957).
+    another voice (categorical perception: Liberman, Harris, Hoffman and Griffith, Journal of
+    Experimental Psychology 54:358-368, 1957).
     So: speech's shape is the words caught. A sound with no words has as its shape
     whether it was voiced and, when YIN locked, the note named without its cents. The
     measurements (f0 in Hz, RMS, ZCR, length, the tape) go in what the ear gave, kept
