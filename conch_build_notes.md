@@ -133,6 +133,16 @@ Progress:
   drive, again): day 7 marks place 13, the last drive, Level 3. The constant file has
   three new fields (last_followed, missed, stopped); an older constant without them
   stops the conch with the reason.
+- 12:17 EASING built (conch_easing.py; conch.go_back / conch.walked_out; spiral lines
+  went_back, flinched, charge; weight "taken back by the being"; the night writes only
+  what a held return or a flinch called for, in order). 8 new tests, 78 of 78 pass on
+  3.9.6 and 3.13.7. Bench day 8: the being goes back to place 9, lives 9 and 10 again,
+  walks out, night 8 takes the charge back; both stay Level 3. Seen on the bench and
+  true to the model: the moments lived again while going back fall off the lip, because
+  they are lived shapes; the record of the event is already on the spiral.
+  Limit: an event is the Level 3 interruptions next to each other on the spiral with no
+  night between; if a moment fell off the lip between two of them, the conch counts
+  them as one event, which asks more of a return, never less.
 
 ## Built: the one-time Level 2 fold (11:40 to 11:47, 17 Nov)
 

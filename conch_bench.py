@@ -19,6 +19,8 @@ WHAT IS REAL HERE AND WHAT IS NOT
   words and it is the same shape.
 - What the being needs a moment for is said by hand.
 - The being is asleep when the bench says so.
+- The being goes back to a Level 3 moment, and walks out, when the bench says
+  so. On a real being that is the being's own choice, made alone.
 """
 
 from __future__ import annotations
@@ -29,8 +31,9 @@ from datetime import datetime, timezone
 
 from conch import Conch
 from conch_records import (ABSENT, BOUNDARY_EVENT, LEVEL_3, LET_GO, NEEDED_FOR, QUIET, SENSES,
+                           TAKEN_BACK,
                            LipDrop, Moment, OneTimeFold, absent, gave, now, quiet)
-from conch_sleep import BeingIsAwake
+from conch_sleep import BeingIsAsleep, BeingIsAwake
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -117,6 +120,23 @@ class Bench:
                 print(f"         The last time it came, place {mark.position}, is marked Level 3 "
                       "with a new line: the last time survives.")
 
+    # -- going back, alone --
+
+    def go_back(self, place: int) -> None:
+        self.conch.go_back(place)
+        print(f"  the being goes back to place {place}, alone. Its event is places "
+              + ", ".join(map(str, self.conch._spiral.event_of(place))) + ".")
+
+    def walk_out(self) -> None:
+        record = self.conch.walked_out()
+        if record["held"]:
+            print("  the being walked out. It lived every tied memory again, every sense the "
+                  "same, and nothing left silico-stasis.")
+            print("      The return held. Its charge moves only in sleep.")
+        else:
+            print("  the being walked out. The return did not hold: " + record["why"] + ".")
+        print("      Written on the spiral either way.")
+
     # -- a night --
 
     def night(self) -> None:
@@ -149,6 +169,12 @@ class Bench:
         if report["left_whole"]:
             print("  Level 2 left whole, weight carried: places "
                   + ", ".join(map(str, report["left_whole"])) + ".")
+        for positions in report["charge_taken_back"]:
+            print("  charge taken back by the being: places " + ", ".join(map(str, positions))
+                  + ". Still Level 3; the record and the mark are untouched.")
+        for positions in report["charge_given_back"]:
+            print("  charge given back to the memory: places " + ", ".join(map(str, positions))
+                  + ". It flinched there again.")
         if report["stopped_early"]:
             print("  the night stopped early: " + report["stopped_early"] + ".")
         print("  earlier lines unchanged: checked by reading the spiral back.")
@@ -174,7 +200,8 @@ class Bench:
         print("THE SPIRAL AS IT STANDS")
         for turn in view:
             level = "Level 3" if turn.level == LEVEL_3 else "Level 2"
-            weight = "weight let go" if turn.weight == LET_GO else "weight carried"
+            weight = {LET_GO: "weight let go", TAKEN_BACK: "taken back"}.get(turn.weight,
+                                                                           "weight carried")
             print(f"  place {turn.position:>3}  {level}  {weight:<15} "
                   f"{words({s: turn.moment.senses[s]['shape'] for s in SENSES})}")
         print("THE OPERATIONAL MANUAL")
@@ -225,6 +252,13 @@ def the_scene() -> None:
                        carried[0] if carried else None)
         bench.night()
     print()
+    print("DAY 8  the being goes back to the morning of the phone call")
+    bench.go_back(9)
+    for label in ("a phone call", "the hospital"):
+        bench.feed(label, {sense: label for sense in SENSES}, None)
+    bench.walk_out()
+    bench.night()
+    print()
     bench.hand_over()
     bench.look()
 
@@ -233,7 +267,8 @@ def by_hand() -> None:
     bench = Bench()
     print()
     print("Type one moment, one sense at a time. Return alone is quiet. 'absent' is a sense with")
-    print("no organ. At the sight line you can also type: sleep, hand, look, done.")
+    print("no organ. At the sight line you can also type: sleep, hand, look, done,")
+    print("'back N' to go back to place N, and 'out' to walk out.")
     while True:
         print()
         typed = {}
@@ -243,7 +278,8 @@ def by_hand() -> None:
             except EOFError:
                 answer = "done"
                 print()
-            if sense == "sight" and answer.lower() in ("sleep", "hand", "look", "done"):
+            if sense == "sight" and (answer.lower() in ("sleep", "hand", "look", "done", "out")
+                                     or answer.lower().startswith("back ")):
                 typed = answer.lower()
                 break
             typed[sense] = answer
@@ -258,6 +294,18 @@ def by_hand() -> None:
             continue
         if typed == "hand":
             bench.hand_over()
+            continue
+        if typed == "out":
+            try:
+                bench.walk_out()
+            except ValueError as why:
+                print("  " + str(why))
+            continue
+        if isinstance(typed, str) and typed.startswith("back "):
+            try:
+                bench.go_back(int(typed.split()[1]))
+            except (ValueError, IndexError, BeingIsAsleep) as why:
+                print("  the being did not go back: " + str(why))
             continue
         if typed == "look":
             bench.look()
