@@ -14,6 +14,12 @@ Fable 5.2 writes here at every step. Times are this Mac's clock (Eastern).
 - This folder is its own save history (git, local only, nothing leaves the drive).
 - 08:56: conch spec v16 is on the drive at docs/conch-spec.html, byte for byte the
   published page. The Session Ledger entries for 17 Nov were written at 02:52.
+- 09:05: docs/the-algorithm.md, the two algorithms in plain words, step by step.
+- 09:24: everything 3C that was only in the cloud workspace is now in
+  docs/cloud-copy-2026-11-17/ (map v24, both drawings and their script, spec v13-v15),
+  every file checked by fingerprint. The cloud workspace holds no 3C work that is not
+  also here. docs/xfer/ and docs/cloud.tgz are the transfer scraps; not saved in git,
+  and removing them is Everett's word.
 - Not done yet: the carbon-to-3C map and the conch drawing still say Level 2 and
   Level 4 are open; both are to be brought up to the build and written into docs/.
   Everett has not yet ruled on the build choices and limits below.
