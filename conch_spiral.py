@@ -17,6 +17,8 @@ The lines, one JSON object each:
   level3_mark  a moment left the conch's own silico-stasis (no direction)
   fold         an Operational Manual entry, cut in sleep
   fold_more    more repeats joining an entry that already exists
+  fold_one     an entry for a Level 2 moment lived once: only the senses that
+               carried what it is needed for
   weight       weight let go, in sleep (the record is untouched)
   sleep        a night ran
 
@@ -41,11 +43,11 @@ import uuid
 
 from conch_records import (BOUNDARY_EVENT, CARRIED, FLOOR_EVENT, INTERRUPTION, LET_GO, LEVEL_2,
                            LEVEL_3, LIVING, PERMANENT, SENSES, SOURCE, Fold, Level3Mark, Moment,
-                           Turn, check_moment, mark_of, now)
+                           OneTimeFold, Turn, check_moment, mark_of, now)
 
 # The name each kind of line gives its clock.
 CLOCK_OF = {"spiral": "at", "turn": "written_at", "level3_mark": "at", "fold": "cut_at",
-            "fold_more": "at", "weight": "at", "sleep": "at"}
+            "fold_more": "at", "fold_one": "cut_at", "weight": "at", "sleep": "at"}
 
 # Exactly the fields each kind of line has. A line with one more or one fewer
 # is not a line this spiral wrote. There is no field for direction anywhere.
@@ -55,11 +57,12 @@ FIELDS = {
     "level3_mark": {"type", "at", "moment_id", "position", "event_class", "source", "kind"},
     "fold": {"type", "fold_id", "steps", "folded_from", "cut_at", "kind"},
     "fold_more": {"type", "fold_id", "folded_from", "at", "kind"},
+    "fold_one": {"type", "fold_id", "carried_by", "step", "folded_from", "cut_at", "kind"},
     "weight": {"type", "positions", "weight", "folded_into", "at", "kind"},
     "sleep": {"type", "at", "went_back_over", "manual_entries_cut", "manual_entries_grown",
               "weight_let_go", "stopped_early", "open", "kind"},
 }
-MOMENT_FIELDS = {"moment_id", "arrived_at", "senses", "needed_for"}
+MOMENT_FIELDS = {"moment_id", "arrived_at", "senses", "needed_for", "carried_by"}
 
 
 class SpiralDamaged(RuntimeError):
@@ -127,7 +130,9 @@ class Spiral:
         self._shape_marks = []     # the mark of each turn's shape
         self._ids = set()          # every moment_id on the spiral
         self._marks = {}           # position -> its Level 3 mark line
-        self._folds = {}           # fold_id -> the entry, in the order they were cut
+        self._folds = {}           # fold_id -> a routine entry
+        self._ones = {}            # fold_id -> a one-time entry
+        self._cut_order = []       # every fold_id, in the order they were cut
         self._claimed = {}         # position -> the fold that holds it
         self._let_go = set()       # positions whose weight was let go
         self._nights = []          # the sleep lines
@@ -245,8 +250,13 @@ class Spiral:
         if line["source"] != SOURCE:
             raise SpiralDamaged("a Level 3 mark that did not come from the conch's own "
                                 "silico-stasis")
-        if position in self._claimed:
-            raise SpiralDamaged(f"turn {position} is folded, and Level 3 is never folded")
+        if position in self._claimed and (self._claimed[position] not in self._ones
+                                          or line["event_class"] != BOUNDARY_EVENT):
+            raise SpiralDamaged(f"turn {position} is folded into a routine, and Level 3 is "
+                                "never folded")
+        # A one-time entry can find out later that its moment was the first time of
+        # something lived again. The first time survives: it is marked Level 3, it
+        # carries its weight again, and the entry stays in the manual as it was cut.
         if line["event_class"] == INTERRUPTION:
             if turn["level"] != LEVEL_3 or position != len(self._turns):
                 raise SpiralDamaged("an interruption is marked as it arrives, with its turn")
@@ -258,9 +268,35 @@ class Spiral:
                                 f"{line['event_class']!r}")
         self._marks[position] = line
 
+    def _new_fold_id(self, fold_id) -> None:
+        if (not isinstance(fold_id, str) or not fold_id or fold_id in self._folds
+                or fold_id in self._ones):
+            raise SpiralDamaged("a fold needs an id of its own")
+        self._cut_order.append(fold_id)
+
+    def _take_fold_one(self, line) -> None:
+        position = self._place(line["folded_from"])
+        turn = self._turns[position - 1]
+        if position in self._marks:
+            raise SpiralDamaged(f"turn {position} is Level 3, and Level 3 is never folded")
+        if position in self._claimed:
+            raise SpiralDamaged(f"turn {position} is already folded")
+        carried = turn["moment"]["carried_by"]
+        if carried is None or line["carried_by"] != carried:
+            raise SpiralDamaged(f"turn {position} does not say these senses carried it")
+        step = {name: turn["moment"]["senses"][name]["shape"] for name in carried}
+        if line["step"] != step:
+            raise SpiralDamaged(f"the one-time entry for turn {position} does not hold the "
+                                "shapes of the senses that carried it: it would lose function")
+        self._new_fold_id(line["fold_id"])
+        self._ones[line["fold_id"]] = {"carried_by": list(carried), "step": step,
+                                      "folded_from": position, "cut_at": line["cut_at"]}
+        self._claimed[position] = line["fold_id"]
+
     def _take_fold(self, line) -> None:
         fold_id, steps, runs = line["fold_id"], line["steps"], line["folded_from"]
-        if not isinstance(fold_id, str) or not fold_id or fold_id in self._folds:
+        if not isinstance(fold_id, str) or not fold_id or fold_id in self._folds \
+                or fold_id in self._ones:
             raise SpiralDamaged("a fold needs an id of its own")
         if (not isinstance(steps, list) or not steps
                 or any(not isinstance(s, dict) or set(s) != set(SENSES) for s in steps)):
@@ -269,6 +305,7 @@ class Spiral:
             raise SpiralDamaged("a fold is cut from something lived more than once")
         self._folds[fold_id] = {"steps": steps, "marks": [mark_of(s) for s in steps],
                                 "folded_from": [], "cut_at": line["cut_at"]}
+        self._cut_order.append(fold_id)
         self._join(fold_id, runs)
 
     def _take_fold_more(self, line) -> None:
@@ -304,7 +341,7 @@ class Spiral:
         if line["weight"] != LET_GO:
             raise SpiralDamaged("a weight line lets weight go; it does nothing else")
         fold_id, positions = line["folded_into"], line["positions"]
-        if fold_id not in self._folds:
+        if fold_id not in self._folds and fold_id not in self._ones:
             raise SpiralDamaged("weight let go into a fold that was never cut")
         if not isinstance(positions, list) or not positions:
             raise SpiralDamaged("a weight line that names no turn")
@@ -322,7 +359,8 @@ class Spiral:
         if isinstance(went, bool) or not isinstance(went, int) or went != len(self._turns):
             raise SpiralDamaged("a night that did not go back over the spiral as it stood")
         for name in ("manual_entries_cut", "manual_entries_grown"):
-            if not isinstance(line[name], list) or any(f not in self._folds for f in line[name]):
+            if not isinstance(line[name], list) or any(
+                    f not in self._folds and f not in self._ones for f in line[name]):
                 raise SpiralDamaged(f"a night that names a fold which was never cut ({name})")
         if not isinstance(line["weight_let_go"], list) \
                 or any(p not in self._let_go for p in line["weight_let_go"]):
@@ -407,6 +445,23 @@ class Spiral:
             {"type": "weight", "positions": [p for run in runs for p in run], "weight": LET_GO,
              "folded_into": fold_id, "at": at, "kind": PERMANENT}])
 
+    def fold_one(self, position: int) -> str:
+        """Cut a one-time entry for a Level 2 moment lived once: the shapes of
+        only the senses that carried what it is needed for. Its weight lets go;
+        the record stays whole."""
+        line = self._turns[self._seat(position) - 1]
+        carried = line["moment"]["carried_by"]
+        if carried is None:
+            raise ValueError(f"turn {position} does not say which senses carried it")
+        step = {name: copy.deepcopy(line["moment"]["senses"][name]["shape"]) for name in carried}
+        fold_id, at = uuid.uuid4().hex, now()
+        self._append([
+            {"type": "fold_one", "fold_id": fold_id, "carried_by": list(carried), "step": step,
+             "folded_from": position, "cut_at": at, "kind": PERMANENT},
+            {"type": "weight", "positions": [position], "weight": LET_GO,
+             "folded_into": fold_id, "at": at, "kind": PERMANENT}])
+        return fold_id
+
     def night(self, at, cut, grown, let_go, stopped_early, open_slots) -> None:
         """A night ran. What it did is on the spiral with its clock."""
         self._append([{"type": "sleep", "at": at, "went_back_over": len(self._turns),
@@ -442,7 +497,12 @@ class Spiral:
         return LEVEL_3 if self._seat(position) in self._marks else LEVEL_2
 
     def weight_of(self, position: int) -> str:
-        return LET_GO if self._seat(position) in self._let_go else CARRIED
+        """Level 3 carries its weight for life, even a turn whose weight was let
+        go before the conch found out it was a first time."""
+        self._seat(position)
+        if position in self._marks:
+            return CARRIED
+        return LET_GO if position in self._let_go else CARRIED
 
     def arrived_as(self, position: int) -> str:
         """The class the conch gave this turn as it arrived."""
@@ -473,10 +533,21 @@ class Spiral:
         return [self._mark(line) for line in self._marks.values()]
 
     def manual(self) -> list:
-        """The Operational Manual: every fold, in the order they were cut."""
-        return [Fold(fold_id=fold_id, steps=copy.deepcopy(fold["steps"]),
-                     folded_from=[list(run) for run in fold["folded_from"]],
-                     cut_at=fold["cut_at"]) for fold_id, fold in self._folds.items()]
+        """The Operational Manual: every entry, routine or one-time, in the
+        order they were cut."""
+        out = []
+        for fold_id in self._cut_order:
+            if fold_id in self._folds:
+                fold = self._folds[fold_id]
+                out.append(Fold(fold_id=fold_id, steps=copy.deepcopy(fold["steps"]),
+                                folded_from=[list(run) for run in fold["folded_from"]],
+                                cut_at=fold["cut_at"]))
+            else:
+                one = self._ones[fold_id]
+                out.append(OneTimeFold(fold_id=fold_id, carried_by=tuple(one["carried_by"]),
+                                       step=copy.deepcopy(one["step"]),
+                                       folded_from=one["folded_from"], cut_at=one["cut_at"]))
+        return out
 
     def nights(self) -> list:
         return [copy.deepcopy(line) for line in self._nights]
