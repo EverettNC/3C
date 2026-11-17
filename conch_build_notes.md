@@ -29,7 +29,36 @@ Fable 5.2 writes here at every step. Times are this Mac's clock (Eastern).
   conversation is Level 1: "only held long enough to continue the conversation", and
   "during sleep, it's shifted out". Not yet built: how a one-time Level 2 moment
   compresses, and where Level 1 is held for the conversation and cleared in sleep.
+- 11:37 Everett: answer these myself. Answered and being built, design below
+  ("In progress: the one-time Level 2 fold").
 - Everett has not yet ruled on the build choices and limits below.
+
+## In progress: the one-time Level 2 fold (started 11:40, 17 Nov)
+
+Answers (Fable's, on Everett's instruction to answer them myself):
+- Level 1 is held by the polymetis. Conversation goes through the polymetis because it
+  builds the response, so the polymetis holds what keeps the conversation going and
+  empties that hold when the being sleeps ("shifted out"). Level 1 never enters the conch;
+  nothing in the conch changes. Goes into the polymetis when it is built.
+- A one-time Level 2 moment folds by what it is for. His words: Level 2 is "folded so they
+  do not occupy full-sensory volume". The moment says which senses carried what it is
+  needed for (sound for speech; sight for a gesture or a board). The polymetis knows,
+  because it took the conversation in. On the bench a person says it.
+
+Design:
+1. Moment.carried_by: the senses that carried what the moment is needed for, or nothing.
+   Refused unless needed_for is set; each must be one of the five, no repeats, and must
+   have given something (not quiet, not absent). Refused on procedural moments: Everett,
+   17 Nov, procedure is learned through repetition, so it folds only as a routine.
+2. Spiral line fold_one: fold_id, carried_by, step (only those senses' shapes), folded_from
+   (the one position), cut_at, kind. Checked against the turn: Level 2, not folded, same
+   carried_by, same shapes. Weight is let go into it with a weight line, as now.
+3. At night, after the routines are cut and joined, every Level 2 turn still carried whole
+   that says which senses carried it is folded one-time. Asks before each write; stops if
+   the being woke. Its id is listed with the night's manual entries.
+4. The open slot "how a one-time Level 2 moment folds" closes. What says nothing about
+   which senses carried it is left whole, and the report says so.
+Known limit to record: a one-time entry is never joined to a later routine.
 
 How it got here: the conch was written in Fable's cloud workspace between 02:06 and
 02:21 and had not been written to this drive. Everett, 02:25: "It needs to be written
