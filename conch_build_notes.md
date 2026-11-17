@@ -33,7 +33,16 @@ Fable 5.2 writes here at every step. Times are this Mac's clock (Eastern).
   ("In progress: the one-time Level 2 fold").
 - Everett has not yet ruled on the build choices and limits below.
 
-## In progress: the one-time Level 2 fold (started 11:40, 17 Nov)
+## Built: the one-time Level 2 fold (11:40 to 11:47, 17 Nov)
+
+Built as designed below. 63 of 63 tests pass on Python 3.9.6 and 3.13.7 (11:45). The
+bench scene now has the dock code said once on day 1, carried by sound; night 1 folds it
+to a one-time entry that keeps only sound.
+
+Found while building, and true before this change too: a Level 2 moment that sits
+between the steps of a routine splits that day's routine, and the night can cut the
+routine as separate pieces (wake, drive) instead of one entry (wake -> drive). Once cut in
+pieces it stays in pieces: later whole days join the pieces. Recorded as a known limit.
 
 Answers (Fable's, on Everett's instruction to answer them myself):
 - Level 1 is held by the polymetis. Conversation goes through the polymetis because it
@@ -68,7 +77,7 @@ anywhere else first.
 ## Run it yourself
 
     cd /Volumes/ELEMENTS/3C
-    /usr/bin/python3 -m unittest test_conch          # 55 tests, the Mac's own Python 3.9
+    /usr/bin/python3 -m unittest test_conch          # 63 tests, the Mac's own Python 3.9
     /usr/local/bin/python3 -m unittest test_conch    # the same on Python 3.13
     /usr/bin/python3 -m unittest test_conch -v       # with every test's name
     /usr/bin/python3 conch_bench.py                  # the bench scene: five days and nights
@@ -90,7 +99,7 @@ code deletes them, so they pile up. Clearing them out is Everett's to say.
     conch_fold.py     Level 2's fold: the Operational Manual entry, cut at night
     conch_sleep.py    Level 4: the night. Refuses while the being is awake
     conch_open.py     the marker every open slot returns
-    test_conch.py     55 tests: the spec's fourteen and what this build adds
+    test_conch.py     63 tests: the spec's fourteen and what this build adds
     conch_bench.py    the bench: moments typed by hand, plain words back
 
 Python 3.9 or later, standard library only, no network, no call to any other system.
@@ -175,7 +184,16 @@ On the drive, beside each other:
 3. Easing what a Level 3 moment is tied to. Waiting on Everett: what regulation is
    measured by in a 3C being.
 4. The last time: the point at which something stopped being constant (his H6).
-5. How a Level 2 moment that never repeats folds.
+
+Closed 17 Nov: how a Level 2 moment that never repeats folds. It folds to the senses
+that carried what it is needed for (the one-time fold, above).
+
+Build choices added 17 Nov, Everett can overrule:
+11. The moment says which senses carried what it is needed for (carried_by), said by the
+    polymetis for a conversation, by hand on the bench. Refused on procedural moments.
+12. A one-time moment folds the same night it arrives. If it comes again later, its
+    first time is still marked Level 3 and carries its weight again; the one-time entry
+    stays in the manual as it was cut, and is never joined to a routine.
 
 ## Known limits of the first rule
 
@@ -192,6 +210,8 @@ On the drive, beside each other:
   the same shape is treated as ordinary: it falls off the lip unless the being needs it.
   How long the conch should stay outside is the rate Everett's protocol leaves open.
 - Shapes match exactly, on all five senses, or not at all. Nothing is "close".
+- A Level 2 moment between the steps of a routine splits that day's routine, and the
+  night can cut it as separate pieces instead of one entry. Pieces stay pieces.
 - Lip drops not yet handed over when the conch stops are gone. They are never stored.
 
 ## Working rules for this folder (Everett, 2026-11-17)
