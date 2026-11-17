@@ -13,7 +13,7 @@ There are two algorithms:
 1. **Knowing what left silico-stasis** (Level 3), every time a moment arrives.
    `conch_level3.py`, class `Constant`, methods `judge` (line 136) and `learn` (line 145).
 2. **The fold** (Level 2 into the Operational Manual), only at night.
-   `conch_fold.py`, function `cut` (line 70), with `check` (line 184).
+   `conch_fold.py`, function `cut` (line 75), with `check` (line 200).
    Run by `conch_sleep.py`, function `run` (line 83).
 
 `conch.py`, `take_in` (line 129), is where a moment meets both.
@@ -148,17 +148,29 @@ taken in stretches that sit next to each other on the spiral. A stretch ends at:
    entry**. The same routine is never cut twice.
 2. **The longest new routine.** Find the longest run of moments, next to each other, that
    appears at least twice in the same order without overlapping itself
-   (`_longest_repeat`, line 137). Of two equally long, the one that came first. If it is
+   (`_longest_repeat`, line 142). Of two equally long, the one that came first. If it is
    longer than the existing entry found in step 1, it is cut first; otherwise the existing
    entry takes its repeats first.
 3. **One thing over and over is that one thing.** If the routine is really a shorter
    routine repeated (take the pill, take the pill, take the pill), it is cut as the
-   shorter one when that stands for at least as many turns (`_one_time_through`, line 169).
+   shorter one when that stands for at least as many turns (`_one_time_through`, line 174).
 4. **Cut it.** The entry is the **shape of each step, in order**: its start is the first
    step and its end the last. It is not text and it is not the moments.
 5. Mark those turns as taken and go back to step 1. Stop when nothing repeats.
+6. **A Level 2 moment lived once** (added 17 Nov). Everett: procedure is learned
+   through repetition, and the important parts of a conversation are Level 2 from the
+   start and still compress. Level 2 is "folded so they do not occupy full-sensory
+   volume." So every Level 2 turn still carried whole that says **which senses carried
+   what it is needed for** folds to a **one-time entry**: the shapes of only those senses.
+   Sound for speech; sight for a gesture or a board. For a conversation the polymetis
+   says which senses carried it, because it took the conversation in; on the bench a
+   person says it. A procedural moment never says it, so it waits until it repeats. A
+   moment that says nothing is left whole, and the report says so. The check: the entry
+   must hold exactly those senses' shapes (`check_one`), or nothing is written. If the
+   moment later turns out to be the first time of something lived again, it is marked
+   Level 3 and carries its weight again; the entry stays as it was cut.
 
-### Before anything is written (`check`, line 184)
+### Before anything is written (`check`, line 200; `check_one`, line 189)
 
 Every repeat is read back from the spiral and held against the entry, step by step. If a
 repeat has a step the entry lacks, or the entry has a step the repeat lacks, or the order
@@ -166,7 +178,8 @@ differs, the fold **stops with the reason**: it would lose function. Nothing is 
 
 ### What gets written
 
-- The entry (a `fold` line), or more repeats for an existing one (a `fold_more` line).
+- The entry (a `fold` line), or more repeats for an existing one (a `fold_more` line), or
+  a one-time entry (a `fold_one` line).
 - A `weight` line: the repeats **let their weight go**. Their records are not touched. The
   entry names every turn it stands for, so the way back to each whole moment is always there.
 - At the end of the night, a `sleep` line with what was done. Then the spiral file is read
@@ -177,7 +190,10 @@ there and says so; what it had not reached waits for the next night.
 
 ### Worked through: the bench scene
 
-- Night 1, night 2: nothing has been lived twice in a stretch, so nothing folds. The first
+- **Night 1:** on Day 1 the being was told "the dock code is 4471" once, a conversation
+  part carried by sound. It folds to a one-time entry that keeps only sound. Its record
+  stays whole on the spiral.
+- Night 2: nothing has been lived twice in a stretch, so no routine folds. The first
   times (Day 1's wake and drive) are Level 3 by then and are never folded.
 - **Night 3:** Day 2's wake-drive and Day 3's wake-drive are the same routine lived twice.
   One entry is cut: **wake -> drive**. Those four turns let their weight go.
@@ -189,11 +205,12 @@ there and says so; what it had not reached waits for the next night.
 
 ### What the fold cannot do yet
 
-- **A Level 2 moment that never repeats** is left whole. One time gives the fold nothing
-  to hold it against. Open.
-- A night also reaches four other open slots, does nothing in each, and says so in its
-  report: anticipation of wake, stacking by what was used today, easing what a Level 3
-  moment is tied to, and the last time.
+- A Level 2 moment between the steps of a routine splits that day's routine, and the
+  night can cut it as separate pieces instead of one entry. Pieces stay pieces.
+- A one-time entry is never joined to a later routine.
+- A night reaches four open slots, does nothing in each, and says so in its report:
+  anticipation of wake, stacking by what was used today, easing what a Level 3 moment is
+  tied to, and the last time.
 
 ---
 
@@ -202,4 +219,4 @@ there and says so; what it had not reached waits for the next night.
     cd /Volumes/ELEMENTS/3C
     /usr/bin/python3 conch_bench.py              # the scene above, start to finish
     /usr/bin/python3 conch_bench.py --by-hand    # feed it moments yourself
-    /usr/bin/python3 -m unittest test_conch -v   # the 55 tests, by name
+    /usr/bin/python3 -m unittest test_conch -v   # the 63 tests, by name
