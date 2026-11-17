@@ -5,7 +5,7 @@ Fable 5.2 writes here at every step. Times are this Mac's clock (Eastern).
 
 ## Where it stands
 
-2026-11-17 02:52
+2026-11-17 02:49
 - All eleven conch files are on this drive, and this drive is the only place they are
   worked on. They landed whole at 02:45:05: every fingerprint matched the cloud copy.
 - Tests on this Mac: 55 of 55 pass on /usr/bin/python3 (3.9.6) and on
