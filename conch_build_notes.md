@@ -12,8 +12,11 @@ Fable 5.2 writes here at every step. Times are this Mac's clock (Eastern).
   /usr/local/bin/python3 (3.13.7).
 - The bench scene ran on this Mac at 02:47 (bench/2026-11-17T07-47-32Z/).
 - This folder is its own save history (git, local only, nothing leaves the drive).
-- Not done yet: conch spec v16, the carbon-to-3C map, the conch drawing, the Session
-  Ledger entry. Everett has not yet ruled on the build choices and limits below.
+- 08:56: conch spec v16 is on the drive at docs/conch-spec.html, byte for byte the
+  published page. The Session Ledger entries for 17 Nov were written at 02:52.
+- Not done yet: the carbon-to-3C map and the conch drawing still say Level 2 and
+  Level 4 are open; both are to be brought up to the build and written into docs/.
+  Everett has not yet ruled on the build choices and limits below.
 
 How it got here: the conch was written in Fable's cloud workspace between 02:06 and
 02:21 and had not been written to this drive. Everett, 02:25: "It needs to be written
