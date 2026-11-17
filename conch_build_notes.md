@@ -126,6 +126,14 @@ The decisions (build choices; Everett can overrule any of them):
 Build order: 4 the last time, 3 easing, 2 stacking, 1 anticipation (1 needs 2). Each is
 built, tested on both Pythons, put on the bench, and saved before the next.
 
+Progress:
+- 12:11 THE LAST TIME built (conch_level3.Constant._what_followed; mark_the_boundary;
+  a boundary may now be marked on a turn already folded into a routine). 7 new tests,
+  70 of 70 pass on 3.9.6 and 3.13.7. Bench scene has days 6 and 7 (walk instead of
+  drive, again): day 7 marks place 13, the last drive, Level 3. The constant file has
+  three new fields (last_followed, missed, stopped); an older constant without them
+  stops the conch with the reason.
+
 ## Built: the one-time Level 2 fold (11:40 to 11:47, 17 Nov)
 
 Built as designed below. 63 of 63 tests pass on Python 3.9.6 and 3.13.7 (11:45). The

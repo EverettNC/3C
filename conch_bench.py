@@ -44,6 +44,8 @@ SCENE = [
     [("wake", "procedural"), ("coffee", None), ("a phone call", None), ("the hospital", None),
      ("drive", "procedural")],
     [("wake", "procedural"), ("coffee", None), ("drive", "procedural")],
+    [("wake", "procedural"), ("coffee", None), ("walk", "procedural")],
+    [("wake", "procedural"), ("coffee", None), ("walk", "procedural")],
 ]
 
 
@@ -100,11 +102,20 @@ class Bench:
                 print("      -> back on something it has lived.")
             print(f"      -> laid on the spiral at place {came.position}. Level 2.")
             self.outside = False
+        fed = came.moment.shape()
         for mark in self.conch.spiral().marks():
-            if mark.position not in marked_before and mark.event_class == BOUNDARY_EVENT:
+            if mark.position in marked_before or mark.event_class != BOUNDARY_EVENT:
+                continue
+            if self.conch.spiral().turn(mark.position).moment.shape() == fed:
                 print("      -> this shape has now been lived again, so it is part of the constant.")
                 print(f"         Its first time, place {mark.position}, is marked Level 3 with a "
                       "new line: the first time survives.")
+            else:
+                what = words(self.conch.spiral().turn(mark.position).moment.shape())
+                print(f"      -> '{what}' did not come where the conch knew it would, again: it "
+                      "has stopped being constant.")
+                print(f"         The last time it came, place {mark.position}, is marked Level 3 "
+                      "with a new line: the last time survives.")
 
     # -- a night --
 
