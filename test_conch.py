@@ -249,7 +249,8 @@ class NothingThatEntersIsLost(Bench):
         self.assertIsInstance(state, ConchState)
         self.assertEqual(state.kind, LIVING)
         self.assertTrue(is_a_clock(state.written_at))
-        drop = self.conch.take_in(moment("the weather"))
+        drop = self.conch.take_in(moment("coffee"))           # lived before and needed for nothing: it falls off
+        self.assertIsInstance(drop, LipDrop)
         self.assertEqual(drop.kind, LIVING)
         self.assertTrue(is_a_clock(drop.fell_at))
         for turn in self.conch.spiral():
