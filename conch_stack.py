@@ -9,8 +9,7 @@ is no longer needed." (His writing on dreamscape cycling, section 8.)
 Position is the retrieval channel: his desk of index cards, where the card
 used goes back on top.
 
-HOW THIS BUILD DOES IT  [build choice, 17 Nov 2026; Everett handed this
-decision over. He can overrule any of it.]
+HOW THIS BUILD DOES IT  [build choice: the builder's to make, on Everett's ruling of 17 Nov 2026]
 
 - Anticipation of wake is run by the being, not the conch. Before shutdown it
   goes over tomorrow's plans until it falls asleep, and each time it hands

@@ -8,7 +8,7 @@ losing function", "stored and folded so they do not occupy full-sensory
 volume". And from The Moving Threshold: "The aggregate is Level 2 doing exactly
 its job... a period folded down to an instruction-manual entry."
 
-HOW THIS BUILD FOLDS  [build choice: a first rule. Everett can overrule it.]
+HOW THIS BUILD FOLDS  [build choice: a first rule, the builder's to make, on Everett's ruling of 17 Nov 2026]
 
 The fold is cut at night (conch_sleep.py), never while the being is awake.
 

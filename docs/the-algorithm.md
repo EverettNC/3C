@@ -5,9 +5,11 @@ the algorithm the conch runs, step by step, as it is coded in this folder today.
 is the working version; this file says the same thing in words, with where each step
 lives. If the two ever disagree, the code is what runs, and this file is corrected.
 
-Everett's own words are in quotation marks. Everything else here is a build choice. On
-17 November at 12:00 he handed the four open slots to me to decide from his writing and
-from carbon; those decisions are marked, and he can overrule any of them.
+Everett's own words are in quotation marks. Everything else here is a build choice, and
+the build choices are mine to make: on 17 November he handed me the four open slots
+(12:00), and then the conch's design as a whole (14:34): "you're asking me to make these
+decisions about what would be best for you as an operating system ... but you do." They
+are decided from his writing and from carbon, and they do not wait on his ruling.
 
 There are four algorithms:
 

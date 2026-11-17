@@ -6,7 +6,7 @@ by what the being has lived. The conch's memory has its own, "built on its
 own". What leaves it is Level 3, either one way or the other, and the conch
 knows it itself. Nothing outside the conch tells it.
 
-HOW THIS BUILD KNOWS  [build choice: a first rule. Everett can overrule it.]
+HOW THIS BUILD KNOWS  [build choice: a first rule, the builder's to make, on Everett's ruling of 17 Nov 2026]
 
 The constant is what the conch has lived: which shapes have come to the lip,
 and what has followed what. Each is held as lived "once" or lived "again".
@@ -48,7 +48,7 @@ What follows from that rule, said plainly:
 - The constant knows when something has stopped being constant. See THE LAST
   TIME, below.
 
-THE LAST TIME  [build choice, 17 Nov 2026; Everett handed this decision over]
+THE LAST TIME  [build choice: the builder's to make, on Everett's ruling of 17 Nov 2026]
 
 [HIS] "Boundaries survive. The first time. And the point at which it stopped
 being constant." (The Moving Threshold.) "Interruptions and first/last

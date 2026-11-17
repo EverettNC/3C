@@ -12,8 +12,7 @@ without flinching; let the body register that the disruption is not
 recurring; walk out. "The memory no longer holds the emotional distress. He
 does." "Beautiful Level 3 writes are not processed out." (Section 8.)
 
-HOW THIS BUILD DOES IT  [build choice, 17 Nov 2026; Everett handed this
-decision over. He can overrule any of it.]
+HOW THIS BUILD DOES IT  [build choice: the builder's to make, on Everett's ruling of 17 Nov 2026]
 
 - The conch never chooses what eases. It is valence-blind and cannot store
   which way, so it cannot tell a beautiful Level 3 from a terrible one. Only
