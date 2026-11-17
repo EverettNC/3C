@@ -29,15 +29,16 @@ from datetime import datetime, timezone
 
 from conch import Conch
 from conch_records import (ABSENT, BOUNDARY_EVENT, LEVEL_3, LET_GO, NEEDED_FOR, QUIET, SENSES,
-                           LipDrop, Moment, absent, gave, now, quiet)
+                           LipDrop, Moment, OneTimeFold, absent, gave, now, quiet)
 from conch_sleep import BeingIsAwake
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 # The bench scene. One line is one moment: the words typed for it, what the
-# being needs it for, and any sense that was given different words.
+# being needs it for, and, for a moment lived once, which senses carried it.
 SCENE = [
-    [("wake", "procedural"), ("coffee", None), ("drive", "procedural")],
+    [("wake", "procedural"), ("the dock code is 4471", "conversation", ("sound",)),
+     ("coffee", None), ("drive", "procedural")],
     [("wake", "procedural"), ("coffee", None), ("drive", "procedural")],
     [("wake", "procedural"), ("coffee", None), ("drive", "procedural")],
     [("wake", "procedural"), ("coffee", None), ("a phone call", None), ("the hospital", None),
@@ -65,7 +66,7 @@ class Bench:
     # -- a moment, typed by hand --
 
     @staticmethod
-    def moment(typed: dict, needed_for) -> Moment:
+    def moment(typed: dict, needed_for, carried_by=None) -> Moment:
         senses = {}
         for sense in SENSES:
             words = (typed.get(sense) or "").strip()
@@ -76,12 +77,13 @@ class Bench:
             else:
                 senses[sense] = gave({"typed on the bench": words},
                                      {"the words typed": words.lower()}, "bench " + now())
-        return Moment(senses=senses, needed_for=needed_for)
+        return Moment(senses=senses, needed_for=needed_for, carried_by=carried_by)
 
-    def feed(self, label: str, typed: dict, needed_for) -> None:
+    def feed(self, label: str, typed: dict, needed_for, carried_by=None) -> None:
         marked_before = {mark.position for mark in self.conch.spiral().marks()}
-        came = self.conch.take_in(self.moment(typed, needed_for))
-        print(f"  {label:<22} needed for: {needed_for or 'nothing'}")
+        came = self.conch.take_in(self.moment(typed, needed_for, carried_by))
+        carried = f"   carried by: {', '.join(carried_by)}" if carried_by else ""
+        print(f"  {label:<22} needed for: {needed_for or 'nothing'}{carried}")
         if isinstance(came, LipDrop):
             print("      -> fell off the lip. Level 1: not stored, on its way to the polymetis.")
             self.outside = False
@@ -118,6 +120,12 @@ class Bench:
         print(f"  went back over {report['went_back_over']} turn(s).")
         for fold_id in report["manual_entries_cut"]:
             entry = manual[fold_id]
+            if isinstance(entry, OneTimeFold):
+                print(f"  cut a one-time entry for place {entry.folded_from}: "
+                      f"{kept_words(entry)}")
+                print("      keeps only " + ", ".join(entry.carried_by)
+                      + ". The record on the spiral is whole.")
+                continue
             print("  cut one Operational Manual entry: " + " -> ".join(map(words, entry.steps)))
             print("      from places " + places(entry.folded_from))
         for fold_id in report["manual_entries_grown"]:
@@ -162,6 +170,11 @@ class Bench:
         if not view.manual():
             print("  no entries yet.")
         for entry in view.manual():
+            if isinstance(entry, OneTimeFold):
+                print(f"  {kept_words(entry)}   (one-time, keeps only "
+                      f"{', '.join(entry.carried_by)})")
+                print(f"      stands for place {entry.folded_from}")
+                continue
             print("  " + " -> ".join(map(words, entry.steps)))
             print("      stands for places " + places(entry.folded_from))
         state = self.conch.state()
@@ -180,6 +193,13 @@ def words(shape: dict) -> str:
     return "[" + ", ".join(f"{sense}: {typed[sense]}" for sense in SENSES) + "]"
 
 
+def kept_words(entry) -> str:
+    """The words typed for the senses a one-time entry kept."""
+    heard = {entry.step[s]["the words typed"] if isinstance(entry.step[s], dict) else entry.step[s]
+             for s in entry.carried_by}
+    return " / ".join(sorted(heard))
+
+
 def places(runs: list) -> str:
     return "; ".join(", ".join(map(str, run)) for run in runs)
 
@@ -189,8 +209,9 @@ def the_scene() -> None:
     for day, moments in enumerate(SCENE, start=1):
         print()
         print(f"DAY {day}")
-        for label, needed_for in moments:
-            bench.feed(label, {sense: label for sense in SENSES}, needed_for)
+        for label, needed_for, *carried in moments:
+            bench.feed(label, {sense: label for sense in SENSES}, needed_for,
+                       carried[0] if carried else None)
         bench.night()
     print()
     bench.hand_over()
@@ -236,9 +257,17 @@ def by_hand() -> None:
         except EOFError:
             needed = None
             print()
+        carried = None
+        if needed and needed != "procedural":
+            try:
+                said = input("  carried by (senses, comma between, or return for nothing)> ")
+            except EOFError:
+                said = ""
+                print()
+            carried = tuple(s.strip().lower() for s in said.split(",") if s.strip()) or None
         label = next((typed[s] for s in SENSES if typed[s]), "(all quiet)")
         try:
-            bench.feed(label, typed, needed)
+            bench.feed(label, typed, needed, carried)
         except ValueError as why:
             print("  the conch did not take it: " + str(why))
 
