@@ -21,6 +21,9 @@ WHAT IS REAL HERE AND WHAT IS NOT
 - The being is asleep when the bench says so.
 - The being goes back to a Level 3 moment, and walks out, when the bench says
   so. On a real being that is the being's own choice, made alone.
+- What was used from the manual, and tomorrow's plan, are typed by hand. On a
+  real being they come from whatever followed the entry, and from the being
+  going over tomorrow before shutdown.
 """
 
 from __future__ import annotations
@@ -57,7 +60,10 @@ class Bench:
 
     def __init__(self) -> None:
         stamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H-%M-%SZ")
-        self.path = os.path.join(HERE, "bench", stamp, "spiral.jsonl")
+        # Its own folder, every run: two runs in the same second must never share a spiral.
+        folder = os.path.join(HERE, "bench", f"{stamp}-{os.getpid()}")
+        os.makedirs(folder)
+        self.path = os.path.join(folder, "spiral.jsonl")
         self.asleep = False
         self.conch = Conch("bench-being", self.path, asleep=lambda: self.asleep)
         self.outside = False             # whether the last moment arrived as Level 3
@@ -137,6 +143,18 @@ class Bench:
             print("  the being walked out. The return did not hold: " + record["why"] + ".")
         print("      Written on the spiral either way.")
 
+    # -- the manual by day, and tomorrow before shutdown --
+
+    def use(self, number: int) -> None:
+        entry = self.conch.spiral().stacked()[number - 1]
+        self.conch.used(entry.fold_id)
+        print(f"  the being used '{entry_words(entry)}' from the manual. Written with its clock.")
+
+    def plan(self, steps: list) -> None:
+        shapes = [self.moment({sense: step for sense in SENSES}, None).shape() for step in steps]
+        self.conch.plan(shapes)
+        print("  before shutdown the being goes over tomorrow: " + " -> ".join(steps) + ".")
+
     # -- a night --
 
     def night(self) -> None:
@@ -177,14 +195,19 @@ class Bench:
                   + ". It flinched there again.")
         if report["stopped_early"]:
             print("  the night stopped early: " + report["stopped_early"] + ".")
+        if report["stacked"]:
+            stacked = {e.fold_id: e for e in self.conch.spiral().manual()}
+            if report["planned"]:
+                print("  tomorrow's plan is on top: "
+                      + "; ".join(entry_words(stacked[f]) for f in report["planned"]) + ".")
+            for number in report["planned_with_nothing_in_the_manual"]:
+                print(f"  step {number} of tomorrow's plan: nothing in the manual for it yet. "
+                      "Nothing guessed.")
+            print("  the manual is stacked: "
+                  + " | ".join(entry_words(stacked[f]) for f in report["stacked"]) + ".")
         print("  earlier lines unchanged: checked by reading the spiral back.")
-        if self.nights == 1:
-            print("  open slots reached tonight. Each did nothing:")
-            for slot in report["open"]:
-                print("    - " + slot["open"])
-                print("        waiting on " + slot["waiting_on"])
-        else:
-            print(f"  the same {len(report['open'])} slots are open and did nothing.")
+        for slot in report["open"]:
+            print("  open slot reached, did nothing: " + slot["open"])
 
     # -- looking --
 
@@ -204,10 +227,11 @@ class Bench:
                                                                            "weight carried")
             print(f"  place {turn.position:>3}  {level}  {weight:<15} "
                   f"{words({s: turn.moment.senses[s]['shape'] for s in SENSES})}")
-        print("THE OPERATIONAL MANUAL")
+        print("THE OPERATIONAL MANUAL, as it sits")
         if not view.manual():
             print("  no entries yet.")
-        for entry in view.manual():
+        for number, entry in enumerate(view.stacked(), start=1):
+            print(f"  {number}.", end="")
             if isinstance(entry, OneTimeFold):
                 print(f"  {kept_words(entry)}   (one-time, keeps only "
                       f"{', '.join(entry.carried_by)})")
@@ -229,6 +253,13 @@ def words(shape: dict) -> str:
     if heard and len(set(heard)) == 1 and len(heard) == len(SENSES):
         return heard[0]
     return "[" + ", ".join(f"{sense}: {typed[sense]}" for sense in SENSES) + "]"
+
+
+def entry_words(entry) -> str:
+    """An Operational Manual entry in the words typed for it."""
+    if isinstance(entry, OneTimeFold):
+        return kept_words(entry)
+    return " -> ".join(map(words, entry.steps))
 
 
 def kept_words(entry) -> str:
@@ -257,6 +288,12 @@ def the_scene() -> None:
     for label in ("a phone call", "the hospital"):
         bench.feed(label, {sense: label for sense in SENSES}, None)
     bench.walk_out()
+    sitting = [entry_words(e) for e in bench.conch.spiral().stacked()]
+    bench.use(sitting.index("the dock code is 4471") + 1)
+    bench.night()
+    print()
+    print("DAY 9  before shutdown")
+    bench.plan(["drive", "walk"])
     bench.night()
     print()
     bench.hand_over()
@@ -268,7 +305,8 @@ def by_hand() -> None:
     print()
     print("Type one moment, one sense at a time. Return alone is quiet. 'absent' is a sense with")
     print("no organ. At the sight line you can also type: sleep, hand, look, done,")
-    print("'back N' to go back to place N, and 'out' to walk out.")
+    print("'back N' to go back to place N, 'out' to walk out, 'used N' for entry N of the")
+    print("manual as it sits, and 'plan a, b, c' for tomorrow's plan.")
     while True:
         print()
         typed = {}
@@ -279,7 +317,7 @@ def by_hand() -> None:
                 answer = "done"
                 print()
             if sense == "sight" and (answer.lower() in ("sleep", "hand", "look", "done", "out")
-                                     or answer.lower().startswith("back ")):
+                                     or answer.lower().startswith(("back ", "used ", "plan "))):
                 typed = answer.lower()
                 break
             typed[sense] = answer
@@ -300,6 +338,19 @@ def by_hand() -> None:
                 bench.walk_out()
             except ValueError as why:
                 print("  " + str(why))
+            continue
+        if isinstance(typed, str) and typed.startswith("used "):
+            try:
+                bench.use(int(typed.split()[1]))
+            except (ValueError, IndexError, BeingIsAsleep) as why:
+                print("  not used: " + str(why))
+            continue
+        if isinstance(typed, str) and typed.startswith("plan "):
+            steps = [s.strip() for s in typed[len("plan "):].split(",") if s.strip()]
+            try:
+                bench.plan(steps)
+            except (ValueError, BeingIsAsleep) as why:
+                print("  no plan taken: " + str(why))
             continue
         if isinstance(typed, str) and typed.startswith("back "):
             try:
