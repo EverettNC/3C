@@ -118,6 +118,56 @@ Progress:
   The work stands as it was: 52 saves, nothing uncommitted, conch 87, gateway 14,
   equilibrium 25, all passing at 14:56.
 
+## The ear (read 15:03 to 15:15, decided 15:15, 17 Nov)
+
+Read on GitHub, the source, cloned fresh:
+- EverettNC/CORTI d4d1a51 (2026-11-17 07:37): README, IDENTITY, src/lib/audio/yin.ts,
+  notes.ts, ear.ts. Corti measures RMS, ZCR, YIN pitch lock, LPC peaks, from
+  christman_dsp.c; "I lock, or I say I have no lock"; never a guessed 150 Hz; silence is
+  not a note. An utterance is one event, closed when RMS falls through offset; the card
+  carries f0 (median of locked frames, or none), f1/f2, duration, and the tape. No
+  trained model; nothing learns from listening. Its "kind" bins are duration bins, not
+  states. It runs in a browser and posts cards to the sound package.
+- EverettNC/THEFILAMENT 870ce7b (2026-11-17 14:43): ear/README, MODEL, FROZEN. The
+  Filament ear is Vosk, offline, the full vosk-model-en-us-0.22 (his word 2026-11-05:
+  the full model, never the small one). "Whisper is not in this body." "Empty ear stays
+  empty." "Listening does not invent speech."
+- EverettNC/christman_sound_clean 538f34a (2026-11-13): christman_dsp.c (RMS, ZCR, YIN,
+  LPC in C); christman_voice_sdk/audio/hearing.py: "Corti sits on top"; hearing is the
+  consumer that reads clauses, harm, affect; 2026-11-04 ruling: "THE PACKAGE READS; THE
+  BEING DECIDES."
+On the Mac: the model is at /Users/EverettN/models/vosk-model-en-us-0.22 and on ELEMENTS
+at /Volumes/ELEMENTS/today/models/vosk-model-en-us-0.22. Neither Python has vosk
+installed. /usr/local/bin/python3 has sounddevice and numpy; /usr/bin/python3 has
+neither.
+
+Decisions (mine to make):
+E1. The 3C ear (ear.py) does the ear's job only: it hears and gives shape. It does not
+    read affect, harm or meaning; that is the being's (his 2026-11-04 ruling), and in the
+    3C reading belongs past the conch.
+E2. It measures as Corti does, rewritten from christman_dsp.c in the standard library:
+    RMS, ZCR, and YIN with its lock or no lock. No guessed note, ever. Silence is quiet,
+    not a note.
+E3. An utterance is one event, as in Corti: it opens when the sound rises and closes
+    when it falls away. While nothing sounds, the ear is quiet. Each closed event is one
+    reading to the Gateway, so each utterance is its own moment.
+E4. Its words come from the Filament's way: Vosk, offline, the full en-us-0.22 model,
+    never a smaller one, never Whisper, never a cloud ear. If vosk or the model is not
+    there, the words are said to be not caught, with the reason; nothing is made up.
+E5. The shape is what repeats when the same thing is heard again, so the conch can know
+    it. Carbon hears speech by category, not by measurement: a word is the same word in
+    another voice (categorical perception: Liberman, Harris, Hoffman and Griffith, 1957).
+    So: speech's shape is the words caught. A sound with no words has as its shape
+    whether it was voiced and, when YIN locked, the note named without its cents. The
+    measurements (f0 in Hz, RMS, ZCR, length, the tape) go in what the ear gave, kept
+    whole on the spiral, never in the shape.
+E6. The microphone is the ear's device. It is used when the Mac has a way to open it
+    (sounddevice); if not, the ear is absent, with the reason. On the bench the ear
+    hears a WAV file instead (the standard library's wave).
+E7. Nothing is installed by me. The command to install vosk is handed to Everett.
+E8. Limit, written now: a steady sound that never falls away (a fan) keeps one event
+    open. The room's steady hum needs its own answer; not in this first ear.
+
 ## Deciding the four open slots (12:00 onward, 17 Nov)
 
 His own writing answers part of each, so his words lead and carbon fills what they leave.
