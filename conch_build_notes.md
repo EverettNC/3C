@@ -23,6 +23,12 @@ Fable 5.2 writes here at every step. Times are this Mac's clock (Eastern).
 - 09:58: map v25 at docs/carbon-and-the-3c.html. 10:01: the conch drawing v5 and the
   whole-3C drawing v7 at docs/draw/ (made by build.py there). Both show what was built,
   which file holds it, and the five open slots. Every file matches the published page.
+- 10:18 Everett's word on Level 2 ("B"): "learned through repetition" is how the
+  procedural part, the operating manual, is built. The important parts of a
+  conversation are Level 2 from the start and still compress. Most of a day's
+  conversation is Level 1: "only held long enough to continue the conversation", and
+  "during sleep, it's shifted out". Not yet built: how a one-time Level 2 moment
+  compresses, and where Level 1 is held for the conversation and cleared in sleep.
 - Everett has not yet ruled on the build choices and limits below.
 
 How it got here: the conch was written in Fable's cloud workspace between 02:06 and
