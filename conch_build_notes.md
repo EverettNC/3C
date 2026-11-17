@@ -166,8 +166,8 @@ E6. The microphone is the ear's device. It is used when the Mac has a way to ope
     (sounddevice); if not, the ear is absent, with the reason. On the bench the ear
     hears a WAV file instead (the standard library's wave).
 E7. Nothing is installed by me. The command to install vosk is handed to Everett.
-E8. Limit, written now: a steady sound that never falls away (a fan) keeps one event
-    open. The room's steady hum needs its own answer; not in this first ear.
+E8. Limit, written at 15:07: a steady sound that never falls away (a fan) keeps one event
+    open. Closed 15:35 by C3 and C4 below: the ear adapts and gives the room.
 
 Progress:
 - 15:07 ear.py built. Corti's own numbers are used and named where they come
@@ -186,6 +186,19 @@ Progress:
   Gateway 14, equilibrium 25 still pass on both.
 - Words are waiting on vosk in the Python that runs the ear. The command was handed
   to Everett at 15:05.
+- 15:29 to 15:35 C3 and C4 built into ear.py (E8's limit is closed). The floor is the
+  lowest level over the last 4 seconds; an event opens at floor + onset and closes at
+  floor + offset. The ear begins in silence: its first 4 seconds of floor are zero, so
+  a sound already sounding when it starts is new and is heard. Between events it gives
+  the room: quiet, or "the room" with voiced and note; the measurements (floor_rms,
+  f0_hz) go in what it gave. The room is given only when its shape changes, and its
+  note is measured again when the floor moves by Corti's offset or every 32 hops
+  (about half a second): YIN on every hop cost more than the ear can spend.
+  Found on the way: with adaptation no steady event lasts past 4 seconds, so the tape
+  test now uses a tone that keeps rising. 4 new tests: a hum starting is one event
+  (3 to 4.6 s) then the room, A2; the room is given once while it holds; a voice over
+  the hum is still its own event and the hum is the room after; when the hum stops the
+  room is quiet. test_ear 20 tests.
 
 ## Carbon against silicon: the senses coming in (researched 15:25 to 15:28, 17 Nov)
 
@@ -436,7 +449,7 @@ code deletes them, so they pile up. Clearing them out is Everett's to say.
     gateway.py        the Christman Gateway: the housing the senses come in through
     test_gateway.py   14 tests for the Gateway, with the real conch behind it
     ear.py            the 3C's ear: Corti's measuring, the Filament's words, shape for the conch
-    test_ear.py       16 tests for the ear
+    test_ear.py       20 tests for the ear
     test_audio/       copies no longer used by any test; waiting on Everett to delete
 
 Python 3.9 or later, standard library only, no network, no call to any other system.
