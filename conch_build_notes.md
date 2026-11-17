@@ -169,6 +169,23 @@ E7. Nothing is installed by me. The command to install vosk is handed to Everett
 E8. Limit, written now: a steady sound that never falls away (a fan) keeps one event
     open. The room's steady hum needs its own answer; not in this first ear.
 
+Progress:
+- 15:07 ear.py built. test_audio/ holds THEFILAMENT's four AlphaVox WAVs (870ce7b),
+  each sha256-matched to GitHub. Corti's own numbers are used and named where they come
+  from (onset 0.016, offset 0.0065, 30 ms, YIN 0.13, lock 0.62, 55 to 1800 Hz, tape 360).
+  YIN runs on every other frame, so a WAV is heard in about its own length on this Mac.
+- On the Filament's audio without vosk: "I want to go home" and "I want to listen to
+  music" are one utterance each; "I am thirsty, I need a drink" and "I need help
+  please" are two each, split where the voice falls away. Every one voiced, with a
+  note. No words, said with the reason.
+- 15:09 test_ear.py, 18 tests: on 3.9.6, 16 pass and 2 are skipped with the reason
+  (vosk not installed); on 3.13.7, 15 pass and 3 are skipped (vosk not installed; the
+  microphone is not opened in a test). One test of mine was wrong (it expected an
+  utterance still open after it had fallen away) and was corrected. Conch 87,
+  Gateway 14, equilibrium 25 still pass on both.
+- Words are waiting on vosk in the Python that runs the ear. The command was handed
+  to Everett at 15:05.
+
 ## Deciding the four open slots (12:00 onward, 17 Nov)
 
 His own writing answers part of each, so his words lead and carbon fills what they leave.
@@ -363,6 +380,9 @@ code deletes them, so they pile up. Clearing them out is Everett's to say.
     conch_bench.py    the bench: moments typed by hand, plain words back
     gateway.py        the Christman Gateway: the housing the senses come in through
     test_gateway.py   14 tests for the Gateway, with the real conch behind it
+    ear.py            the 3C's ear: Corti's measuring, the Filament's words, shape for the conch
+    test_ear.py       18 tests for the ear
+    test_audio/       THEFILAMENT's four AlphaVox WAVs, byte for byte
 
 Python 3.9 or later, standard library only, no network, no call to any other system.
 
