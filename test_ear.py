@@ -101,11 +101,9 @@ class Hearing(unittest.TestCase):
                 if m.senses["sound"]["shape"] not in (QUIET,)]
 
     def test_an_utterance_is_one_event_and_one_reading(self):
-        self.ear.hear(silence(0.3) + tone(220, 0.4) + silence(0.3))
-        heard = self.sounds()
-        self.assertEqual(len(heard), 0)                       # still open: nothing closed it yet
-        self.ear.hear(silence(0.2))
-        self.gate.close()
+        self.ear.hear(silence(0.3) + tone(220, 0.4))
+        self.assertEqual(self.sounds(), [])                   # still sounding: nothing closed it
+        self.ear.hear(silence(0.3))                           # it fell away: closed, and quiet after
         heard = self.sounds()
         self.assertEqual(len(heard), 1)
         self.assertEqual(heard[0]["shape"], {"heard": "a sound", "voiced": True, "note": "A3"})
@@ -239,7 +237,8 @@ class StandsAlone(unittest.TestCase):
                     self.assertIn(n.name.split(".")[0], allowed)
             if isinstance(node, ast.ImportFrom):
                 self.assertIn(node.module.split(".")[0], allowed)
-        source = open(os.path.join(HERE, "ear.py"), encoding="utf-8").read()
+        with open(os.path.join(HERE, "ear.py"), encoding="utf-8") as f:
+            source = f.read()
         for outside in ("whisper", "openai", "google", "requests", "urllib", "http"):
             self.assertNotIn("import " + outside, source)
 
