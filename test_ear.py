@@ -4,8 +4,8 @@ test_ear.py: the 3C's ear, tested forward.
     python3 -m unittest test_ear -v
 
 Tones are made here with the standard library, so what the ear should lock on
-is known. The four WAVs in test_audio/ are THEFILAMENT's own test audio
-(870ce7b), byte for byte. A test that needs vosk or a microphone this Python
+is known. No recording of any being is used here. A test that needs vosk or a
+microphone this Python
 does not have is skipped with the reason; it never counts as a pass. Files
 written here go into test_spirals/, beside this file, and nothing is deleted.
 """
@@ -27,7 +27,6 @@ from ear import (FRAME, HOP, MODEL_NAME, RATE, TAPE_CAP, Ear, Words, note_of, rm
 from gateway import Gateway
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-AUDIO = os.path.join(HERE, "test_audio")
 THIS_RUN = os.path.join(HERE, "test_spirals", "ear-"
                         + datetime.now(timezone.utc).strftime("%Y-%m-%dT%H-%M-%SZ")
                         + "-" + str(os.getpid()))
@@ -155,16 +154,6 @@ class Hearing(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.ear.hear_wav(path)
 
-    def test_filament_audio_is_heard(self):
-        for name in sorted(os.listdir(AUDIO)):
-            before = len(self.sounds())
-            self.ear.hear_wav(os.path.join(AUDIO, name))
-            heard = self.sounds()[before:]
-            self.assertTrue(heard, name)
-            for reading in heard:
-                self.assertTrue(reading["gave"]["voiced"], name)
-
-
 class TheWordsAndTheMicrophone(unittest.TestCase):
     def test_without_vosk_or_the_model_the_reason_is_given(self):
         if vosk_here():
@@ -181,22 +170,6 @@ class TheWordsAndTheMicrophone(unittest.TestCase):
         small = os.path.join(THIS_RUN, "vosk-model-small-en-us-0.15")
         os.makedirs(small, exist_ok=True)
         self.assertIn("never a smaller one", Words(model_path=small).why_not)
-
-    def test_the_filament_words(self):
-        if not vosk_here():
-            self.skipTest("vosk is not installed in this Python: python3 -m pip install vosk")
-        words = Words()
-        if words.model is None:
-            self.skipTest(words.why_not)
-        catches = Catches()
-        gate = Gateway(catches)
-        heard_ear = Ear(gate, words)
-        heard_ear.hear_wav(os.path.join(AUDIO, "alphavox_i_want_to_go_home.wav"))
-        gate.close()
-        said = " ".join(m.senses["sound"]["gave"]["words"]["words"] or ""
-                        for m in catches.moments
-                        if isinstance(m.senses["sound"]["gave"], dict))
-        self.assertIn("home", said)
 
     def test_the_microphone_is_not_pretended(self):
         try:

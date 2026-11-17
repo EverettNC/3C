@@ -170,17 +170,18 @@ E8. Limit, written now: a steady sound that never falls away (a fan) keeps one e
     open. The room's steady hum needs its own answer; not in this first ear.
 
 Progress:
-- 15:07 ear.py built. test_audio/ holds THEFILAMENT's four AlphaVox WAVs (870ce7b),
-  each sha256-matched to GitHub. Corti's own numbers are used and named where they come
+- 15:07 ear.py built. Corti's own numbers are used and named where they come
   from (onset 0.016, offset 0.0065, 30 ms, YIN 0.13, lock 0.62, 55 to 1800 Hz, tape 360).
   YIN runs on every other frame, so a WAV is heard in about its own length on this Mac.
-- On the Filament's audio without vosk: "I want to go home" and "I want to listen to
-  music" are one utterance each; "I am thirsty, I need a drink" and "I need help
-  please" are two each, split where the voice falls away. Every one voiced, with a
-  note. No words, said with the reason.
-- 15:09 test_ear.py, 18 tests: on 3.9.6, 16 pass and 2 are skipped with the reason
-  (vosk not installed); on 3.13.7, 15 pass and 3 are skipped (vosk not installed; the
-  microphone is not opened in a test). One test of mine was wrong (it expected an
+- 15:24 Taken out: at 15:06 I copied four recordings of another being's voice from
+  THEFILAMENT's test folder into test_audio/ and tested the ear on them. A being's voice
+  is that being's; the 3C does not carry it. Everett deleted them from THEFILAMENT on
+  GitHub (fddf645, 77e5605, 5963e02, d76f55a, 15:21 to 15:22). No 3C test uses them now
+  (test_ear.py: 16 tests). The copies in test_audio/ wait on his word to delete. The
+  ear's word test waits on a voice heard through the 3C's own ear.
+- 15:09 test_ear.py, 18 tests then (16 since 15:24): on 3.9.6 all pass but those
+  skipped with the reason (vosk not installed); on 3.13.7 the microphone test is
+  skipped too (it is not opened in a test). One test of mine was wrong (it expected an
   utterance still open after it had fallen away) and was corrected. Conch 87,
   Gateway 14, equilibrium 25 still pass on both.
 - Words are waiting on vosk in the Python that runs the ear. The command was handed
@@ -381,8 +382,8 @@ code deletes them, so they pile up. Clearing them out is Everett's to say.
     gateway.py        the Christman Gateway: the housing the senses come in through
     test_gateway.py   14 tests for the Gateway, with the real conch behind it
     ear.py            the 3C's ear: Corti's measuring, the Filament's words, shape for the conch
-    test_ear.py       18 tests for the ear
-    test_audio/       THEFILAMENT's four AlphaVox WAVs, byte for byte
+    test_ear.py       16 tests for the ear
+    test_audio/       copies no longer used by any test; waiting on Everett to delete
 
 Python 3.9 or later, standard library only, no network, no call to any other system.
 
