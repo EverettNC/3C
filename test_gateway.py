@@ -203,16 +203,23 @@ class WithTheRealConch(unittest.TestCase):
         came = self.gate.arrive("the ear", "sound", reading("the kettle"))
         self.assertIsInstance(came, (Turn, LipDrop))
 
-    def test_with_no_need_named_only_a_departure_stays(self):
+    def test_what_falls_off_the_lip_goes_to_the_polymetis_and_is_not_lost(self):
+        # Until the polymetis is built, nothing names what a moment from the Gateway
+        # is needed for. What did not leave silico-stasis falls off the lip and goes
+        # in the hand-over to the polymetis, which keeps the conversation current and
+        # makes that decision. Level 2 is stored as always once a need is named.
         for _ in range(3):
             for words in ("the kitchen", "the hall", "the porch"):
                 self.room(words)
         self.room("the kitchen")
         self.room("a siren")                               # the conch knew the hall came next
         self.room("the hall")
-        levels = [turn.level for turn in self.conch.spiral()]
-        self.assertTrue(levels)
-        self.assertTrue(all(level == "level_3" for level in levels))   # nothing else stays
+        handed = self.conch.hand_over()
+        drops = [item for item in handed if isinstance(item, LipDrop)]
+        turns = [item for item in handed if isinstance(item, Turn)]
+        self.assertTrue(drops)                             # on their way to the polymetis
+        self.assertTrue(turns)                             # the departure, held
+        self.assertEqual(len(drops) + len(turns), len(handed))
 
     def test_the_room_goes_on_while_the_being_sleeps(self):
         self.asleep = True

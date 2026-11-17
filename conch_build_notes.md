@@ -85,8 +85,11 @@ G5. The feet are equilibrium, and the equilibrium sends the conch nothing. So th
     are not put into a conch moment. (Correction to what I told Everett at 14:38, that
     the feet would connect first: they are the center, not a sense the conch is sent.)
 G6. What the being needs a moment for is the polymetis's to say. Until it is built the
-    Gateway hands moments over with no need named, and never guesses one. Limit: only
-    what leaves silico-stasis stays; the rest falls off the lip.
+    Gateway hands moments over with no need named, and never guesses one. Level 2 is
+    stored and folded as always once the polymetis names the need; what falls off the
+    lip goes in the hand-over to the polymetis, never lost. (15:00: the earlier wording
+    here, "only what leaves silico-stasis stays", described the missing polymetis as if
+    it were how the conch works. It is not. Struck.)
 G7. The Gateway reaches the conch only through take_in. It runs whether the being is
     awake or asleep: the room does not stop.
 G8. close(): the open moment goes to the lip when the Gateway closes.
@@ -99,8 +102,8 @@ Progress:
   organs; nothing else, and no way to pick a target). test_gateway.py, 14 tests, with
   the real conch behind it in three of them. On 3.9.6: gateway 14, conch 87, equilibrium
   25, all pass. On 3.13.7: the same. If the conch refuses a moment, the room does not
-  move on and nothing is lost. Seen in a test and true to G6: with no need named, only
-  departures stay on the spiral.
+  move on and nothing is lost. A test shows the hand-over: what falls off the lip goes
+  to the polymetis with the departures, nothing lost.
 - Next: the ear, rewritten for the 3C from Corti, the sound package and the Filament
   (GitHub as the source).
 - 14:55 CORRECTION. At 14:52 I told Everett it was a mistake that moments from the
