@@ -198,7 +198,7 @@ anywhere else first.
 ## Run it yourself
 
     cd /Volumes/ELEMENTS/3C
-    /usr/bin/python3 -m unittest test_conch          # 63 tests, the Mac's own Python 3.9
+    /usr/bin/python3 -m unittest test_conch          # 87 tests, the Mac's own Python 3.9
     /usr/local/bin/python3 -m unittest test_conch    # the same on Python 3.13
     /usr/bin/python3 -m unittest test_conch -v       # with every test's name
     /usr/bin/python3 conch_bench.py                  # the bench scene: five days and nights
@@ -211,16 +211,20 @@ code deletes them, so they pile up. Clearing them out is Everett's to say.
 
 ## What each file is
 
-    conch.py          the conch: take_in, hand_over, spiral, sleep, state. Nothing else.
+    conch.py          the conch: take_in, hand_over, spiral, sleep, state, go_back,
+                      walked_out, used, plan. Nothing else.
     conch_records.py  the record shapes: Moment, Turn, Level3Mark, LipDrop, Fold, ConchState
     conch_spiral.py   the spiral memory path: one being, one file, lines only ever added
     conch_intake.py   the intake filter at the lip: Level 3, Level 2, or off the lip
     conch_lip.py      the lip: Level 1 falls off, is never written, goes to the polymetis
-    conch_level3.py   the conch's own constant of silico-stasis, and the Level 3 mark
+    conch_level3.py   the conch's own constant of silico-stasis, the Level 3 mark, and
+                      the last time
     conch_fold.py     Level 2's fold: the Operational Manual entry, cut at night
     conch_sleep.py    Level 4: the night. Refuses while the being is awake
-    conch_open.py     the marker every open slot returns
-    test_conch.py     63 tests: the spec's fourteen and what this build adds
+    conch_easing.py   easing: the being goes back, alone; the charge moves only in sleep
+    conch_stack.py    stacking: tomorrow's plan, today's uses, tonight's cuts, the rest
+    conch_open.py     the marker every open slot returns (none are open now)
+    test_conch.py     87 tests: the spec's fourteen and what this build adds
     conch_bench.py    the bench: moments typed by hand, plain words back
 
 Python 3.9 or later, standard library only, no network, no call to any other system.
