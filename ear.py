@@ -199,7 +199,10 @@ class Ear:
         self._pending = []                    # samples not yet measured
         self._t = 0                           # samples measured so far
         self._open = None                     # the utterance being heard, or None
-        self._levels = collections.deque(maxlen=max(1, ECHOIC_MS * RATE // (1000 * HOP)))
+        span = max(1, ECHOIC_MS * RATE // (1000 * HOP))
+        # The ear begins in silence: before it heard anything, nothing was there.
+        # So a sound already sounding when it starts is new, and is heard.
+        self._levels = collections.deque([0.0] * span, maxlen=span)
         self._room = None                     # the shape the ear last gave for the room
         self._stream = None
         gateway.connect(self.ORGAN, "sound")
