@@ -36,8 +36,8 @@ from conch_level3 import ConstantDoesNotMatch
 from conch_open import Open
 from conch_records import (ABSENT, BOUNDARY_EVENT, CARRIED, INTERRUPTION, LET_GO, LEVEL_1, LEVEL_2,
                            LEVEL_3, LIVING, NEEDED_FOR, PERMANENT, QUIET, SENSES, SOURCE,
-                           ConchState, Level3Mark, LipDrop, Moment, Turn, absent, gave, mark_of,
-                           quiet)
+                           ConchState, Fold, Level3Mark, LipDrop, Moment, OneTimeFold, Turn,
+                           absent, gave, mark_of, quiet)
 from conch_sleep import BeingIsAwake
 from conch_spiral import (CLOCK_OF, FIELDS, NotThisBeingsSpiral, Spiral, SpiralChangedUnderneath,
                           SpiralDamaged, SpiralView, write_beside)
@@ -847,6 +847,106 @@ class TheNight(Bench):
         self.assertIsNone(rest["stopped_early"])
         self.assertEqual(rest["weight_let_go"], [9, 10, 11, 12])
         self.assertEqual(len(self.open().spiral().manual()), 2)
+
+
+# ---- a Level 2 moment lived once (17 Nov) ----------------------------------------------
+
+def said_once(name, needed_for, carried_by, **different):
+    """A moment that says which senses carried what it is needed for."""
+    return dataclasses.replace(moment(name, needed_for, **different), carried_by=carried_by)
+
+
+class LivedOnce(Bench):
+    def test_a_one_time_part_of_a_conversation_folds_to_the_senses_that_carried_it(self):
+        m = said_once("the dock code is 4471", "conversation", ("sound",))
+        turn = self.conch.take_in(m)
+        self.assertEqual(turn.moment.carried_by, ("sound",))
+        report = self.night()
+        entry, = self.conch.spiral().manual()
+        self.assertIsInstance(entry, OneTimeFold)
+        self.assertEqual(report["manual_entries_cut"], [entry.fold_id])
+        self.assertEqual(entry.carried_by, ("sound",))
+        self.assertEqual(entry.step, {"sound": shape_of("the dock code is 4471")["sound"]})
+        self.assertEqual(entry.folded_from, 1)
+        self.assertEqual(report["weight_let_go"], [1])
+        self.assertEqual(report["left_whole"], [])
+        kept = self.conch.spiral().turn(1)
+        self.assertEqual((kept.level, kept.weight), (LEVEL_2, LET_GO))
+        self.assertEqual(kept.moment.senses, m.senses)        # the record stays whole
+        line, = [l for l in self.lines() if l["type"] == "fold_one"]
+        self.assertEqual(set(line["step"]), {"sound"})        # the entry holds nothing else
+        self.assertNotIn("bench reading", json.dumps(line))
+        self.assertEqual(self.open().spiral().manual(), [entry])   # and survives a restart
+
+    def test_a_nonverbal_conversation_keeps_sight(self):
+        self.conch.take_in(said_once("points at the cup", "conversation", ("sight", "touch")))
+        self.night()
+        entry, = self.conch.spiral().manual()
+        self.assertEqual(entry.carried_by, ("sight", "touch"))
+        self.assertEqual(set(entry.step), {"sight", "touch"})
+
+    def test_what_says_nothing_about_its_senses_is_left_whole(self):
+        turn = self.conch.take_in(moment("a lesson heard once", "education"))
+        report = self.night()
+        self.assertEqual(self.conch.spiral().manual(), [])
+        self.assertEqual(report["left_whole"], [turn.position])
+        self.assertEqual(self.conch.spiral().turn(turn.position).weight, CARRIED)
+
+    def test_which_senses_carried_it_is_checked_and_never_guessed(self):
+        before = self.raw()
+        for needed, carried, different in [
+                (None, ("sound",), {}),                       # nothing it is needed for
+                ("procedural", ("touch",), {}),               # procedure folds only as a routine
+                ("conversation", (), {}),
+                ("conversation", ("hearing",), {}),
+                ("conversation", ("sound", "sound"), {}),
+                ("conversation", ("taste",), {"taste": quiet("taste clock")}),
+                ("conversation", ("touch",), {"touch": absent()})]:
+            with self.assertRaises(ValueError):
+                self.conch.take_in(said_once("something said", needed, carried, **different))
+        self.assertEqual(self.raw(), before)
+
+    def test_a_routine_folds_as_a_routine_first(self):
+        for _ in range(3):
+            self.conch.take_in(said_once("the safety talk", "education", ("sound",)))
+        self.night()
+        entry, = self.conch.spiral().manual()
+        self.assertIsInstance(entry, Fold)
+        self.assertEqual(entry.folded_from, [[2], [3]])
+        self.assertEqual(self.conch.spiral().turn(1).level, LEVEL_3)   # the first time, never folded
+
+    def test_level_3_is_never_folded_one_time(self):
+        for _ in range(2):
+            self.morning()
+        broke = self.morning(between=[said_once("the phone call", "conversation", ("sound",))])
+        self.night()
+        self.assertEqual(self.conch.spiral().turn(broke[2].position).level, LEVEL_3)
+        held = [e.folded_from for e in self.conch.spiral().manual() if isinstance(e, OneTimeFold)]
+        self.assertNotIn(broke[2].position, held)
+
+    def test_a_one_time_moment_that_comes_again_is_still_its_first_time(self):
+        self.conch.take_in(said_once("the dock code is 4471", "conversation", ("sound",)))
+        self.night()
+        entry, = self.conch.spiral().manual()
+        again = self.conch.take_in(said_once("the dock code is 4471", "conversation", ("sound",)))
+        first = self.conch.spiral().turn(1)
+        self.assertEqual((first.level, first.weight), (LEVEL_3, CARRIED))
+        self.assertEqual([m.event_class for m in self.conch.spiral().marks()], [BOUNDARY_EVENT])
+        self.assertEqual(self.conch.spiral().manual()[0], entry)      # the entry stays as it was cut
+        self.assertEqual(again.level, LEVEL_2)
+        self.assertEqual(self.open().spiral().turn(1).level, LEVEL_3)
+
+    def test_a_one_time_entry_that_lost_a_sense_stops_the_conch(self):
+        self.conch.take_in(said_once("the dock code is 4471", "conversation", ("sound", "sight")))
+        self.night()
+        lines = self.lines()
+        for line in lines:
+            if line["type"] == "fold_one":
+                line["step"].pop("sight")
+        path = self.copy_to("lost-a-sense", spiral="".join(
+            json.dumps(line) + "\n" for line in lines).encode("utf-8"))
+        with self.assertRaises(SpiralDamaged):
+            self.open(path=path)
 
 
 # ---- Section 10, test 11 -----------------------------------------------------------
