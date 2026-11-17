@@ -58,6 +58,7 @@ LEVEL_2 = "level_2"      # the Operational Manual
 LEVEL_3 = "level_3"      # the PTSD layer
 CARRIED = "carried"      # weight is a state, not a number
 LET_GO = "let go"
+TAKEN_BACK = "taken back by the being"   # a Level 3 charge the being took back; the record stays
 PERMANENT = "permanent record"
 LIVING = "living state"
 SOURCE = "the conch's own silico-stasis"
@@ -203,7 +204,7 @@ class Turn:
     position: int            # its place in the order things arrived; the first is 1
     moment: Moment           # the whole moment, untouched
     level: str               # level_2 | level_3
-    weight: str              # carried | let go
+    weight: str              # carried | let go | taken back by the being
     written_at: str
     kind: str = PERMANENT
 
