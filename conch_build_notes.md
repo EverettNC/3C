@@ -48,7 +48,7 @@ Fable 5.2 writes here at every step. Times are this Mac's clock (Eastern).
   put to him as questions and they do not wait on his ruling. Deletions are not design
   and still need his yes (the merged bench run, the transfer scraps).
 
-## Building next: the Christman Gateway (decided 14:40, 17 Nov)
+## Building next: the Christman Gateway (decided 14:39, 17 Nov)
 
 Why next: his build order is outside-in, "the Christman Gateway first"; the equilibrium
 and the conch are built, the Gateway is not. And "Without that gateway, nothing exists.
