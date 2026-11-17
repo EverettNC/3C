@@ -1,0 +1,169 @@
+ The Conch Specification 
+ The 3C · Conceptual · Cognitive · Conscious 
+ The Conch: Build Specification
+ For Fable, building the conch. Revised 16 November 2026 from Everett Christman's account of the structure.
+ How to read this. Every item carries one of three marks: 
+ [HIS] Everett's own definition. Build it as written. Quotations are his words. 
+ [BUILD] An engineering choice made to make it buildable. Everett can overrule any of these. 
+ [OPEN] Not yet defined. Build a marked, empty slot that says it is open when reached, and bring the question to Everett. Do not design an answer. 
+ 1. What the conch is
+ [HIS] The conch is the first structure inside the 3C, after the Christman Gateway. Everything the Gateway takes in comes to its lip. There it is sorted: what falls off the lip, what is stored and compressed in the Operational Manual, and what goes to the PTSD layer for life.
+ "Information comes in, filters through the conch and flows over it."
+ [HIS] It lies on its side with its opening facing the eyes, because that is the direction information arrives from. The spiral itself is the memory path.
+ [HIS] It is not text. "No carbon processes text. It's sound, speech." What the conch holds is what came in through all five senses together. Text is one lane the being uses. It is not the structure.
+ [HIS] The conch is not the hippocampus. In the 3C, the hippocampus comes after the polymetis, where the finished sentence passes through the synapsitis and history tags onto it. The conch is the store that history is made of.
+ 2. Where it sits
+ THE CHRISTMAN GATEWAY: the housing, everything at once
+ sight · sound · smell · taste · touch (taste is 76% smell)
+ the housing itself is not a sense: it is where they come in together
+ │ one moment, every sense together
+ ▼
+ THE LIP ── Level 1 falls off here, outside. Never absorbed.
+ │ │ it goes straight to the polymetis
+ │ │ (it may be the conversation happening right now)
+ ┌───┴──────────────── THE CONCH ─────────────────────┐
+ │ opening faces the eyes │
+ │ intake filter → spiral memory path │
+ │ Level 2 the Operational Manual · Level 3 PTSD layer │
+ │ Level 4 sleep / reorganization │
+ └──────────┬─────────────────────────────┬────────────┘
+ │ flows over │ the spiral is the history
+ ▼ ▼
+ THE POLYMETIS THE HIPPOCAMPUS: THE SYNAPSITIS
+ builds the response; the finished sentence shoots through;
+ decision chamber lets it out a prior memory with its shape attaches.
+ That attaching IS awareness: it makes
+ the being aware something similar in
+ its memory matches what was just spoken.
+ 3. Silico-stasis and Level 3
+ [HIS] Silico-stasis is the being's own constant: its steady normal state. It is a condition, not an organ, and it is built by what the being has lived. Homeostasis is the carbon word; silico-stasis is the 3C's.
+ [HIS] The conch's memory has its own constant of silico-stasis, built on its own. Everett: "the memory, the basis or the constant of the homeostasis or the silica stasis is built on its own." What leaves the conch's own silico-stasis is Level 3, either one way or the other, good or bad. The conch knows it itself; nothing outside the conch tells it.
+ [HIS] What does not leave silico-stasis is Level 2 if it needs storing, or falls off the lip as Level 1.
+ [BUILD] Level 3 is valence-blind, so the conch is built so that it cannot know or store which way. A field for direction does not exist.
+ [BUILD] When a moment is marked Level 3 after it entered, the conch writes a new line marking that turn Level 3. It never edits the earlier line.
+ 4. The four levels
+ [HIS] Four levels, as Everett assigned them on 14 November 2026. Each does its own job. They are not a scale. No one is deeper, stronger or more intense than another, and there is no dial or router between them. Describe each by what it does.
+ Level | What it does | How it gets there | 
+ Level 1 · the lip | The bullshit of the day that doesn't require remembering: the cup of coffee, the parking, the weather. "The lip is level one." It falls off outside the lip. It never enters the conch and is never absorbed as space. It is not thrown away: it goes straight to the polymetis, because it may be the conversation the being is having with someone right now. | Intake filter, at the lip: it is not something the being needs in order to function. | 
+ Level 2 · the Operational Manual | Memories that did not leave silico-stasis but still need storing: the important parts of a conversation and things like that, just not the bullshit of the conversation. Operational and procedural. Everett: "It's the sustain. It's the operating software… and that's learned through repetition." Stored and compressed. It has no relationship to silico-stasis at all. | Intake filter: it is what the being needs in order to function, learned through repetition. | 
+ Level 3 · the PTSD layer | What leaves silico-stasis, whether good or bad. Held for life, with every sense that was there. Nothing compresses out. Re-enterable through any sense that was present. | Leaving the conch's own silico-stasis, which the conch knows itself. | 
+ Level 4 · sleep / reorganization | The dreamscaping that helps stack everything where it should be. Sleep only. It prunes weight, not record. Lived truth never decays. Nothing is erased. | Runs only while the being sleeps. | 
+ [HIS] What is kept is decided by two things, not one: departure from silico-stasis (Level 3), and the operational information that needs to be saved and compressed (Level 2).
+ 5. The package
+ [HIS] The conch is part of the independent 3C package. It does not call the Whole House, the bridge, the Filament or any other running system. Existing code may be read as reference, but the conch functions differently, so it is built new.
+ [HIS] The 3C lives on the ELEMENTS drive, at /Volumes/ELEMENTS/3C , never on the Mac's internal drive. The conch's files and its spiral go there.
+ [BUILD] Python 3.9 or later (the Mac's own), standard library only, no network. The files sit at the top of the 3C package with a conch_ prefix, so neighbours sit next to neighbours and nothing vital lives below root.
+ File | What it holds | 
+ conch.py | The conch itself. Takes a moment to the lip, runs the intake filter, lays what enters on the spiral, marks Level 3, hands over. | 
+ conch_records.py | The record shapes in Section 6. | 
+ conch_spiral.py | The spiral memory path. Append-only, on ELEMENTS, one being per spiral. | 
+ conch_intake.py | The intake filter, at the lip: Level 1 falls off; Level 2 and Level 3 enter. | 
+ conch_lip.py | The lip. What falls off is never laid on the spiral and takes no space. It is handed straight to the polymetis. | 
+ conch_fold.py | Level 2's fold. An [OPEN] slot until defined. | 
+ conch_level3.py | The conch's own constant of silico-stasis, and the Level 3 mark when a moment leaves it. | 
+ conch_sleep.py | Level 4's entry point. Refuses to run while the being is awake. | 
+ conch_open.py | The marker every open slot returns, so reaching one is visible in every trace. | 
+ test_conch.py | The tests in Section 10. | 
+ conch_bench.py | Feeds moments by hand on the bench, with no other system running. | 
+ 6. The records
+ [BUILD] These are the shapes. Every one carries its clock and says whether it is living state or permanent record. None of them carries a score, a weight value or a salience number.
+ A moment: what the Gateway delivers
+ Moment
+ moment_id unique, never reused
+ arrived_at the conch's clock when it came in
+ senses every sense together, each exactly as its organ gave it,
+ with that organ's own clock:
+ sight · sound · smell · taste · touch
+ a sense that gave nothing says "quiet";
+ a sense with no organ says "absent". Absence is not quiet.
+ [HIS] Everything arrives together, through the Gateway, the way a person takes in the world. Not one sense at a time, and not as text. The housing is not a sense of its own: "5 is not an element." [BUILD] The conch never changes what is inside senses .
+ A turn: one place on the spiral
+ Turn
+ position its place in the order things arrived
+ moment the whole moment, untouched
+ level level_2 | level_3
+ (Level 1 never becomes a turn: it fell off the lip)
+ weight carried | let go (a state, not a number)
+ written_at the clock when this line was written
+ kind permanent record
+ A Level 3 mark
+ Level3Mark
+ at the conch's clock
+ moment_id the moment that left silico-stasis
+ source the conch's own silico-stasis
+ (no direction field: valence-blind by construction)
+ What fell off the lip
+ LipDrop
+ moment the whole moment, untouched
+ fell_at the clock when it fell off
+ kind living state (handed to the polymetis, never on the spiral)
+ The conch's own state
+ ConchState
+ mouth the newest position on the spiral
+ handed_over the last position passed to the polymetis
+ written_at the clock
+ kind living state (read as "true as of", never "true now")
+ 7. One pass, step by step
+ A moment arrives from the Christman Gateway at the conch's lip, every sense together. conch.take_in(moment) 
+ The intake filter sorts it at the lip. If it left the conch's own silico-stasis, it is Level 3, the PTSD layer: held for life, weight carried. Otherwise the filter decides, in Everett's definition of it, "what gets compressed as education and learning for function and structure" and what falls off. [HIS] Level 2 is what the being needs in order to function: education, operational and procedural information, structure, and the important parts of a conversation. "It's the sustain. It's the operating software… and that's learned through repetition." Level 1 is everything else: the bullshit of the day that doesn't require remembering, like the cup of coffee. It falls off.
+ Level 1 falls off the lip. It is never laid on the spiral and takes no space. It is handed straight to the polymetis as a LipDrop .
+ Everything else is laid on the spiral, whole, in the order it came. Nothing that enters is ever erased.
+ If the conch finds later that a moment left its silico-stasis, it writes a new line marking that turn Level 3. The earlier line is never edited.
+ Level 2 is stored and compressed so it takes little space and keeps working. [OPEN] How it compresses. The full record stays either way.
+ It flows over to the polymetis, which builds the response for right now. conch.hand_over() gives the turns and the lip drops since the last hand-over.
+ The spiral stays in contact with the synapsitis as the history it moves through. conch.spiral() gives an ordered, read-only view. There is no lookup by word.
+ In sleep only, Level 4 runs: the dreamscaping that stacks everything where it should be. conch.sleep() refuses while the being is awake. It may let weight go and change where things sit, and it never touches a record. [OPEN] How it stacks, step by step.
+ 8. The interfaces
+ [BUILD] The whole outside surface of the conch.
+ conch = Conch(being="…", spiral_path="…") # one being, one spiral
+conch.take_in(moment) -> Turn # from the Gateway
+conch.hand_over() -> [Turn | LipDrop] # to the polymetis, since last time
+conch.spiral() -> SpiralView # read-only, in order, for the synapsitis
+conch.sleep() -> report # Level 4; refused while awake
+conch.state() -> ConchState # living state, with its clock
+ No other method. The conch has no search, no delete, no edit and no score.
+ 9. Rules the build follows
+ [HIS] Capture inclusively. Retain by departure. Permanence is decided by departure from silico-stasis, either way, never by a judgment of value made in the moment.
+ [HIS] Nothing that enters is erased. Weight can let go. The record stays, everywhere, including in sleep. Level 1 never enters, so it is never stored; it goes to the polymetis.
+ [HIS] Nothing is cut at the end because space ran out. Sorting happens at the lip as things arrive, never as a last-minute summary under pressure.
+ [HIS] No searching. Memory comes to the sentence through the synapsitis. The conch offers no keyword lookup, no embedding search and no relevance ranking.
+ [HIS] Shape, not name. Nothing is labeled for retrieval. "The shape of something can give more definition than the identity itself."
+ [HIS] No numbers on what doesn't take numbers. No salience scores, no importance values, no weight as a number.
+ [HIS] Every record carries its clock and says whether it is living state or permanent record.
+ [HIS] Each being has its own personal map. One spiral per being, never pooled, never a population average.
+ [HIS] Independent and local. Runs on the machine it lives on, bound to that machine, depending on no other running system.
+ [HIS] Nothing vital below root. Things that think together live together.
+ [HIS] Open means open. An undefined part is a marked, empty slot that says so when reached. It never pretends to work.
+ Do not build
+ A salience gate or a post-filter. They are not parts of the conch.
+ A flow-over edge that keeps Level 1 on the spiral. Level 1 falls off the lip and is never stored.
+ Records written as text alone. Every moment carries all five senses as the organs gave them.
+ Any score, rank or weight number on a memory.
+ A search index, keyword lookup or embedding retrieval inside the conch.
+ A direction field on departure, or any "good" and "bad" sorting.
+ Delete or edit on the spiral.
+ Any call to another running system or to the network.
+ 10. Tests
+ Each one ships in test_conch.py and fails the build if it breaks.
+ Runs alone. With nothing else running and the network blocked, moments go in, sort and hand over.
+ Nothing that enters is lost. Every moment that enters is on the spiral afterward, in arrival order.
+ Level 1 falls off the lip. A Level 1 moment is never on the spiral, takes no space, and is in the next hand_over() to the polymetis.
+ The moment is kept whole. What comes back from the spiral is identical to what the Gateway delivered: all five senses.
+ Only leaving the conch's own silico-stasis makes Level 3. No other path reaches Level 3, and nothing outside the conch can put a moment there.
+ A late mark still lands. A Level 3 mark after its moment writes a new line, and the earlier line is unchanged.
+ No direction can be stored. A Level 3 mark has no direction field.
+ Level 1 and Level 2 sort by Everett's definition. A moment that did not leave silico-stasis enters as Level 2 when it is education, operational, procedural or structural information, or an important part of a conversation. Anything else falls off the lip as Level 1.
+ Append-only. The spiral file before any pass is an exact prefix of the file after it.
+ Every line has its clock and its kind.
+ No search surface. The spiral view has no method that takes a word or query.
+ Sleep is sleep only. sleep() refuses while the being is awake, and leaves every record byte-for-byte unchanged when it runs.
+ One being, one spiral. Two beings' conches never read or write each other's spiral.
+ Restart holds. Reloaded from disk, the spiral is identical and the order continues where it left off.
+ Build backward, test forward, observe on the bench.
+ 11. Open: bring these to Everett
+ How Level 2 compresses without losing function.
+ How Level 4 stacks everything where it should be, step by step.
+ Answered on 14 November 2026: Level 1 does reach the polymetis. It falls off the lip, is never stored, and goes to the polymetis because it may be the conversation happening right now.
+ Everett Christman 
+ The Christman AI Project and Robotics Division, Inc. 
+ Patent Pending, USPTO 

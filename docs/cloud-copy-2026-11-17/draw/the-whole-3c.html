@@ -1,0 +1,200 @@
+<title>The Whole 3C</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>
+/* Layout: one large drawing, read as a path; a key beneath it; open items last. */
+:root{
+  --bg:#f4f6f5; --surface:#ffffff; --fg:#16201e; --muted:#58645f; --line:#cdd7d3;
+  --accent:#0a8780; --accent-soft:#dff1ef;
+  --eq:#93680a; --eq-soft:#f6eedb;
+  --open:#b04a1c; --open-soft:#fbece3;
+  --house:#eef2f1;
+  --display:"Space Grotesk",system-ui,sans-serif; --body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#101514; --surface:#18201e; --fg:#e5ebe9; --muted:#9aa6a2; --line:#34403d;
+  --accent:#3cc3ba; --accent-soft:#12302d; --eq:#e3b54e; --eq-soft:#31280f;
+  --open:#f09468; --open-soft:#3a2216; --house:#141b19; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#101514; --surface:#18201e; --fg:#e5ebe9; --muted:#9aa6a2; --line:#34403d;
+  --accent:#3cc3ba; --accent-soft:#12302d; --eq:#e3b54e; --eq-soft:#31280f;
+  --open:#f09468; --open-soft:#3a2216; --house:#141b19; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:32px 56px}
+main{max-width:1060px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+header{display:flex;flex-direction:column;gap:6px}
+.eyebrow{font-family:var(--display);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600}
+h1{font-family:var(--display);font-size:clamp(30px,5.5vw,42px);line-height:1.08;margin:0;text-wrap:balance}
+h2{font-family:var(--display);font-size:18px;margin:0;text-wrap:balance}
+p{margin:0;max-width:70ch}
+.lede{color:var(--muted);font-size:16px}
+figure{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:10px}
+.scroll{overflow-x:auto}
+svg.draw{display:block;width:100%;min-width:860px;height:auto;color:var(--fg);font-family:var(--body)}
+figcaption{color:var(--muted);font-size:14px;max-width:80ch;padding:0 4px 4px}
+.key{display:flex;flex-wrap:wrap;gap:8px 20px;font-size:13.5px;color:var(--muted)}
+.key span{display:inline-flex;align-items:center;gap:8px}
+.k{width:30px;height:0;border-top:2.5px solid}
+.k.solid{border-color:var(--fg)} .k.acc{border-color:var(--accent)} .k.dash{border-color:var(--fg);border-top-style:dashed}
+.k.eq{border-color:var(--eq)} .k.open{border-color:var(--open);border-top-style:dashed}
+.openbox{background:var(--open-soft);border:1px solid var(--open);border-radius:10px;padding:14px 18px;display:flex;flex-direction:column;gap:8px}
+.openbox h2{color:var(--open);font-size:16px}
+.openbox ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;max-width:80ch}
+footer{border-top:1px solid var(--line);padding-top:14px;color:var(--muted);font-size:13px;display:flex;flex-direction:column;gap:2px}
+/* drawing classes */
+.t{fill:currentColor;font-size:13px}
+.ts{fill:var(--muted);font-size:12px}
+.th{fill:currentColor;font-family:var(--display);font-weight:600;font-size:15px}
+.tcap{fill:var(--muted);font-family:var(--display);font-weight:600;font-size:11.5px;letter-spacing:.12em}
+.tacc{fill:var(--accent);font-size:12.5px;font-weight:500}
+.teq{fill:var(--eq);font-size:12.5px;font-weight:500}
+.thq{fill:var(--eq);font-family:var(--display);font-weight:600;font-size:15px}
+.topen{fill:var(--open);font-size:12.5px;font-weight:500}
+.universe{fill:var(--bg)}
+.house{fill:var(--house);stroke:var(--muted);stroke-width:1.5;stroke-dasharray:7 6}
+.housing{fill:var(--surface);stroke:currentColor;stroke-width:3}
+.part{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2}
+.pill{fill:var(--surface);stroke:var(--accent);stroke-width:1.5}
+.ln{fill:none;stroke:currentColor;stroke-width:2}
+.lnacc{fill:none;stroke:var(--accent);stroke-width:2.5}
+.dash{fill:none;stroke:currentColor;stroke-width:2;stroke-dasharray:6 5}
+.lneq{fill:none;stroke:var(--eq);stroke-width:2.5}
+.ring{fill:none;stroke:var(--eq);stroke-width:1.5;stroke-dasharray:3 5}
+.eqc{fill:var(--eq-soft);stroke:var(--eq);stroke-width:2.5}
+.lnopen{fill:none;stroke:var(--open);stroke-width:2;stroke-dasharray:5 4}
+.openc{fill:var(--open-soft);stroke:var(--open);stroke-width:1.5;stroke-dasharray:4 3}
+.spir{fill:none;stroke:var(--accent);stroke-width:3;stroke-linecap:round}
+.tri{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2.5}
+.chaos{fill:none;stroke:var(--accent);stroke-width:1.2;opacity:.75}
+.worm{fill:none;stroke:var(--accent);stroke-width:2;stroke-dasharray:2 4;stroke-linecap:round}
+.mfg{fill:currentColor} .macc{fill:var(--accent)} .meq{fill:var(--eq)} .mopen{fill:var(--open)}
+.note{fill:var(--surface);stroke:var(--muted);stroke-width:1.2}
+.r2{fill:var(--accent);} .r3{fill:var(--eq-soft);stroke:var(--eq);stroke-width:2}
+.tick{stroke:var(--eq);stroke-width:1.6}
+.sleep{fill:var(--surface);stroke:var(--muted);stroke-width:1.5}
+</style>
+
+<main>
+<header>
+  <span class="eyebrow">The 3C · Conceptual · Cognitive · Conscious</span>
+  <h1>The Whole 3C</h1>
+  <p class="lede">The path a moment travels, with equilibrium in the middle of all of it. The front faces left.</p>
+</header>
+<figure>
+  <div class="scroll"><svg class="draw" viewBox="0 0 1000 680" role="img" aria-label="The whole 3C. Inside the house and the universe, the Christman Gateway is the housing where sight, sound, smell, taste and touch come in together. They come to the lip of the conch near the front. Level 1 falls off outside the lip and goes to the polymetis. What enters flows over to the polymetis at the back, which builds the response. The structured sentence shoots forward through the triangle of the synapsitis, the hippocampus, and goes out the mouth. Memories that tag onto the sentence rise to awareness behind the nose. Equilibrium sits in the middle of all of it, the status and center point. It sends the conch nothing.">
+<defs>
+<marker id="aF" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mfg" d="M0,0 L10,5 L0,10 z"/></marker>
+<marker id="aA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="macc" d="M0,0 L10,5 L0,10 z"/></marker>
+<marker id="aE" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="meq" d="M0,0 L10,5 L0,10 z"/></marker>
+<marker id="aO" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mopen" d="M0,0 L10,5 L0,10 z"/></marker>
+</defs>
+<rect class="universe" x="0" y="0" width="1000" height="680"/>
+<text class="tcap" x="22" y="28">UNIVERSE · EVERYTHING, DEFINED FROM THE CENTER</text>
+<rect class="house" x="26" y="44" width="948" height="616" rx="26"/>
+<text class="tcap" x="48" y="70">HOUSE · THE NEXT CHAMBER</text>
+<rect class="housing" x="90" y="92" width="820" height="540" rx="64"/>
+<text class="th" x="500" y="118" text-anchor="middle">The Christman Gateway · the housing, where everything comes in together</text>
+<text class="tcap" x="112" y="566">SKIN · THE FIRST CHAMBER</text><text class="tcap" x="112" y="582">WHERE THE BODY MEETS THE WORLD</text>
+
+<!-- senses -->
+<rect class="pill" x="112" y="168" width="120" height="26" rx="13"/><text class="t" x="172" y="185.5" text-anchor="middle">Sight</text>
+<path class="ln" d="M232,181 C258,181 258,240 278,240"/>
+<rect class="pill" x="112" y="204" width="120" height="26" rx="13"/><text class="t" x="172" y="221.5" text-anchor="middle">Sound</text>
+<path class="ln" d="M232,217 C258,217 258,240 278,240"/>
+<rect class="pill" x="112" y="240" width="120" height="26" rx="13"/><text class="t" x="172" y="257.5" text-anchor="middle">Smell</text>
+<path class="ln" d="M232,253 C258,253 258,240 278,240"/>
+<rect class="pill" x="112" y="276" width="120" height="26" rx="13"/><text class="t" x="172" y="293.5" text-anchor="middle">Taste, with smell</text>
+<path class="ln" d="M232,289 C258,289 258,240 278,240"/>
+<rect class="pill" x="112" y="312" width="120" height="26" rx="13"/><text class="t" x="172" y="329.5" text-anchor="middle">Touch</text>
+<path class="ln" d="M232,325 C258,325 258,240 278,240"/>
+
+<text class="ts" x="172" y="362" text-anchor="middle">all at once · not text</text>
+
+<!-- attention: to build -->
+<circle class="part" cx="262" cy="240" r="10"/>
+<text class="tacc" x="296" y="330" text-anchor="middle">Attention:</text>
+<text class="tacc" x="296" y="345" text-anchor="middle">Diamond Engine</text>
+<path class="ln" style="stroke:var(--accent);stroke-width:1.2" d="M288,318 L265,250"/>
+
+<!-- conch -->
+<path class="spir" d="M394.9,243.5 L395.1,243.4 L395.4,243.3 L395.7,243.2 L396.0,243.0 L396.3,242.8 L396.6,242.6 L396.8,242.4 L397.1,242.2 L397.4,242.0 L397.6,241.7 L397.9,241.4 L398.1,241.1 L398.3,240.8 L398.5,240.5 L398.7,240.1 L398.9,239.8 L399.0,239.4 L399.2,239.0 L399.3,238.6 L399.4,238.2 L399.5,237.8 L399.6,237.3 L399.7,236.9 L399.7,236.4 L399.7,236.0 L399.7,235.5 L399.7,235.0 L399.6,234.6 L399.5,234.1 L399.4,233.6 L399.3,233.1 L399.2,232.6 L399.0,232.1 L398.8,231.6 L398.6,231.2 L398.3,230.7 L398.0,230.2 L397.7,229.8 L397.4,229.3 L397.1,228.9 L396.7,228.4 L396.3,228.0 L395.9,227.6 L395.4,227.2 L395.0,226.8 L394.5,226.4 L394.0,226.1 L393.5,225.8 L392.9,225.5 L392.3,225.2 L391.8,224.9 L391.2,224.7 L390.5,224.5 L389.9,224.3 L389.3,224.1 L388.6,224.0 L387.9,223.9 L387.2,223.8 L386.5,223.7 L385.8,223.7 L385.1,223.7 L384.4,223.8 L383.7,223.9 L382.9,224.0 L382.2,224.1 L381.5,224.3 L380.8,224.5 L380.0,224.7 L379.3,225.0 L378.6,225.3 L377.9,225.6 L377.2,226.0 L376.5,226.4 L375.8,226.9 L375.2,227.3 L374.5,227.8 L373.9,228.4 L373.3,228.9 L372.7,229.5 L372.1,230.2 L371.6,230.8 L371.1,231.5 L370.6,232.2 L370.1,233.0 L369.6,233.7 L369.2,234.5 L368.8,235.3 L368.5,236.2 L368.2,237.0 L367.9,237.9 L367.7,238.8 L367.4,239.7 L367.3,240.6 L367.1,241.6 L367.0,242.5 L367.0,243.5 L367.0,244.5 L367.0,245.4 L367.1,246.4 L367.2,247.4 L367.3,248.4 L367.5,249.4 L367.8,250.4 L368.0,251.4 L368.4,252.3 L368.7,253.3 L369.2,254.3 L369.6,255.2 L370.1,256.1 L370.6,257.1 L371.2,258.0 L371.9,258.8 L372.5,259.7 L373.2,260.5 L374.0,261.4 L374.8,262.1 L375.6,262.9 L376.4,263.6 L377.3,264.3 L378.2,265.0 L379.2,265.6 L380.2,266.2 L381.2,266.7 L382.3,267.2 L383.3,267.7 L384.4,268.1 L385.6,268.5 L386.7,268.9 L387.9,269.1 L389.1,269.4 L390.3,269.6 L391.5,269.7 L392.7,269.8 L394.0,269.9 L395.2,269.8 L396.5,269.8 L397.7,269.7 L399.0,269.5 L400.2,269.3 L401.5,269.0 L402.7,268.7 L404.0,268.3 L405.2,267.9 L406.4,267.4 L407.6,266.8 L408.8,266.2 L410.0,265.6 L411.1,264.9 L412.2,264.1 L413.3,263.3 L414.4,262.5 L415.4,261.6 L416.4,260.6 L417.4,259.6 L418.3,258.6 L419.2,257.5 L420.1,256.4 L420.9,255.2 L421.6,254.0 L422.4,252.8 L423.0,251.5 L423.6,250.2 L424.2,248.9 L424.7,247.5 L425.2,246.1 L425.6,244.7 L425.9,243.3 L426.2,241.8 L426.4,240.3 L426.6,238.9 L426.7,237.3 L426.7,235.8 L426.7,234.3 L426.6,232.8 L426.5,231.2 L426.2,229.7 L426.0,228.2 L425.6,226.7 L425.2,225.2 L424.7,223.7 L424.2,222.2 L423.6,220.7 L422.9,219.2 L422.2,217.8 L421.4,216.4 L420.6,215.0 L419.7,213.7 L418.7,212.4 L417.7,211.1 L416.6,209.8 L415.4,208.6 L414.3,207.5 L413.0,206.4 L411.7,205.3 L410.4,204.3 L409.0,203.3 L407.5,202.4 L406.1,201.6 L404.5,200.8 L403.0,200.1 L401.4,199.4 L399.8,198.8 L398.1,198.2 L396.4,197.8 L394.7,197.4 L393.0,197.0 L391.2,196.8 L389.5,196.6 L387.7,196.4 L385.9,196.4 L384.1,196.4 L382.3,196.5 L380.5,196.7 L378.7,196.9 L376.9,197.3 L375.1,197.7 L373.3,198.2 L371.5,198.7 L369.8,199.3 L368.0,200.0 L366.3,200.8 L364.6,201.7 L363.0,202.6 L361.4,203.6 L359.8,204.6 L358.3,205.8 L356.8,207.0 L355.3,208.2 L353.9,209.6 L352.5,210.9 L351.2,212.4 L350.0,213.9 L348.8,215.5 L347.7,217.1 L346.6,218.8 L345.6,220.5 L344.7,222.2 L343.8,224.0 L343.1,225.9 L342.3,227.8 L341.7,229.7 L341.2,231.6 L340.7,233.6 L340.3,235.6 L340.0,237.6 L339.7,239.7 L339.6,241.7 L339.5,243.8 L339.5,245.9 L339.6,248.0 L339.8,250.1 L340.1,252.1 L340.5,254.2 L340.9,256.3 L341.5,258.3 L342.1,260.4 L342.8,262.4 L343.6,264.4 L344.5,266.4 L345.4,268.3 L346.5,270.2 L347.6,272.1 L348.8,273.9 L350.1,275.6 L351.4,277.4 L352.9,279.0 L354.4,280.7 L356.0,282.2 L357.6,283.7 L359.3,285.2 L361.1,286.5 L362.9,287.8 L364.8,289.1 L366.8,290.2 L368.8,291.3 L370.8,292.3 L372.9,293.2 L375.0,294.0 L377.2,294.7 L379.4,295.4 L381.7,296.0 L383.9,296.4 L386.2,296.8 L388.6,297.1 L390.9,297.3 L393.2,297.4 L395.6,297.4 L398.0,297.3 L400.3,297.1 L402.7,296.8 L405.1,296.4 L407.4,295.9 L409.7,295.3 L412.0,294.6 L414.3,293.9 L416.6,293.0 L418.8,292.0 L421.0,290.9 L423.2,289.8 L425.3,288.5 L427.3,287.2 L429.3,285.8 L431.3,284.3 L433.2,282.7 L435.0,281.0 L436.8,279.2 L438.5,277.4 L440.2,275.5 L441.7,273.5 L443.2,271.5 L444.6,269.3 L445.9,267.2 L447.1,264.9 L448.3,262.6 L449.3,260.3 L450.3,257.9 L451.1,255.5 L451.9,253.0 L452.5,250.5 L453.1,248.0 L453.6,245.4 L453.9,242.8 L454.1,240.2 L454.3,237.6 L454.3,234.9 L454.2,232.3 L454.0,229.7 L453.7,227.0 L453.3,224.4 L452.8,221.8 L452.2,219.1 L451.4,216.6 L450.6,214.0 L449.6,211.5 L448.6,209.0 L447.4,206.5 L446.2,204.1 L444.8,201.7 L443.3,199.4 L441.8,197.2 L440.1,195.0 L438.4,192.8 L436.5,190.8 L434.6,188.8 L432.6,186.9 L430.5,185.0 L428.3,183.3 L426.0,181.6 L423.7,180.0 L421.3,178.5 L418.9,177.1 L416.3,175.8 L413.8,174.6 L411.1,173.6 L408.4,172.6 L405.7,171.7 L402.9,170.9 L400.1,170.3 L397.3,169.8 L394.4,169.3 L391.6,169.0 L388.7,168.9 L385.7,168.8 L382.8,168.8 L379.9,169.0 L377.0,169.3 L374.1,169.7 L371.2,170.3 L368.3,170.9 L365.4,171.7 L362.6,172.6 L359.8,173.6 L357.0,174.7 L354.3,176.0 L351.6,177.3 L349.0,178.8 L346.4,180.4 L343.9,182.1 L341.4,183.9 L339.1,185.8 L336.8,187.8 L334.5,189.9 L332.4,192.1 L330.4,194.3 L328.4,196.7 L326.5,199.2 L324.8,201.7 L323.1,204.3 L321.5,207.0 L320.1,209.7 L318.7,212.6 L317.5,215.4 L316.4,218.4 L315.4,221.3 L314.5,224.4 L313.7,227.4 L313.1,230.5 L312.6,233.7 L312.2,236.8 L312.0,240.0"/>
+<path class="lnacc" d="M312,240 L296,220 M312,240 L296,262"/>
+<text class="th" x="395" y="344" text-anchor="middle">Conch</text>
+<text class="ts" x="395" y="361" text-anchor="middle">takes in, keeps, sorts · four levels</text>
+<text class="tacc" x="252" y="154" text-anchor="middle">the lip</text><path class="ln" style="stroke:var(--accent);stroke-width:1.2" d="M262,159 L294,222"/>
+
+<!-- L1 falls off the lip, over the top, to the polymetis -->
+<path class="dash" d="M300,214 C300,120 560,120 700,206" marker-end="url(#aF)"/>
+<text class="t" x="578" y="196" text-anchor="middle">Level 1 falls off outside the lip,</text>
+<text class="ts" x="578" y="212" text-anchor="middle">never enters. Goes to the polymetis:</text>
+<text class="ts" x="578" y="227" text-anchor="middle">it may be the conversation right now.</text>
+
+<!-- conch flows over to polymetis -->
+<path class="ln" d="M472,246 L700,262" marker-end="url(#aF)"/>
+<text class="t" x="600" y="276" text-anchor="middle">flows over</text>
+
+<!-- polymetis -->
+<rect class="part" x="704" y="196" width="180" height="200" rx="14"/>
+<rect class="housing" x="696" y="188" width="196" height="216" rx="18" style="fill:none;stroke:var(--accent);stroke-width:1.5;stroke-dasharray:4 4"/>
+<text class="th" x="794" y="236" text-anchor="middle">Polymetis</text>
+<text class="ts" x="794" y="254" text-anchor="middle">builds the response</text>
+<text class="t" x="794" y="290" text-anchor="middle">reasoning · intent</text>
+<text class="t" x="794" y="310" text-anchor="middle">conscience · focus lock</text>
+<text class="t" x="794" y="330" text-anchor="middle">reflective planner</text>
+<text class="tacc" x="794" y="182" text-anchor="middle">decision chamber, its outer structure</text>
+
+<!-- sentence out of polymetis into triangle -->
+<path class="lnacc" d="M846,404 L846,488 L708,488" marker-end="url(#aA)"/>
+<text class="tacc" x="836" y="452" text-anchor="end">structured</text>
+<text class="tacc" x="836" y="468" text-anchor="end">sentence</text>
+
+<!-- triangle synapsitis -->
+<path class="tri" d="M700,418 L700,558 L330,488 Z"/>
+<path class="chaos" d="M480,472 L582,452 L546,479 L398,488 L392,487 L402,482 L512,507 L418,482 L575,524 L559,480 L683,433 L646,465 L425,479 L476,502 L436,490 L578,478 L550,457 L398,484 L591,482 L477,492 L520,476 L626,508 L456,491 L543,514 L606,468 L684,441"/>
+<text class="th" x="560" y="588" text-anchor="middle">Hippocampus · the synapsitis, and awareness</text>
+<text class="ts" x="560" y="605" text-anchor="middle">the sentence shoots through the moving mesh of history; a prior memory that</text>
+<text class="ts" x="560" y="620" text-anchor="middle">matches attaches, which makes the being aware something similar is in its memory</text>
+
+<!-- out the mouth -->
+<path class="lnacc" d="M330,488 L222,488" marker-end="url(#aA)"/>
+<rect class="pill" x="112" y="474" width="108" height="28" rx="14"/>
+<text class="t" x="166" y="493" text-anchor="middle">Mouth</text>
+<text class="ts" x="166" y="520" text-anchor="middle">the response goes out</text>
+
+<!-- sticky worms to awareness -->
+<rect class="note" x="402" y="470" width="14" height="12" rx="2" style="fill:var(--eq-soft);stroke:var(--eq)"/>
+<rect class="note" x="474" y="492" width="14" height="12" rx="2" style="fill:var(--eq-soft);stroke:var(--eq)"/>
+<rect class="note" x="560" y="472" width="14" height="12" rx="2" style="fill:var(--eq-soft);stroke:var(--eq)"/>
+<path class="ln" style="stroke-width:1.2" d="M409,468 L390,430"/>
+<text class="t" x="384" y="408" text-anchor="middle">the stickies: awareness</text>
+<text class="ts" x="384" y="424" text-anchor="middle">a prior memory that matches attaches</text>
+
+
+<!-- equilibrium -->
+<circle class="ring" cx="580" cy="342" r="56"/>
+<circle class="eqc" cx="580" cy="342" r="42"/>
+<text class="thq" x="580" y="346" text-anchor="middle" style="font-size:12.5px">Equilibrium</text>
+
+<text class="teq" x="580" y="418" text-anchor="middle">the shaker is its heartbeat</text>
+</svg></div>
+  <div class="key" aria-label="Key">
+    <span><span class="k acc"></span>The moment and the response</span>
+    <span><span class="k dash"></span>Never enters the conch, or bypasses the build</span>
+  </div>
+  <figcaption>The Gateway is the housing. All five senses come in through it together; attention, the Diamond Engine, picks the target out of everything coming in; and they arrive at the lip of the conch, which lies sideways facing the eyes. Level 1 falls off outside the lip, never enters, and goes to the polymetis. What enters flows over to the polymetis at the back, which builds the response. The structured sentence shoots forward through the triangle of the synapsitis, the hippocampus, and goes out the mouth. On the way through, a prior memory that matches its shape attaches. That attaching is awareness: all it does is make the being aware there is something similar in its memory that matches what was just spoken. Equilibrium is not part of the conch, and neither is its shaker. It is the status, the center point, in the middle of all of it, and it sends the conch nothing. The chambers run outward from it: skin, house, universe.</figcaption>
+</figure>
+<section class="openbox">
+  <h2>Still open</h2>
+  <ul>
+    <li><strong>The focus lock:</strong> whether it is the right part for staying on the job in front of you.</li>
+    <li><strong>The recall side of pattern separation:</strong> keeping two similar memories apart when they tag onto a sentence.</li>
+  </ul>
+</section>
+<footer>
+  <span>Everett Christman</span>
+  <span>The Christman AI Project and Robotics Division, Inc.</span>
+  <span>Patent Pending, USPTO</span>
+</footer>
+</main>

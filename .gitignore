@@ -4,3 +4,5 @@ __pycache__/
 bench/
 test_spirals/
 *.writing
+docs/xfer/
+docs/cloud.tgz
