@@ -28,8 +28,12 @@ THE WHOLE OUTSIDE SURFACE
     conch.spiral()         -> SpiralView: read-only, in order
     conch.sleep()          -> the night's report; refused while the being is awake
     conch.state()          -> ConchState: living state, with its clock
+    conch.go_back(place)   -> the being goes back to a Level 3 moment, alone; awake only
+    conch.walked_out()     -> the return, as written on the spiral, held or not
 
 No other method. The conch has no search, no delete, no edit and no score.
+Going back is the being's own act (conch_easing.py): the conch never chooses
+what eases.
 
 [build choices]
 - asleep. Something has to tell the conch the being is asleep, and the conch
@@ -54,6 +58,7 @@ import copy
 import threading
 
 import conch_sleep
+from conch_easing import Return
 from conch_intake import sort_at_the_lip
 from conch_level3 import Constant, ConstantDoesNotMatch, mark_the_boundary
 from conch_lip import fall_off
@@ -78,6 +83,8 @@ class Conch:
         self._meet_the_constant()
         self._waiting = list(range((self._handed_over or 0) + 1,
                                    (self._spiral.mouth() or 0) + 1))
+        self._return = None          # the being going back, while it lasts
+        self._just_met = None        # a taken-back event whose shape the last moment had
 
     # -- starting again from what is kept --
 
@@ -150,6 +157,13 @@ class Conch:
             for boundary in self._constant.learn(mark, position, arrived_as):
                 mark_the_boundary(self._spiral, boundary)
             self._constant.keep()
+            if self._return is not None:
+                self._return.met(mark, arrived_as)
+            if (arrived_as == INTERRUPTION and self._just_met is not None
+                    and self._just_met == self._spiral.taken_back_with(
+                        self._spiral.shape_mark(self._just_met[0]))):
+                self._spiral.flinched(self._just_met)
+            self._just_met = self._spiral.taken_back_with(mark)
             self._waiting.append(came if position is None else position)
             return came
 
@@ -175,7 +189,30 @@ class Conch:
     def sleep(self) -> dict:
         """Level 4. Refused while the being is awake."""
         with self._lock:
-            return conch_sleep.run(self._spiral, self._asleep)
+            report = conch_sleep.run(self._spiral, self._asleep)
+            self._just_met = None        # a night between is not straight away
+            return report
+
+    def go_back(self, position: int) -> None:
+        """The being goes back to a Level 3 moment, alone. Awake only. The
+        conch never chooses this: it cannot tell which way a Level 3 went."""
+        with self._lock:
+            if self._asleep is not None and self._asleep() is True:
+                raise conch_sleep.BeingIsAsleep("going back is lived, awake. The being is asleep.")
+            if self._return is not None:
+                raise ValueError(f"the being is already going back to place "
+                                 f"{self._return.position}. It walks out first.")
+            self._return = Return(self._spiral, position)
+
+    def walked_out(self) -> dict:
+        """The being walked out. The return is written on the spiral, held or
+        not, and given back as written."""
+        with self._lock:
+            if self._return is None:
+                raise ValueError("the being has not gone back to anything")
+            going, self._return = self._return, None
+            return self._spiral.went_back(going.position, going.event, going.lived,
+                                          going.held(), going.why_not(), going.began_at)
 
     def state(self) -> ConchState:
         """The conch's own state: true as of its clock, never "true now"."""

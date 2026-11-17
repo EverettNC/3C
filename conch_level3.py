@@ -95,17 +95,10 @@ be kept.
 
 from __future__ import annotations
 
-from conch_open import Open
 from conch_records import BOUNDARY_EVENT, FLOOR_EVENT, INTERRUPTION, LEVEL_3, LIVING, now
 from conch_spiral import read_beside, write_beside
 
 ONCE, AGAIN = "once", "again"
-
-EASING = Open(
-    "easing what a Level 3 moment is tied to, in sleep",
-    "Everett: what 'regulation strong enough' is measured by in a 3C being. The record itself "
-    "never eases.")
-
 
 class ConstantDoesNotMatch(RuntimeError):
     """The constant kept beside the spiral is not this being's, or is ahead of the spiral."""

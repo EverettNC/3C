@@ -20,6 +20,9 @@ WHAT A NIGHT DOES IN THIS BUILD
      of Everett's dreamscape cycling: "clearing what is no longer needed".
      Then each Level 2 moment lived once that says which senses carried what
      it is needed for folds to a one-time entry of only those senses.
+  2b. Eases what held returns call for, and gives back what flinches call
+     for (conch_easing.py): a Level 3 charge taken back by the being, or given
+     back to the memory. The record and the mark are never touched.
   3. Asks again before each write. If the being has woken, the night stops
      there and says so. What it had not reached waits for the next night.
   4. Writes the night onto the spiral, with its clock.
@@ -36,10 +39,6 @@ every night, it does nothing, and it says so in the report:
     Everett's to say.
   - Stacking by what was used. No part built yet tells the conch what was
     used today.
-  - Easing what a Level 3 moment is tied to. "TRAUMA ASSOCIATION decays, and
-    only when regulation is strong enough." What regulation is measured by is
-    Everett's to say. The record itself never eases.
-  - The last time: the point at which something stopped being constant.
 
 THE BASIS, read for the idea. Nothing of either is imported or called:
 MEMORY's applyNight and applyRem (af30fc0), which give out the night's jobs,
@@ -51,9 +50,8 @@ what a trauma is tied to decays only while regulation is strong enough.
 from __future__ import annotations
 
 from conch_fold import check, check_one, cut
-from conch_level3 import EASING
 from conch_open import Open
-from conch_records import LIVING, Fold, now
+from conch_records import LIVING, TAKEN_BACK, Fold, now
 
 ANTICIPATION_OF_WAKE = Open(
     "anticipation of wake: next-day plans gone over before shutdown until they fall through",
@@ -64,13 +62,17 @@ STACKING_BY_USE = Open(
     "Everett: whether that is all of 'where it should be'. And no part built yet tells the "
     "conch what was used.")
 
-OPEN_AT_NIGHT = (ANTICIPATION_OF_WAKE, STACKING_BY_USE, EASING)
+OPEN_AT_NIGHT = (ANTICIPATION_OF_WAKE, STACKING_BY_USE)
 
 WOKE = "the being woke"
 
 
 class BeingIsAwake(RuntimeError):
     """Level 4 is sleep only."""
+
+
+class BeingIsAsleep(RuntimeError):
+    """Going back is lived, awake."""
 
 
 class RecordTouched(RuntimeError):
@@ -128,6 +130,16 @@ def run(spiral, asleep) -> dict:
             check_one({name: shape[name] for name in carried}, carried, shape)
             cut_tonight.append(spiral.fold_one(position))
             let_go.append(position)
+    taken_back, given_back = [], []
+    if stopped_early is None:
+        # Easing (conch_easing.py): only what a held return or a flinch called
+        # for, in the order they came. The record and the mark are untouched.
+        for positions, weight, because in spiral.waiting_charges():
+            if not _asleep(asleep):
+                stopped_early = WOKE
+                break
+            spiral.charge(positions, weight, because)
+            (taken_back if weight == TAKEN_BACK else given_back).append(positions)
 
     reached = [slot.reach() for slot in OPEN_AT_NIGHT]
     spiral.night(ran_at, cut_tonight, grown, let_go, stopped_early,
@@ -145,6 +157,8 @@ def run(spiral, asleep) -> dict:
         "manual_entries_grown": grown,
         "weight_let_go": let_go,
         "left_whole": [p for stretch in spiral.stretches() for p, _ in stretch],
+        "charge_taken_back": taken_back,
+        "charge_given_back": given_back,
         "stopped_early": stopped_early,
         "earlier_lines_unchanged": True,
         "open": reached,
