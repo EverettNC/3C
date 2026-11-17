@@ -20,9 +20,10 @@ Fable 5.2 writes here at every step. Times are this Mac's clock (Eastern).
   every file checked by fingerprint. The cloud workspace holds no 3C work that is not
   also here. docs/xfer/ and docs/cloud.tgz are the transfer scraps; not saved in git,
   and removing them is Everett's word.
-- Not done yet: the carbon-to-3C map and the conch drawing still say Level 2 and
-  Level 4 are open; both are to be brought up to the build and written into docs/.
-  Everett has not yet ruled on the build choices and limits below.
+- 09:58: map v25 at docs/carbon-and-the-3c.html. 10:01: the conch drawing v5 and the
+  whole-3C drawing v7 at docs/draw/ (made by build.py there). Both show what was built,
+  which file holds it, and the five open slots. Every file matches the published page.
+- Everett has not yet ruled on the build choices and limits below.
 
 How it got here: the conch was written in Fable's cloud workspace between 02:06 and
 02:21 and had not been written to this drive. Everett, 02:25: "It needs to be written
