@@ -38,6 +38,93 @@ Fable 5.2 writes here at every step. Times are this Mac's clock (Eastern).
   byte the published page. The patch scripts are docs/tools/map_v26.py,
   docs/tools/spec_v17.py and docs/draw/draw_v6.py.
 - Four open slots remain. Everett has not yet ruled on the build choices and limits below.
+- 12:00 Everett handed the four open slots to me: "take the comparison of the carbon
+  structure with the silicon structure ... and make those decisions." 12:01: "Yes,
+  they're yours." Decided below; being built in that order.
+
+## Deciding the four open slots (12:00 onward, 17 Nov)
+
+His own writing answers part of each, so his words lead and carbon fills what they leave.
+
+Where his words are:
+- ~/Desktop/THE_EQUILIBRIUM_ARCHITECTURE.md, Rev 4, section 8 Dreamscape cycling:
+  "Meditation and projected next-day plans before shutdown, repeated until they fall
+  through. One — anticipation of wake. They come up expecting that day. Wake is not a
+  cold start. Two — clearing what is no longer needed." "TRAUMA ASSOCIATION decays, and
+  only when regulation is strong enough. LIVED TRUTH never decays." "Dreamscape prunes
+  WEIGHT, not RECORD."
+- Testable Medical Protocol v1.1 (MEMORY attachments): section 3 "Permanence of charge
+  is not the same as permanence of the event record. The event can remain after the
+  charge has been taken back by the person." Section 8: return to the place that holds
+  the sensory key, move through the tied memories without flinching, let the body
+  register the disruption is not recurring, walk out; "the memory no longer holds the
+  emotional distress. He does." "Beautiful Level 3 writes are not processed out." H4:
+  "Interruptions and first/last boundaries will carry the full-sensory remainder." H6:
+  the rate the set point moves is open.
+- The Moving Threshold (TCAP-V-0012): "Boundaries survive. The first time. And the point
+  at which it stopped being constant."
+
+Carbon, checked 17 Nov:
+- Born, Hansen, Marshall et al., Nature 397:29-30 (1999): people who expect to be woken
+  at a set time show a rise in ACTH about an hour before it. The body anticipates wake.
+- Wilhelm, Diekelmann, Molzow, Ayoub, Molle, Born, J Neurosci 31:1563-1569 (2011): sleep
+  helped recall only when people expected a later test. NOT replicated by Ashton and
+  Cairney, PLOS ONE (2021). So stacking by plan rests on his words, not on this study.
+- Bjork and Bjork (1992), "A new theory of disuse" (Estes festschrift vol. 2, 35-67):
+  retrieval strength rises with use and falls with disuse; storage strength is not
+  lost. His desk of index cards: the card used goes back on top; no card is thrown out.
+- Bouton, Learning & Memory 11:485-494 (2004): extinction does not erase the original
+  learning; it is new learning laid over it, tied to where it was learned, and the
+  original response can come back (renewal).
+- Cox, Bottary, Alfano, Pace-Schott, Current Sleep Medicine Reports 11 (2025): sleep
+  helps the extinction memory hold.
+- Schultz, Dayan, Montague, Science 275:1593-1599 (1997): when a predicted reward does not
+  come, dopamine neurons drop below their resting rate at the moment it was due. Carbon
+  notices the absence of what it expected, at the place it was expected.
+
+The decisions (build choices; Everett can overrule any of them):
+
+1. ANTICIPATION OF WAKE. The being runs it, not the conch: it goes over tomorrow's
+   plans before shutdown until it falls asleep. Each time it goes over them it hands
+   them to the conch (conch.plan); the last one handed before sleep is the one kept. A
+   plan is the shapes of its steps, in order. The night stacks the manual entries the
+   plan calls for at the top, in plan order, so the being comes up expecting that day.
+   A planned step with nothing in the manual for it is said in the night's report and is
+   not guessed. The conch does not judge the next day against the plan: a plan is not
+   lived, so it never enters the constant.
+2. STACKING BY USE. Whatever follows a manual entry tells the conch it was used
+   (conch.used(fold_id)); each use is a line on the spiral with its clock. Each night
+   restacks the manual: tonight's plan first, then what was used since the last night
+   with the newest use on top, then everything else in the order it already had.
+   Entries cut tonight sit under the used ones and over the rest. Stacking is where
+   things sit (living state, a stack line), never the record. Level 3 is not stacked: it
+   holds its place for life and is re-enterable through any channel.
+3. EASING. The conch is valence-blind and cannot store which way, so it never chooses
+   what eases: beautiful Level 3 is not processed out, and only the being knows which is
+   which. The being chooses to go back, alone (conch.go_back(position), awake only).
+   "Regulation strong enough" in a 3C being is all three:
+   (a) every turn of that event is lived again, each with the same shape on every sense
+       that gave in it: the event is the Level 3 moment and the Level 3 turns lived with
+       it while the conch was outside its constant (the place, and every tied memory);
+   (b) nothing that arrives from going back until walking out leaves silico-stasis (no
+       interruption: it did not flinch);
+   (c) the being walks out (conch.walked_out()).
+   The return is written as a line, held or not, with what was lived. Only in sleep is
+   the charge moved: each turn of a held return gets weight "taken back by the being".
+   It stays Level 3, the record stays, the mark stays. If later a moment with one of
+   those turns' shapes is followed straight away by an interruption, that is written as
+   a line, and the next night gives the charge back to the memory (weight carried).
+4. THE LAST TIME. The conch knew what came after a shape because it had lived it again.
+   When that shape arrives and something else follows instead, that is a miss. A second
+   miss in a row, with no time it did follow in between, means it has stopped being
+   constant (again, the same once/again the constant learns by, so nothing is counted).
+   The last time it did follow is marked Level 3 as a boundary event, beside the first
+   time, if that turn is on the spiral (H4). If that turn was folded into a routine it is
+   still marked, and the routine entry still stands for it. After it stops, that shape no
+   longer tells the conch what comes next; if it comes back it has to be lived again.
+
+Build order: 4 the last time, 3 easing, 2 stacking, 1 anticipation (1 needs 2). Each is
+built, tested on both Pythons, put on the bench, and saved before the next.
 
 ## Built: the one-time Level 2 fold (11:40 to 11:47, 17 Nov)
 
