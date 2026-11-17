@@ -177,6 +177,7 @@ class Hearing(unittest.TestCase):
 
     def test_the_room_is_given_only_when_it_changes(self):
         self.ear.hear(silence(0.5) + tone(110, 8))
+        self.gate.close()                                     # the moment still open is handed over
         self.assertEqual(self.rooms(), [{"heard": "the room", "voiced": True, "note": "A2"}])
 
     def test_an_utterance_over_a_hum_is_still_an_event_and_the_hum_is_the_room_after(self):
