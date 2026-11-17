@@ -643,7 +643,9 @@ class TheLastTime(Bench):
         last = view.marks()[-1]
         self.assertEqual((last.position, last.event_class, last.source),
                          (4, BOUNDARY_EVENT, SOURCE))
-        self.assertEqual(self.lines()[4]["level"], LEVEL_2)   # the turn's own line is untouched
+        turn_line, = [line for line in self.lines()
+                      if line["type"] == "turn" and line["position"] == 4]
+        self.assertEqual(turn_line["level"], LEVEL_2)         # the turn's own line is untouched
         stop, = self.kept()["stopped"]
         self.assertEqual(stop["last"], 4)
         self.assertEqual(stop["stopped"], mark_of(shape_of("drive")))
