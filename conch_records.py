@@ -23,6 +23,13 @@ them [build choice]:
   kinds, or nothing at all. The sorting rule is his and is built in
   conch_intake.py. The part of the 3C that reads which kind a moment is has
   not been built, so on the bench a person says it.
+- CARRIED_BY says which senses carried what the moment is needed for: sound
+  for speech, sight for a gesture or a board. Level 2 is "folded so they do not
+  occupy full-sensory volume", and a moment lived only once folds down to these
+  senses at night. For a conversation the polymetis knows which senses carried
+  it, because it took the conversation in to answer it. On the bench a person
+  says it. A procedural moment never says it: procedure is learned through
+  repetition (Everett, 17 November 2026), so it folds only as a routine.
 
 Nothing here says which way a moment left silico-stasis. Level 3 is
 valence-blind, so a field for direction does not exist.
@@ -130,6 +137,7 @@ class Moment:
     """What the Gateway delivers. The conch never changes what is inside senses."""
     senses: dict
     needed_for: str | None = None
+    carried_by: tuple | None = None      # the senses that carried what it is needed for
     moment_id: str = field(default_factory=lambda: uuid.uuid4().hex)
     arrived_at: str | None = None        # the conch's clock; the conch sets it
 
@@ -140,11 +148,14 @@ class Moment:
 
     def to_line(self) -> dict:
         return {"moment_id": self.moment_id, "arrived_at": self.arrived_at,
-                "senses": copy.deepcopy(self.senses), "needed_for": self.needed_for}
+                "senses": copy.deepcopy(self.senses), "needed_for": self.needed_for,
+                "carried_by": None if self.carried_by is None else list(self.carried_by)}
 
     @staticmethod
     def from_line(line: dict) -> "Moment":
+        carried = line["carried_by"]
         return Moment(senses=copy.deepcopy(line["senses"]), needed_for=line["needed_for"],
+                      carried_by=None if carried is None else tuple(carried),
                       moment_id=line["moment_id"], arrived_at=line["arrived_at"])
 
 
@@ -159,6 +170,31 @@ def check_moment(moment) -> None:
         raise ValueError(f"needed_for is one of {', '.join(NEEDED_FOR)}, or nothing at all; "
                          f"not {moment.needed_for!r}")
     check_senses(moment.senses)
+    check_carried_by(moment)
+
+
+def check_carried_by(moment) -> None:
+    """Which senses carried what the moment is needed for: nothing at all, or
+    one or more of the five that gave something."""
+    carried = moment.carried_by
+    if carried is None:
+        return
+    if moment.needed_for is None:
+        raise ValueError("carried_by says what carried what the moment is needed for, so it "
+                         "comes only with needed_for")
+    if moment.needed_for == "procedural":
+        raise ValueError("a procedural moment folds only as a routine: procedure is learned "
+                         "through repetition, so it does not say which senses carried it")
+    if not isinstance(carried, (tuple, list)) or not carried:
+        raise ValueError("carried_by names one or more of the five senses")
+    if len(set(carried)) != len(carried):
+        raise ValueError("carried_by names each sense once")
+    for name in carried:
+        if name not in SENSES:
+            raise ValueError(f"carried_by names the five senses only: "
+                             f"{', '.join(SENSES)}; not {name!r}")
+        if moment.senses[name]["gave"] in (QUIET, ABSENT):
+            raise ValueError(f"{name} gave nothing, so it cannot have carried anything")
 
 
 @dataclass(frozen=True)
@@ -209,6 +245,19 @@ class Fold:
     @property
     def end(self) -> dict:
         return self.steps[-1]
+
+
+@dataclass(frozen=True)
+class OneTimeFold:
+    """One entry in the Operational Manual for a Level 2 moment lived once:
+    the shapes of only the senses that carried what it is needed for. The
+    moment itself stays whole on the spiral."""
+    fold_id: str
+    carried_by: tuple        # the senses kept
+    step: dict               # those senses' shapes, nothing else
+    folded_from: int         # the one position it stands for
+    cut_at: str
+    kind: str = PERMANENT
 
 
 @dataclass(frozen=True)

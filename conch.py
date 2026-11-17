@@ -137,8 +137,9 @@ class Conch:
             if self._spiral.holds(moment.moment_id):
                 raise ValueError(f"moment {moment.moment_id} is already on the spiral. A "
                                  "moment_id is never reused.")
+            carried = None if moment.carried_by is None else tuple(moment.carried_by)
             here = Moment(senses=copy.deepcopy(moment.senses), needed_for=moment.needed_for,
-                          moment_id=moment.moment_id, arrived_at=now())
+                          carried_by=carried, moment_id=moment.moment_id, arrived_at=now())
             mark = mark_of(here.shape())
             arrived_as = self._constant.judge(mark)
             level = sort_at_the_lip(arrived_as == INTERRUPTION, here.needed_for)
