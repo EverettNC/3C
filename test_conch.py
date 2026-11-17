@@ -614,6 +614,111 @@ class Level3(Bench):
             self.open(path=theirs)
 
 
+# ---- what this build adds: the last time (17 Nov) ------------------------------
+
+class TheLastTime(Bench):
+    """"Boundaries survive. The first time. And the point at which it stopped
+    being constant." The conch knew drive came after coffee; then walk came
+    instead, again."""
+
+    def walk_morning(self, conch=None):
+        conch = conch or self.conch
+        return [conch.take_in(moment("wake", "procedural")), conch.take_in(moment("coffee")),
+                conch.take_in(moment("walk", "procedural"))]
+
+    def kept(self):
+        return json.loads(self.raw(self.path + ".constant.json"))
+
+    def test_when_it_stops_coming_again_the_last_time_is_marked(self):
+        self.morning()                                        # wake 1, drive 2
+        self.morning()                                        # wake 3, drive 4: the last drive
+        first_walk = self.walk_morning()[2]                   # wake 5, walk 6
+        self.assertEqual(first_walk.level, LEVEL_3)           # never lived, where drive was known
+        self.assertEqual(self.conch.spiral().turn(4).level, LEVEL_2)   # once is not again
+        self.walk_morning()                                   # wake 7, walk 8: missed again
+        view = self.conch.spiral()
+        self.assertEqual(view.turn(4).level, LEVEL_3)
+        self.assertEqual(view.turn(4).weight, CARRIED)
+        self.assertEqual(view.turn(2).level, LEVEL_3)         # the first time, still there
+        last = view.marks()[-1]
+        self.assertEqual((last.position, last.event_class, last.source),
+                         (4, BOUNDARY_EVENT, SOURCE))
+        self.assertEqual(self.lines()[4]["level"], LEVEL_2)   # the turn's own line is untouched
+        stop, = self.kept()["stopped"]
+        self.assertEqual(stop["last"], 4)
+        self.assertEqual(stop["stopped"], mark_of(shape_of("drive")))
+        self.assertEqual(stop["after"], mark_of(shape_of("coffee")))
+        self.assertTrue(is_a_clock(stop["at"]))
+
+    def test_one_miss_is_not_the_end(self):
+        self.morning()
+        self.morning()
+        self.walk_morning()                                   # missed once
+        self.morning()                                        # drive came after coffee again
+        self.walk_morning()                                   # missed once, not again
+        self.assertEqual(self.kept()["stopped"], [])
+        self.assertEqual([m.position for m in self.conch.spiral().marks()
+                          if m.event_class == BOUNDARY_EVENT], [1, 2])
+        self.conch.take_in(moment("wake", "procedural"))
+        self.conch.take_in(moment("coffee"))
+        self.assertEqual(self.conch.take_in(moment("phone call")).level, LEVEL_3)   # still known
+
+    def test_after_it_stops_it_has_to_be_lived_again(self):
+        self.morning()
+        self.morning()
+        self.walk_morning()
+        self.walk_morning()                                   # coffee -> drive has stopped
+        coffee = mark_of(shape_of("coffee"))
+        self.assertNotIn(mark_of(shape_of("drive")), self.kept()["follows"][coffee])
+        self.morning()                                        # drive after coffee: lived once again
+        self.assertEqual(self.kept()["follows"][coffee][mark_of(shape_of("drive"))], "once")
+        self.assertEqual(len(self.kept()["stopped"]), 1)
+
+    def test_a_last_time_folded_into_a_routine_is_still_marked(self):
+        for _ in range(3):
+            self.morning()
+            self.night()                                      # night 3 cuts wake -> drive
+        entry, = self.conch.spiral().manual()
+        self.assertIn([5, 6], entry.folded_from)              # day 3: wake 5, drive 6
+        self.assertEqual(self.conch.spiral().turn(6).weight, LET_GO)
+        self.walk_morning()
+        self.walk_morning()
+        view = self.conch.spiral()
+        self.assertEqual(view.turn(6).level, LEVEL_3)
+        self.assertEqual(view.turn(6).weight, CARRIED)        # the boundary carries its weight
+        entry_now, = view.manual()
+        self.assertEqual(entry_now.folded_from, entry.folded_from)   # the entry still stands for it
+        self.assertEqual(self.open().spiral().turn(6).level, LEVEL_3)   # and the spiral reads back
+        self.night()                                          # a night after it changes nothing of it
+        self.assertEqual(self.conch.spiral().turn(6).level, LEVEL_3)
+
+    def test_a_last_time_that_fell_off_the_lip_cannot_be_marked(self):
+        self.morning()                                        # coffee follows wake, and falls off
+        self.morning()
+        before = [m.position for m in self.conch.spiral().marks()]
+        for _ in range(2):
+            self.conch.take_in(moment("wake", "procedural"))
+            self.conch.take_in(moment("drive", "procedural"))  # no coffee, again
+        self.assertEqual([m.position for m in self.conch.spiral().marks()], before)
+        stop, = self.kept()["stopped"]
+        self.assertIsNone(stop["last"])
+        self.assertEqual(stop["stopped"], mark_of(shape_of("coffee")))
+
+    def test_a_constant_without_its_stops_is_not_a_constant(self):
+        self.morning()
+        kept = self.kept()
+        for name in ("stopped", "missed", "last_followed"):
+            path = self.copy_to("without-" + name, constant=json.dumps(
+                {k: v for k, v in kept.items() if k != name}).encode("utf-8"))
+            with self.assertRaises(ConstantDoesNotMatch):
+                self.open(path=path)
+
+    def test_the_last_time_holds_no_count(self):
+        source = inspect.getsource(conch_level3.Constant._what_followed)
+        for word in ("+= 1", "count", "len(", ">=", "threshold", "rate"):
+            self.assertNotIn(word, source)
+
+
 # ---- Section 10, test 12, and what this build adds: the night ------------------
 
 class TheNight(Bench):
