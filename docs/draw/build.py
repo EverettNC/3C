@@ -329,7 +329,7 @@ conch=f"""<title>The Conch</title>
 <section class="openbox">
   <h2>Still open</h2>
   <ul>
-    <li><strong>Nothing in the conch.</strong> Everett handed the last four slots to the builder to decide from his writing and from carbon on 17 November. They are built. He has not yet ruled on those choices.</li>
+    <li><strong>Nothing in the conch.</strong> Everett handed the last four slots to the builder to decide from his writing and from carbon on 17 November. They are built. The conch's design choices are the builder's to make, on his ruling the same day.</li>
   </ul>
 </section>
 {FOOT}
