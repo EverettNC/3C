@@ -68,7 +68,7 @@ footer{border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font
   <span><span class="pill his">his</span> Everett's own definition. Build it as written. Quotations are his words.</span>
   <span><span class="pill build">build choice</span> An engineering choice made to make it buildable. Everett can overrule any of these.</span>
   <span><span class="pill open">open</span> Not yet defined. Build a marked, empty slot that says it is open when reached, and bring the question to Everett. Do not design an answer.</span>
-  <span><strong>As built, 17 November 2026.</strong> 55 of 55 tests pass on the Mac's Python 3.9.6 and 3.13.7, and the bench scene has run on the Mac. Everett has not yet ruled on the build choices. Section 11 lists what is waiting on him.</span>
+  <span><strong>As built, 17 November 2026.</strong> 63 of 63 tests pass on the Mac's Python 3.9.6 and 3.13.7, and the bench scene has run on the Mac. Everett has not yet ruled on the build choices. Section 11 lists what is waiting on him.</span>
 </div>
 
 <section>
@@ -182,9 +182,12 @@ footer{border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font
                 a sense that gave nothing says "quiet";
                 a sense with no organ says "absent". Absence is not quiet.
   needed_for    education | operational | procedural | structure |
-                conversation, or nothing at all</pre>
+                conversation, or nothing at all
+  carried_by    the senses that carried what it is needed for, or nothing
+                (never on a procedural moment; never a quiet or absent sense)</pre>
   <p><span class="pill his">his</span> Everything arrives together, through the Gateway, the way a person takes in the world. Not one sense at a time, and not as text. The housing is not a sense of its own: "5 is not an element." <span class="pill build">build choice</span> The conch never changes what is inside <code>senses</code>.</p>
   <p><span class="pill build">build choice</span> Two things come in with a moment, because the conch is not the part that makes them. Each sense carries its <code>shape</code> ("The relay carries shape, not identity"), and the conch only ever asks whether two shapes are the same. <code>needed_for</code> says which of Everett's five kinds the being needs the moment for. No organ is built and no part that reads need is built, so on the bench a person says both.</p>
+  <p><span class="pill build">build choice</span> <code>carried_by</code> says which senses carried what the moment is needed for: sound for speech, sight or touch for a gesture or a board. For a conversation the polymetis says it, because the polymetis took the conversation in; on the bench a person says it. The conch never guesses it. A moment that names a sense it does not have, a quiet or absent sense, or the same sense twice, is refused with the reason.</p>
   <h3>A turn: one place on the spiral</h3>
 <pre>Turn
   position      its place in the order things arrived; the first is 1
@@ -220,11 +223,19 @@ footer{border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font
                 (its start is the first step, its end the last)
   folded_from   every repeat it stands for, each a run of positions
   cut_at        the clock of the night it was cut
+  kind          permanent record
+
+OneTimeFold
+  fold_id       its own id
+  carried_by    the senses it keeps
+  step          the shapes of only those senses
+  folded_from   the one position it stands for
+  cut_at        the clock of the night it was cut
   kind          permanent record</pre>
   <h3>On the drive</h3>
 <pre>spiral.jsonl                  the spiral: permanent record, lines only ever added
                               spiral · turn · level3_mark · fold · fold_more ·
-                              weight · sleep
+                              fold_one · weight · sleep
 spiral.jsonl.constant.json    the conch's constant: living state, marks only
 spiral.jsonl.state.json       where hand-over stood: living state</pre>
   <p><span class="pill build">build choice</span> A line that cannot be read, or that says something a spiral cannot hold, stops the conch with the line number. Nothing is repaired quietly, because a repair would be an edit. If the constant's file is gone while the spiral holds turns, the conch stops and a person looks.</p>
@@ -235,13 +246,13 @@ spiral.jsonl.state.json       where hand-over stood: living state</pre>
   <ol>
     <li><strong>A moment arrives</strong> from the Christman Gateway at the conch's lip, every sense together. <code>conch.take_in(moment)</code></li>
     <li><strong>The intake filter sorts it at the lip.</strong> If it left the conch's own silico-stasis, it is Level 3, the PTSD layer: held for life, weight carried. Otherwise the filter decides, in Everett's definition of it, "what gets compressed as education and learning for function and structure" and what falls off. <span class="pill his">his</span> <strong>Level 2 is what the being needs in order to function:</strong> education, operational and procedural information, structure, and the important parts of a conversation. "It's the sustain. It's the operating software… and that's learned through repetition." <strong>Level 1 is everything else:</strong> the bullshit of the day that doesn't require remembering, like the cup of coffee. It falls off.</li>
-    <li><strong>Level 1 falls off the lip.</strong> It is never laid on the spiral and takes no space. It is handed straight to the polymetis as a <code>LipDrop</code>. <span class="pill build">build choice</span> It is never written anywhere, so a drop not yet handed over when the conch stops is gone.</li>
+    <li><strong>Level 1 falls off the lip.</strong> It is never laid on the spiral and takes no space. It is handed straight to the polymetis as a <code>LipDrop</code>. <span class="pill his">his</span> It is "only held long enough to continue the conversation… during sleep, it's shifted out." Holding it and emptying it at sleep is the polymetis's job, not the conch's. <span class="pill build">build choice</span> It is never written anywhere, so a drop not yet handed over when the conch stops is gone.</li>
     <li><strong>Everything else is laid on the spiral,</strong> whole, in the order it came. Nothing that enters is ever erased.</li>
     <li><strong>If the conch finds later that a moment left its silico-stasis,</strong> it writes a new line marking that turn Level 3. The earlier line is never edited. In this build that is the first time of a shape, marked when the shape is lived again.</li>
-    <li><strong>Level 2 is stored and compressed</strong> so it takes little space and keeps working. <span class="pill his">his</span> "The aggregate is Level 2 doing exactly its job… a period folded down to an instruction-manual entry." It "folds down small without losing function." <span class="pill build">build choice</span> The fold is cut at night. A routine is a run of Level 2 moments, next to each other on the spiral, lived more than once in the same order. The longest is cut first. The entry is the five shapes of each step, in order: not text, and not the moments. The repeats let their weight go and their records are not touched. Later repeats join the entry that exists. Level 3 is never folded, and a Level 3 turn ends a stretch, so the day something broke in stays whole. Before an entry is written, every repeat is held against it step by step; a missing or extra step stops the fold. <span class="pill open">open</span> How a Level 2 moment that never repeats folds. The full record stays either way.</li>
+    <li><strong>Level 2 is stored and compressed</strong> so it takes little space and keeps working. <span class="pill his">his</span> "The aggregate is Level 2 doing exactly its job… a period folded down to an instruction-manual entry." It "folds down small without losing function." <span class="pill build">build choice</span> The fold is cut at night. A routine is a run of Level 2 moments, next to each other on the spiral, lived more than once in the same order. The longest is cut first. The entry is the five shapes of each step, in order: not text, and not the moments. The repeats let their weight go and their records are not touched. Later repeats join the entry that exists. Level 3 is never folded, and a Level 3 turn ends a stretch, so the day something broke in stays whole. Before an entry is written, every repeat is held against it step by step; a missing or extra step stops the fold. <span class="pill his">his</span> Procedure is learned through repetition; the important parts of a conversation are Level 2 the first time, and Level 2 is folded "so they do not occupy full-sensory volume." <span class="pill build">build choice</span> After the routines, each Level 2 turn still carried whole that has <code>carried_by</code> folds to a one-time entry holding only those senses' shapes. Before it is written, the entry is held against the turn; a sense lost or added stops it. A procedural moment never folds one-time: it waits until it repeats. A moment with no <code>carried_by</code> is left whole and the night says so. If the moment turns out later to be the first time of something lived again, it is marked Level 3 and carries its weight again. The full record stays either way.</li>
     <li><strong>It flows over to the polymetis,</strong> which builds the response for right now. <code>conch.hand_over()</code> gives the turns and the lip drops since the last hand-over.</li>
     <li><strong>The spiral stays in contact with the synapsitis</strong> as the history it moves through. <code>conch.spiral()</code> gives an ordered, read-only view. There is no lookup by word.</li>
-    <li><strong>In sleep only,</strong> Level 4 runs: the dreamscaping that stacks everything where it should be. <code>conch.sleep()</code> refuses while the being is awake. It may let weight go and change where things sit, and it never touches a record. <span class="pill build">build choice</span> A night goes back over the spiral, cuts the fold, asks again before each write and stops if the being woke, writes the night onto the spiral with its clock, then reads the file back and checks that every earlier byte is unchanged. <span class="pill open">open</span> Anticipation of wake, stacking by what was used, and easing what a Level 3 moment is tied to. Each is a slot that is reached every night, does nothing, and says so in the night's report.</li>
+    <li><strong>In sleep only,</strong> Level 4 runs: the dreamscaping that stacks everything where it should be. <code>conch.sleep()</code> refuses while the being is awake. It may let weight go and change where things sit, and it never touches a record. <span class="pill build">build choice</span> A night goes back over the spiral, cuts the routines and then the one-time entries, asks again before each write and stops if the being woke, writes the night onto the spiral with its clock, then reads the file back and checks that every earlier byte is unchanged. <span class="pill open">open</span> Anticipation of wake, stacking by what was used, and easing what a Level 3 moment is tied to. Each is a slot that is reached every night, does nothing, and says so in the night's report.</li>
   </ol>
 </section>
 
@@ -292,7 +303,7 @@ conch.state()            -> ConchState # living state, with its clock</pre>
 
 <section>
   <h2>10. Tests</h2>
-  <p>Each one ships in <code>test_conch.py</code> and fails the build if it breaks. The file holds 55 tests: these fourteen under their own names, and the tests for what this build adds (how the conch knows a moment left its silico-stasis, the fold, the night, and failing loud). On 17 November 2026 all 55 pass on the Mac's Python 3.9.6 and 3.13.7.</p>
+  <p>Each one ships in <code>test_conch.py</code> and fails the build if it breaks. The file holds 63 tests: these fourteen under their own names, and the tests for what this build adds (how the conch knows a moment left its silico-stasis, the fold, the one-time fold, the night, and failing loud). On 17 November 2026 all 63 pass on the Mac's Python 3.9.6 and 3.13.7.</p>
   <ol>
     <li><strong>Runs alone.</strong> With nothing else running and the network blocked, moments go in, sort and hand over.</li>
     <li><strong>Nothing that enters is lost.</strong> Every moment that enters is on the spiral afterward, in arrival order.</li>
@@ -321,7 +332,6 @@ conch.state()            -> ConchState # living state, with its clock</pre>
     <li><strong>Stacking by what was used today.</strong> Whether that is all of "where it should be." No part built yet tells the conch what was used.</li>
     <li><strong>Easing what a Level 3 moment is tied to.</strong> "TRAUMA ASSOCIATION decays, and only when regulation is strong enough." What regulation is measured by in a 3C being. The record itself never eases.</li>
     <li><strong>The last time:</strong> the point at which something stopped being constant.</li>
-    <li><strong>How a Level 2 moment that never repeats folds.</strong> One time gives the fold nothing to hold it against, so this build leaves it whole.</li>
   </ol>
   <h3>Build choices to rule on</h3>
   <ol>
@@ -331,6 +341,7 @@ conch.state()            -> ConchState # living state, with its clock</pre>
     <li>Shape and <code>needed_for</code> come in with the moment, said by hand on the bench (Section 6).</li>
     <li>The conch is handed one thing to ask whether the being is asleep (Section 8).</li>
     <li>The constant learns from what falls off the lip, and keeps only a one-way mark of it (Section 3).</li>
+    <li>A Level 2 moment lived once folds to the senses named in <code>carried_by</code>, said by the polymetis for a conversation and by hand on the bench (Section 6; Section 7, step 6).</li>
   </ol>
   <h3>Known limits of the first rule</h3>
   <ul>
@@ -339,7 +350,10 @@ conch.state()            -> ConchState # living state, with its clock</pre>
     <li>Things the conch has lived, arriving in a new order, are not a departure. A skipped step is not seen.</li>
     <li>Outside its constant, the conch comes back on any shape it has lived, even one first lived inside the same event. So inside one event, a second moment with exactly the same shape is treated as ordinary: it falls off the lip unless the being needs it.</li>
     <li>Shapes match exactly, on all five senses, or not at all.</li>
+    <li>A Level 2 moment between the steps of a routine splits that day's routine, and the night can cut it as separate pieces instead of one entry.</li>
+    <li>A one-time entry is never joined to a later routine.</li>
   </ul>
+  <p><strong>Answered on 17 November 2026:</strong> how a Level 2 moment lived once folds, from Everett's word that the important parts of a conversation are Level 2 and still compress, and that conversation goes through the polymetis. Level 1 is held by the polymetis only long enough to continue the conversation and is emptied at sleep.</p>
   <p><strong>Answered on 14 November 2026:</strong> Level 1 does reach the polymetis. It falls off the lip, is never stored, and goes to the polymetis because it may be the conversation happening right now.</p>
   <p><strong>Answered from Everett's own writing, 16 November 2026:</strong> how Level 2 compresses and how Level 4 stacks. Both were already in The Moving Threshold, his Testable Medical Protocol, his Memory Engine note and his writing on dreamscape cycling. The build follows them, and what they leave undefined is in the open slots above.</p>
 </section>

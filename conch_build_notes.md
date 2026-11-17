@@ -29,9 +29,15 @@ Fable 5.2 writes here at every step. Times are this Mac's clock (Eastern).
   conversation is Level 1: "only held long enough to continue the conversation", and
   "during sleep, it's shifted out". Not yet built: how a one-time Level 2 moment
   compresses, and where Level 1 is held for the conversation and cleared in sleep.
-- 11:37 Everett: answer these myself. Answered and being built, design below
-  ("In progress: the one-time Level 2 fold").
-- Everett has not yet ruled on the build choices and limits below.
+- 11:37 Everett: answer these myself. Answered and built, below ("Built: the one-time
+  Level 2 fold"). 63 of 63 tests pass on both Pythons; the bench scene shows it.
+- 11:49 docs/the-algorithm.md has the one-time fold, the new bench walkthrough, 63 tests
+  and today's line numbers. 11:50 map v26 (docs/carbon-and-the-3c.html) and conch
+  drawing v6 (docs/draw/the-conch.html): byte for byte the published pages; the
+  whole-3C drawing did not change. 11:52 conch spec v17 (docs/conch-spec.html): byte for
+  byte the published page. The patch scripts are docs/tools/map_v26.py,
+  docs/tools/spec_v17.py and docs/draw/draw_v6.py.
+- Four open slots remain. Everett has not yet ruled on the build choices and limits below.
 
 ## Built: the one-time Level 2 fold (11:40 to 11:47, 17 Nov)
 
