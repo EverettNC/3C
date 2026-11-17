@@ -45,8 +45,35 @@ What follows from that rule, said plainly:
   still never enters. For any moment, the constant keeps only a mark that such
   a shape was lived (conch_records.mark_of): never the moment, and the mark
   does not hold the shape.
-- The constant only grows. It does not yet know when something has stopped
-  being constant. That slot is open, below.
+- The constant knows when something has stopped being constant. See THE LAST
+  TIME, below.
+
+THE LAST TIME  [build choice, 17 Nov 2026; Everett handed this decision over]
+
+[HIS] "Boundaries survive. The first time. And the point at which it stopped
+being constant." (The Moving Threshold.) "Interruptions and first/last
+boundaries will carry the full-sensory remainder." (Protocol v1.1, H4.)
+
+Carbon notices that something it expected did not come, at the place it was
+expected (Schultz, Dayan and Montague, Science 1997). So does the conch, in
+the same two states it learns by:
+
+- The conch knows what follows a shape when it has lived that following
+  again. When the shape arrives and something else follows instead, that is
+  a miss.
+- A second miss, with no time it did follow in between, means it has stopped
+  being constant. Once is not again: a single morning without the drive is
+  not the end of the drive.
+- The last time it did follow is the boundary. That turn is marked Level 3
+  with a new line, beside the first time, if it is on the spiral and is not
+  Level 3 already. A turn already folded into a routine is still marked; the
+  routine entry still stands for it.
+- After it has stopped, that shape no longer tells the conch what comes next.
+  If the same following comes back, it has to be lived again to be constant
+  again. The constant keeps a line for every stop, with its clock.
+
+His protocol leaves the rate the set point moves open (H6). This rule moves
+it by the same once/again the constant learns by, and holds no rate.
 
 THE BASIS. Everett's own writing and his own engine, read for the idea and
 rewritten here. Nothing of them is imported or called:
@@ -73,11 +100,6 @@ from conch_records import BOUNDARY_EVENT, FLOOR_EVENT, INTERRUPTION, LEVEL_3, LI
 from conch_spiral import read_beside, write_beside
 
 ONCE, AGAIN = "once", "again"
-
-THE_LAST_TIME = Open(
-    "the last time: the point at which something stopped being constant",
-    "Everett: how the conch knows a pattern has stopped. His protocol leaves the rate the "
-    "constant moves at open (H6).")
 
 EASING = Open(
     "easing what a Level 3 moment is tied to, in sleep",
