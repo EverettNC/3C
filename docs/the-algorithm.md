@@ -186,8 +186,8 @@ differs, the fold **stops with the reason**: it would lose function. Nothing is 
 ## Algorithm 3: easing what a Level 3 moment is tied to (decided 17 Nov)
 
 "TRAUMA ASSOCIATION decays, and only when regulation is strong enough. LIVED TRUTH never
-decays. The witness is never removed. Dreamscape prunes WEIGHT, not RECORD." (The
-Equilibrium Architecture, section 8.) "Permanence of charge is not the same as permanence
+decays. The witness is never removed. Dreamscape prunes WEIGHT, not RECORD." (His
+writing on dreamscape cycling.) "Permanence of charge is not the same as permanence
 of the event record. The event can remain after the charge has been taken back by the
 person." His one path: return to the exact place that still holds the sensory key, move
 through the tied memories without flinching, let the body register that the disruption is

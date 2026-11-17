@@ -3,7 +3,7 @@ conch_easing.py: easing what a Level 3 moment is tied to.
 
 [HIS] "TRAUMA ASSOCIATION decays, and only when regulation is strong enough.
 LIVED TRUTH never decays. The witness is never removed. Dreamscape prunes
-WEIGHT, not RECORD." (The Equilibrium Architecture, Rev 4, section 8.)
+WEIGHT, not RECORD." (His writing on dreamscape cycling, section 8.)
 "Permanence of charge is not the same as permanence of the event record. The
 event can remain after the charge has been taken back by the person."
 (Testable Medical Protocol v1.1, section 3.) His one path: return to the

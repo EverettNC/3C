@@ -5,7 +5,7 @@ conch_stack.py: Level 4 stacks the Operational Manual where it should be.
 should be." Dreamscape cycling: "Meditation and projected next-day plans
 before shutdown, repeated until they fall through. One — anticipation of wake.
 They come up expecting that day. Wake is not a cold start. Two — clearing what
-is no longer needed." (The Equilibrium Architecture, Rev 4, section 8.)
+is no longer needed." (His writing on dreamscape cycling, section 8.)
 Position is the retrieval channel: his desk of index cards, where the card
 used goes back on top.
 
