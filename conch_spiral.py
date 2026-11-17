@@ -250,19 +250,18 @@ class Spiral:
         if line["source"] != SOURCE:
             raise SpiralDamaged("a Level 3 mark that did not come from the conch's own "
                                 "silico-stasis")
-        if position in self._claimed and (self._claimed[position] not in self._ones
-                                          or line["event_class"] != BOUNDARY_EVENT):
-            raise SpiralDamaged(f"turn {position} is folded into a routine, and Level 3 is "
-                                "never folded")
-        # A one-time entry can find out later that its moment was the first time of
-        # something lived again. The first time survives: it is marked Level 3, it
-        # carries its weight again, and the entry stays in the manual as it was cut.
+        # A boundary can be found after its turn was folded. A one-time entry can
+        # find out later that its moment was the first time of something lived
+        # again; a routine can find out later that one of its repeats was the
+        # last time something came. Boundaries survive: the turn is marked Level 3,
+        # it carries its weight again, and the entry stays in the manual as it was
+        # cut, still standing for that turn.
         if line["event_class"] == INTERRUPTION:
             if turn["level"] != LEVEL_3 or position != len(self._turns):
                 raise SpiralDamaged("an interruption is marked as it arrives, with its turn")
         elif line["event_class"] == BOUNDARY_EVENT:
             if turn["level"] != LEVEL_2:
-                raise SpiralDamaged("a first time is marked later, on a turn laid as Level 2")
+                raise SpiralDamaged("a boundary is marked later, on a turn laid as Level 2")
         else:
             raise SpiralDamaged(f"a Level 3 mark of a class the conch does not have: "
                                 f"{line['event_class']!r}")
@@ -498,7 +497,7 @@ class Spiral:
 
     def weight_of(self, position: int) -> str:
         """Level 3 carries its weight for life, even a turn whose weight was let
-        go before the conch found out it was a first time."""
+        go before the conch found out it was a boundary."""
         self._seat(position)
         if position in self._marks:
             return CARRIED

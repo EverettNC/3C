@@ -51,7 +51,7 @@ what a trauma is tied to decays only while regulation is strong enough.
 from __future__ import annotations
 
 from conch_fold import check, check_one, cut
-from conch_level3 import EASING, THE_LAST_TIME
+from conch_level3 import EASING
 from conch_open import Open
 from conch_records import LIVING, Fold, now
 
@@ -64,7 +64,7 @@ STACKING_BY_USE = Open(
     "Everett: whether that is all of 'where it should be'. And no part built yet tells the "
     "conch what was used.")
 
-OPEN_AT_NIGHT = (ANTICIPATION_OF_WAKE, STACKING_BY_USE, EASING, THE_LAST_TIME)
+OPEN_AT_NIGHT = (ANTICIPATION_OF_WAKE, STACKING_BY_USE, EASING)
 
 WOKE = "the being woke"
 

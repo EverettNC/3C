@@ -55,7 +55,7 @@ import threading
 
 import conch_sleep
 from conch_intake import sort_at_the_lip
-from conch_level3 import Constant, ConstantDoesNotMatch, mark_the_first_time
+from conch_level3 import Constant, ConstantDoesNotMatch, mark_the_boundary
 from conch_lip import fall_off
 from conch_records import (INTERRUPTION, LEVEL_1, LEVEL_3, LIVING, ConchState, Moment,
                            check_moment, mark_of, now)
@@ -117,10 +117,9 @@ class Conch:
             return
         missed = list(range(through + 1, mouth + 1))
         for position in missed:
-            first_time = self._constant.learn(mark_of(self._spiral.shape_at(position)), position,
-                                              self._spiral.arrived_as(position))
-            if first_time is not None:
-                mark_the_first_time(self._spiral, first_time)
+            for boundary in self._constant.learn(mark_of(self._spiral.shape_at(position)),
+                                                 position, self._spiral.arrived_as(position)):
+                mark_the_boundary(self._spiral, boundary)
         self._constant.caught_up(missed)
         self._constant.keep()
 
@@ -148,9 +147,8 @@ class Conch:
             else:
                 came = self._spiral.lay(here, level, INTERRUPTION if level == LEVEL_3 else None)
                 position = came.position
-            first_time = self._constant.learn(mark, position, arrived_as)
-            if first_time is not None:
-                mark_the_first_time(self._spiral, first_time)
+            for boundary in self._constant.learn(mark, position, arrived_as):
+                mark_the_boundary(self._spiral, boundary)
             self._constant.keep()
             self._waiting.append(came if position is None else position)
             return came

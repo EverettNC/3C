@@ -806,9 +806,9 @@ class TheNight(Bench):
 
     def test_open_slots_say_they_are_open(self):
         slots = conch_sleep.OPEN_AT_NIGHT
-        self.assertEqual(len(slots), 4)
+        self.assertEqual(len(slots), 3)
         self.assertFalse(hasattr(conch_fold, "ONE_TIME"))     # closed on 17 Nov: one-time moments fold
-        self.assertIn(conch_level3.THE_LAST_TIME, slots)
+        self.assertFalse(hasattr(conch_level3, "THE_LAST_TIME"))   # closed on 17 Nov: the last time
         self.assertIn(conch_level3.EASING, slots)
         reached_before = [len(slot.reached) for slot in slots]
         report = self.night()

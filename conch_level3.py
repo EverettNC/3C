@@ -119,6 +119,9 @@ class Constant:
         self._path = path
         self._lived = {}             # mark -> {"lived": once | again, "first": position | None}
         self._follows = {}           # mark -> {the mark that came next: once | again}
+        self._last_followed = {}     # mark -> {the mark that came next: where that last was, or None}
+        self._missed = {}            # mark -> [marks it knew came next that did not come, last time]
+        self._stopped = []           # every following that stopped being constant, with its clock
         self._last = None            # the mark of the moment before this one
         self._outside = False        # the conch has left its constant and is not back yet
         self._learned_through = None  # the newest position on the spiral it has learned
@@ -134,19 +137,30 @@ class Constant:
                                        f"{self._being!r}'s")
         try:
             lived, follows = kept["lived"], kept["follows"]
+            last_followed, missed, stopped = (kept["last_followed"], kept["missed"],
+                                              kept["stopped"])
             last, outside = kept["last"], kept["outside"]
             through, caught_up = kept["learned_through"], kept["caught_up"]
         except KeyError as missing:
             raise ConstantDoesNotMatch(f"{self._path} has no {missing}") from None
         if (not isinstance(lived, dict) or not isinstance(follows, dict)
+                or not isinstance(last_followed, dict) or not isinstance(missed, dict)
+                or not isinstance(stopped, list)
                 or not isinstance(outside, bool) or not isinstance(caught_up, list)
                 or any(not isinstance(v, dict) or v.get("lived") not in (ONCE, AGAIN)
                        or "first" not in v for v in lived.values())
                 or any(not isinstance(after, dict) or any(v not in (ONCE, AGAIN)
                                                           for v in after.values())
-                       for after in follows.values())):
+                       for after in follows.values())
+                or any(not isinstance(after, dict) or set(after) != set(follows.get(mark, {}))
+                       for mark, after in last_followed.items())
+                or set(last_followed) != set(follows)
+                or any(not isinstance(gone, list) or any(
+                    follows.get(mark, {}).get(m) != AGAIN for m in gone)
+                       for mark, gone in missed.items())):
             raise ConstantDoesNotMatch(f"{self._path} does not hold a constant")
         self._lived, self._follows = lived, follows
+        self._last_followed, self._missed, self._stopped = last_followed, missed, stopped
         self._last, self._outside = last, outside
         self._learned_through, self._caught_up = through, caught_up
 
@@ -164,28 +178,65 @@ class Constant:
             return INTERRUPTION
         return FLOOR_EVENT
 
-    def learn(self, mark: str, position, event_class: str):
+    def learn(self, mark: str, position, event_class: str) -> list:
         """The moment has been lived. position is its place on the spiral, or
-        None when it fell off the lip. Gives back the place of the shape's first
-        time when this arrival is what made it part of the constant and that
-        first time is on the spiral; otherwise None."""
+        None when it fell off the lip. Gives back the boundaries this arrival
+        found, as places on the spiral, in the order found:
+          - the shape's first time, when this arrival is what made the shape
+            part of the constant;
+          - the last time a following came, for each following this arrival
+            showed has stopped being constant.
+        A boundary that fell off the lip is not on the spiral and is not given."""
         if event_class not in (FLOOR_EVENT, INTERRUPTION):
             raise ValueError("a moment arrives as a floor event or as an interruption")
         self._outside = event_class == INTERRUPTION
-        first_time = None
+        boundaries = []
         known = self._lived.get(mark)
         if known is None:
             self._lived[mark] = {"lived": ONCE, "first": position}
         elif known["lived"] == ONCE:
             known["lived"] = AGAIN
-            first_time = known["first"]
+            if known["first"] is not None:
+                boundaries.append(known["first"])
         if self._last is not None:
-            after = self._follows.setdefault(self._last, {})
-            after[mark] = AGAIN if mark in after else ONCE
+            boundaries.extend(self._what_followed(self._last, mark, position))
         self._last = mark
         if position is not None:
             self._learned_through = position
-        return first_time
+        return boundaries
+
+    def _what_followed(self, before: str, mark: str, position) -> list:
+        """mark came after before. Every following the conch knew came after
+        before, and that did not come now, has missed. One that has missed again
+        has stopped being constant. Gives back where each stopped one last came."""
+        after = self._follows.setdefault(before, {})
+        last_followed = self._last_followed.setdefault(before, {})
+        missed = self._missed.setdefault(before, [])
+        last_times = []
+        for known in sorted(after):
+            if known == mark or after[known] != AGAIN:
+                continue
+            if known not in missed:
+                missed.append(known)
+                continue
+            missed.remove(known)
+            del after[known]
+            last = last_followed.pop(known)
+            self._stopped.append({"after": before, "stopped": known, "last": last, "at": now()})
+            if last is not None:
+                last_times.append(last)
+        if mark in missed:
+            missed.remove(mark)
+        after[mark] = AGAIN if mark in after else ONCE
+        last_followed[mark] = position
+        if not missed:
+            del self._missed[before]
+        return last_times
+
+    def stopped(self) -> list:
+        """Every following that stopped being constant, in the order the conch
+        found out, with its clock. Living state, read as "true as of"."""
+        return [dict(stop) for stop in self._stopped]
 
     @property
     def kept_before(self) -> bool:
@@ -204,14 +255,17 @@ class Constant:
     def keep(self) -> None:
         write_beside(self._path, {
             "being": self._being, "kind": LIVING, "written_at": now(),
-            "lived": self._lived, "follows": self._follows, "last": self._last,
+            "lived": self._lived, "follows": self._follows,
+            "last_followed": self._last_followed, "missed": self._missed,
+            "stopped": self._stopped, "last": self._last,
             "outside": self._outside, "learned_through": self._learned_through,
             "caught_up": self._caught_up})
 
 
-def mark_the_first_time(spiral, position: int):
-    """"Boundaries survive. The first time." Marks the turn Level 3 with a new
-    line, unless it is Level 3 already. Gives back the mark, or None."""
+def mark_the_boundary(spiral, position: int):
+    """"Boundaries survive. The first time. And the point at which it stopped
+    being constant." Marks the turn Level 3 with a new line, unless it is Level
+    3 already. Gives back the mark, or None."""
     if spiral.level_of(position) == LEVEL_3:
         return None
     return spiral.mark_level3(position, BOUNDARY_EVENT)

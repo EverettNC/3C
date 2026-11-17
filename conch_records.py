@@ -66,7 +66,7 @@ SOURCE = "the conch's own silico-stasis"
 # them says which way. They are Everett's three, from his own engine.
 FLOOR_EVENT = "floor_event"          # it sat inside what the conch has lived
 INTERRUPTION = "interruption"        # it broke the pattern as it arrived
-BOUNDARY_EVENT = "boundary_event"    # the first time of what later became constant
+BOUNDARY_EVENT = "boundary_event"    # the first time of what became constant, or the last time of what stopped
 
 
 def now() -> str:
