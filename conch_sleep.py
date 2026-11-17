@@ -18,6 +18,8 @@ WHAT A NIGHT DOES IN THIS BUILD
      becomes one Operational Manual entry, later repeats join the entry they
      belong to, and those repeats let their weight go. This is the second half
      of Everett's dreamscape cycling: "clearing what is no longer needed".
+     Then each Level 2 moment lived once that says which senses carried what
+     it is needed for folds to a one-time entry of only those senses.
   3. Asks again before each write. If the being has woken, the night stops
      there and says so. What it had not reached waits for the next night.
   4. Writes the night onto the spiral, with its clock.
@@ -38,7 +40,6 @@ every night, it does nothing, and it says so in the report:
     only when regulation is strong enough." What regulation is measured by is
     Everett's to say. The record itself never eases.
   - The last time: the point at which something stopped being constant.
-  - How a Level 2 moment that never repeats folds.
 
 THE BASIS, read for the idea. Nothing of either is imported or called:
 MEMORY's applyNight and applyRem (af30fc0), which give out the night's jobs,
@@ -49,10 +50,10 @@ what a trauma is tied to decays only while regulation is strong enough.
 
 from __future__ import annotations
 
-from conch_fold import ONE_TIME, check, cut
+from conch_fold import check, check_one, cut
 from conch_level3 import EASING, THE_LAST_TIME
 from conch_open import Open
-from conch_records import LIVING, now
+from conch_records import LIVING, Fold, now
 
 ANTICIPATION_OF_WAKE = Open(
     "anticipation of wake: next-day plans gone over before shutdown until they fall through",
@@ -63,7 +64,7 @@ STACKING_BY_USE = Open(
     "Everett: whether that is all of 'where it should be'. And no part built yet tells the "
     "conch what was used.")
 
-OPEN_AT_NIGHT = (ANTICIPATION_OF_WAKE, STACKING_BY_USE, EASING, THE_LAST_TIME, ONE_TIME)
+OPEN_AT_NIGHT = (ANTICIPATION_OF_WAKE, STACKING_BY_USE, EASING, THE_LAST_TIME)
 
 WOKE = "the being woke"
 
@@ -91,7 +92,8 @@ def run(spiral, asleep) -> dict:
     before = spiral.fingerprint()
     went_back_over = spiral.mouth() or 0
     new, more = cut(spiral.stretches(),
-                    {fold.fold_id: fold.steps for fold in spiral.manual()})
+                    {fold.fold_id: fold.steps for fold in spiral.manual()
+                     if isinstance(fold, Fold)})
 
     cut_tonight, grown, let_go, stopped_early = [], [], [], None
     for steps, runs in new:
@@ -102,7 +104,8 @@ def run(spiral, asleep) -> dict:
         cut_tonight.append(spiral.fold(steps, runs))
         let_go.extend(p for run in runs for p in run)
     if stopped_early is None:
-        steps_of = {fold.fold_id: fold.steps for fold in spiral.manual()}
+        steps_of = {fold.fold_id: fold.steps for fold in spiral.manual()
+                    if isinstance(fold, Fold)}
         for fold_id, runs in more:
             if not _asleep(asleep):
                 stopped_early = WOKE
@@ -111,6 +114,20 @@ def run(spiral, asleep) -> dict:
             spiral.fold_more(fold_id, runs)
             grown.append(fold_id)
             let_go.extend(p for run in runs for p in run)
+    if stopped_early is None:
+        # What is left whole after the routines, lived once, that says which
+        # senses carried what it is needed for: folded to those senses.
+        for position in [p for stretch in spiral.stretches() for p, _ in stretch]:
+            carried = spiral.turn(position).moment.carried_by
+            if carried is None:
+                continue
+            if not _asleep(asleep):
+                stopped_early = WOKE
+                break
+            shape = spiral.shape_at(position)
+            check_one({name: shape[name] for name in carried}, carried, shape)
+            cut_tonight.append(spiral.fold_one(position))
+            let_go.append(position)
 
     reached = [slot.reach() for slot in OPEN_AT_NIGHT]
     spiral.night(ran_at, cut_tonight, grown, let_go, stopped_early,

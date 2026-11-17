@@ -36,9 +36,20 @@ The fold is cut at night (conch_sleep.py), never while the being is awake.
   entry lacks, or the entry has one the repeat lacks, the fold stops with the
   reason: it would lose function.
 
-NOT BUILT, and it says so when reached: how a Level 2 moment that never
-repeats folds. One time gives the fold nothing to hold it against, so this
-build leaves it whole with its weight carried.
+A LEVEL 2 MOMENT LIVED ONCE  [Everett, 17 Nov: procedure is learned through
+repetition; the important parts of a conversation are Level 2 from the start
+and still compress. The rule below is Fable's answer, on his instruction.]
+
+- After the routines are cut, every Level 2 turn still carried whole that says
+  which senses carried what it is needed for (Moment.carried_by) folds to a
+  one-time entry: the shapes of only those senses. "Folded so they do not
+  occupy full-sensory volume." Its weight lets go; the record stays whole.
+- Procedure never says it, so a procedural moment waits until it repeats.
+- A moment that says nothing about which senses carried it is left whole, and
+  the night's report says so.
+- If the conch later finds that a one-time moment was the first time of
+  something lived again, it is marked Level 3 and carries its weight again.
+  The entry stays in the manual as it was cut.
 
 THE BASIS, read for the idea and not carried over: MEMORY's foldProcedure
 (af30fc0) joins the channel text of one scene and cuts it at 180 characters.
@@ -54,13 +65,7 @@ from __future__ import annotations
 
 import copy
 
-from conch_open import Open
-from conch_records import mark_of
-
-ONE_TIME = Open(
-    "how a Level 2 moment that never repeats folds without losing function",
-    "Everett. One time gives the fold nothing to hold it against, so this build leaves it "
-    "whole.")
+from conch_records import SENSES, mark_of
 
 
 class FoldWouldLoseFunction(RuntimeError):
@@ -179,6 +184,17 @@ def _one_time_through(marks: tuple) -> tuple:
 def _covers(cells, where, marks) -> int:
     """How many turns this run of marks would stand for."""
     return len(_find(cells, where, marks)) * len(marks)
+
+
+def check_one(step, carried_by, shape) -> None:
+    """Hold a one-time entry against its moment, as read back from the spiral.
+    The entry must hold exactly the shapes of the senses that carried it."""
+    if not carried_by or any(name not in SENSES for name in carried_by):
+        raise FoldWouldLoseFunction("a one-time entry keeps one or more of the five senses")
+    if step != {name: shape[name] for name in carried_by}:
+        raise FoldWouldLoseFunction(
+            "the one-time entry does not hold the shapes of the senses that carried what the "
+            "moment is needed for. Folding it would lose function, so nothing was folded.")
 
 
 def check(steps, repeats) -> None:
