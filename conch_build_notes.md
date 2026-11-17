@@ -153,6 +153,14 @@ Progress:
   folder was named by the second only). Each run now has its own folder (second + pid).
   The one merged run is bench/2026-11-17T17-21-02Z: two scenes on one spiral. Left
   where it is; removing it is Everett's word.
+- 12:24 the conch's own files cite his dreamscape cycling writing by subject, not by the
+  equilibrium document's title: the conch's papers do not name the equilibrium.
+- 12:23 docs/the-algorithm.md rewritten for four algorithms, the night in order, bench
+  days 1 to 9, limits, 87 tests. 12:27 conch spec v18 (docs/conch-spec.html, 038d9427).
+  12:30 map v27 (docs/carbon-and-the-3c.html, b5d6f8be) and conch drawing v7
+  (docs/draw/the-conch.html, 88b5610f); whole-3C drawing unchanged (0b6f7303). Each is
+  byte for byte the published page. Patch scripts: docs/tools/spec_v18.py,
+  docs/tools/map_v27.py, docs/draw/draw_v7.py, and docs/tools/patch_*.py for the code.
 
 ## Built: the one-time Level 2 fold (11:40 to 11:47, 17 Nov)
 

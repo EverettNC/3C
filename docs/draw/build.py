@@ -318,19 +318,18 @@ conch=f"""<title>The Conch</title>
   <h2>Built and tested on ELEMENTS, 17 November 2026</h2>
   <ul>
     <li><strong>The lip sorts by Everett's definition.</strong> Level 2 is what the being needs in order to function: education, operational and procedural information, structure, the important parts of a conversation. Everything else is Level 1 and falls off.</li>
-    <li><strong>The conch knows what left its silico-stasis.</strong> It knew what came next, because it has lived it more than once, and something it has never lived came instead. The first time of what becomes constant is held too.</li>
+    <li><strong>The conch knows what left its silico-stasis.</strong> It knew what came next, because it has lived it more than once, and something it has never lived came instead. The first time of what becomes constant is held too, and so is the last time of what stopped: what it knew came next, and missed again.</li>
     <li><strong>Level 2 folds at night.</strong> A routine lived more than once in the same order becomes one Operational Manual entry, the shape of each step in order. The repeats let their weight go; their records stay whole. Level 3 is never folded.</li>
     <li><strong>A Level 2 moment lived once folds too.</strong> It keeps only the senses that carried what it is needed for: sound for speech, sight or touch for a gesture or a board. For a conversation the polymetis says which senses carried it; nothing is guessed. A moment that says nothing is left whole. If it comes again, its first time is still held as Level 3.</li>
-    <li><strong>Level 4 runs only in sleep.</strong> It goes back over the spiral, cuts the fold, and checks every earlier line is unchanged.</li>
+    <li><strong>Level 4 runs only in sleep.</strong> It goes back over the spiral, cuts the fold, moves only the charge a held return called for, stacks the manual, and checks every earlier line is unchanged.</li>
+    <li><strong>Easing is the being's choice, never the conch's.</strong> The conch cannot tell a beautiful Level 3 from a terrible one. The being goes back alone, lives every tied memory again with every sense the same, nothing leaves silico-stasis, and it walks out. Only in sleep does the charge move to the being. The record and the mark stay.</li>
+    <li><strong>The manual is stacked where it should be.</strong> Before shutdown the being goes over tomorrow; that comes up first. Then what was used today, newest on top, then the rest as it sat. Level 3 is never stacked.</li>
   </ul>
 </section>
 <section class="openbox">
   <h2>Still open</h2>
   <ul>
-    <li><strong>Anticipation of wake:</strong> who runs the dreamscape cycling before shutdown.</li>
-    <li><strong>Stacking by what was used today.</strong></li>
-    <li><strong>Easing what a Level 3 moment is tied to:</strong> what "regulation strong enough" is measured by in a 3C being.</li>
-    <li><strong>The last time:</strong> the point at which something stopped being constant.</li>
+    <li><strong>Nothing in the conch.</strong> Everett handed the last four slots to the builder to decide from his writing and from carbon on 17 November. They are built. He has not yet ruled on those choices.</li>
   </ul>
 </section>
 {FOOT}
