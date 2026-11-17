@@ -143,6 +143,16 @@ Progress:
   Limit: an event is the Level 3 interruptions next to each other on the spiral with no
   night between; if a moment fell off the lip between two of them, the conch counts
   them as one event, which asks more of a return, never less.
+- 12:21 STACKING and ANTICIPATION OF WAKE built (conch_stack.py; conch.used /
+  conch.plan; spiral lines used, plan, stack; SpiralView.stacked(); the night stacks
+  after the folds and the charges). 8 new tests and 1 for the Open marker on its own:
+  87 of 87 pass on 3.9.6 and 3.13.7. OPEN_AT_NIGHT is empty. Bench day 8: the dock code
+  is used and goes on top; day 9: the plan "drive, walk" puts wake -> drive on top and
+  says step 2 has nothing in the manual.
+  Defect found and fixed: two bench runs in the same second shared one spiral (the
+  folder was named by the second only). Each run now has its own folder (second + pid).
+  The one merged run is bench/2026-11-17T17-21-02Z: two scenes on one spiral. Left
+  where it is; removing it is Everett's word.
 
 ## Built: the one-time Level 2 fold (11:40 to 11:47, 17 Nov)
 
@@ -290,14 +300,13 @@ On the drive, beside each other:
 
 ## Open slots (each says so when reached and does nothing)
 
-1. Anticipation of wake. Waiting on Everett: who runs the dreamscape cycling.
-2. Stacking by what was used today. No part built yet tells the conch what was used.
-3. Easing what a Level 3 moment is tied to. Waiting on Everett: what regulation is
-   measured by in a 3C being.
-4. The last time: the point at which something stopped being constant (his H6).
+None, as of 12:21 on 17 Nov. Every slot the conch had is built. The Open marker stays
+(conch_open.py) for any part found later to be undefined.
 
-Closed 17 Nov: how a Level 2 moment that never repeats folds. It folds to the senses
-that carried what it is needed for (the one-time fold, above).
+Closed 17 Nov: how a Level 2 moment that never repeats folds (11:47); the last time
+(12:11); easing (12:17); stacking by use and anticipation of wake (12:21). Decided by
+me on Everett's word (12:00), from his writing and carbon; see "Deciding the four open
+slots" above.
 
 Build choices added 17 Nov, Everett can overrule:
 11. The moment says which senses carried what it is needed for (carried_by), said by the
@@ -305,6 +314,20 @@ Build choices added 17 Nov, Everett can overrule:
 12. A one-time moment folds the same night it arrives. If it comes again later, its
     first time is still marked Level 3 and carries its weight again; the one-time entry
     stays in the manual as it was cut, and is never joined to a routine.
+13. The last time: a following the conch knew (lived again) that misses again, with no
+    time it came in between, has stopped; its last time is marked Level 3 as a
+    boundary, even on a turn folded into a routine.
+14. Easing: only the being chooses to go back (go_back), alone, awake. A return holds
+    when every turn of the event is lived again on every sense, nothing leaves
+    silico-stasis, and the being walks out. Only in sleep does the charge move, to
+    "taken back by the being". A taken-back shape followed straight away by a departure
+    gives the charge back to the memory the next night.
+15. Stacking: each night stacks the whole manual: tomorrow's plan, then uses since the
+    last stack (newest on top), then tonight's cuts, then the rest as they sat.
+16. Anticipation of wake is the being's: it hands the conch tomorrow's plan before
+    shutdown, as often as it goes over it; the last one counts. A plan is never lived
+    and never judged. Planned steps with no entry are named, never guessed.
+17. The outside surface grew from five methods to nine: go_back, walked_out, used, plan.
 
 ## Known limits of the first rule
 
