@@ -77,6 +77,7 @@ RATE = 16000            # the Filament's model hears 16 kHz mono
 FRAME = 1024            # samples measured together
 HOP = 256               # samples between one measurement and the next
 ECHOIC_MS = 4000        # the span the floor is taken over: echoic memory, three to four seconds
+ROOM_EVERY = 32         # hops between measurements of a room that holds (about half a second)
 
 NOTE_NAMES = ("C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B")
 MODEL_NAME = "vosk-model-en-us-0.22"
@@ -204,6 +205,8 @@ class Ear:
         # So a sound already sounding when it starts is new, and is heard.
         self._levels = collections.deque([0.0] * span, maxlen=span)
         self._room = None                     # the shape the ear last gave for the room
+        self._room_floor = None               # the floor the room's note was last measured at
+        self._room_hops = 0                   # hops since the room's note was last measured
         self._stream = None
         gateway.connect(self.ORGAN, "sound")
 
@@ -296,10 +299,20 @@ class Ear:
         return []
 
     def _the_room(self, frame, floor: float) -> list:
-        """Between events: the room as it stands. Given only when it changes."""
+        """Between events: the room as it stands. Given only when it changes.
+
+        The room's note is measured again when its floor moves, or every
+        ROOM_EVERY hops while it holds: YIN on every hop would cost more than
+        the ear can spend while it listens."""
         if floor < OFFSET:
             shape, reading = "quiet", None
+            self._room_floor = None
         else:
+            self._room_hops += 1
+            moved = self._room_floor is None or abs(floor - self._room_floor) >= OFFSET
+            if not moved and self._room is not None and self._room_hops < ROOM_EVERY:
+                return []
+            self._room_hops, self._room_floor = 0, floor
             locked = yin(frame)
             f0 = locked[0] if locked and locked[1] > LOCK else None
             shape = {"heard": "the room", "voiced": f0 is not None,
