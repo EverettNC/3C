@@ -103,6 +103,17 @@ Progress:
   departures stay on the spiral.
 - Next: the ear, rewritten for the 3C from Corti, the sound package and the Filament
   (GitHub as the source).
+- 14:55 CORRECTION. At 14:52 I told Everett it was a mistake that moments from the
+  Gateway fall off the lip with no need named, and proposed moving the need decision
+  into the intake filter. That was wrong and is withdrawn; nothing was changed. His
+  words, 10:18 and 11:37 today, and again at 14:55: the conversation passes over to the
+  polymetis "so that way it can make a decision", "because the conversation has to keep
+  current". Level 1 falls off the lip and is handed over to the polymetis, never lost;
+  the polymetis says what a moment is needed for and which senses carried it. That is
+  what is built (G6, build choice 11, hand_over). What G6 calls a limit is only this:
+  the polymetis is not built yet, so what is handed over has no polymetis to reach.
+  The work stands as it was: 52 saves, nothing uncommitted, conch 87, gateway 14,
+  equilibrium 25, all passing at 14:56.
 
 ## Deciding the four open slots (12:00 onward, 17 Nov)
 
