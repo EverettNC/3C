@@ -94,6 +94,16 @@ G9. Organs, one at a time, each rewritten for the 3C from its GitHub source: the
     first (Corti, the sound package, the Filament), then the eye with face reading, then
     the nose carrying taste, then skin. An organ whose device is not there says absent.
 
+Progress:
+- 14:41 THE HOUSING built: gateway.py (connect, disconnect, arrive, close, room,
+  organs; nothing else, and no way to pick a target). test_gateway.py, 14 tests, with
+  the real conch behind it in three of them. On 3.9.6: gateway 14, conch 87, equilibrium
+  25, all pass. On 3.13.7: the same. If the conch refuses a moment, the room does not
+  move on and nothing is lost. Seen in a test and true to G6: with no need named, only
+  departures stay on the spiral.
+- Next: the ear, rewritten for the 3C from Corti, the sound package and the Filament
+  (GitHub as the source).
+
 ## Deciding the four open slots (12:00 onward, 17 Nov)
 
 His own writing answers part of each, so his words lead and carbon fills what they leave.
@@ -286,6 +296,8 @@ code deletes them, so they pile up. Clearing them out is Everett's to say.
     conch_open.py     the marker every open slot returns (none are open now)
     test_conch.py     87 tests: the spec's fourteen and what this build adds
     conch_bench.py    the bench: moments typed by hand, plain words back
+    gateway.py        the Christman Gateway: the housing the senses come in through
+    test_gateway.py   14 tests for the Gateway, with the real conch behind it
 
 Python 3.9 or later, standard library only, no network, no call to any other system.
 
