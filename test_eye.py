@@ -46,7 +46,10 @@ def a_face(look="center", closed=False, dx=0.0):
         pts[e["lids"][0]] = [x0 + 0.05, 0.4 - gap / 2, 0.0]
         pts[e["lids"][1]] = [x0 + 0.05, 0.4 + gap / 2, 0.0]
         pts[e["iris"]] = [x0 + 0.05, 0.4, 0.0]
-    return {"landmarks": pts, "blendshapes": dict(LOOKS[look]), "matrix": None}
+    # The face model always gives its blendshape scores; a face with none gives no gaze.
+    shapes = {"eyeBlinkLeft": 0.0, "eyeBlinkRight": 0.0, "jawOpen": 0.0}
+    shapes.update(LOOKS[look])
+    return {"landmarks": pts, "blendshapes": shapes, "matrix": None}
 
 
 def a_hand(cx, cy):
