@@ -359,7 +359,7 @@ Progress (times from the Mac's clock, read at each save):
   given; a frame not caught is refused loudly; wrong model bytes are refused; with
   Lucent's real model files on this Mac (their sums match) and no mediapipe, the
   reason is given; the camera is not pretended; readings reach the real conch whole.
-- 20:23 to 20:27 every suite on both Pythons: eye 18, eye_reading 31, ear 20 (1 skipped
+- 20:22 to 20:24 every suite on both Pythons: eye 18, eye_reading 31, ear 20 (1 skipped
   on 3.9.6, 2 on 3.13.7, each with its reason), gateway 14, conch 87, equilibrium 25.
   All pass on 3.9.6 and on 3.13.7.
 - What installing mediapipe would bring, from pip's dry run for 3.9.6 (nothing was
