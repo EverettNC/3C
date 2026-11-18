@@ -253,7 +253,7 @@ opencv, numpy or Pillow. /usr/local/bin/python3 3.13.7 has opencv 4.14.0, numpy 
 Pillow 12.2.0, sounddevice; no mediapipe. Lucent's vendored models are in
 ~/LUCENT/public/mediapipe/models (a drive copy: to be checked against SHA256SUMS on
 GitHub before use, never taken as the source).
-Asked pip, installing nothing (20:07): this Mac is Intel (x86_64). For 3.13.7 pip finds
+Asked pip, installing nothing (between 20:05 and 20:11): this Mac is Intel (x86_64). For 3.13.7 pip finds
 no mediapipe at all ("from versions: none"). For the Mac's own 3.9.6 it finds
 mediapipe 0.10.21 (cp39, macosx_11_0_x86_64). Python 3.10, 3.11 and 3.12 are also on the
 Mac and were not asked. So the eye's landmarks can run on 3.9.6 once Everett installs
