@@ -297,6 +297,43 @@ fixations, and fixations in scene viewing run longer than in reading (Henderson 
 Hollingworth 1998; Rayner, Psychological Bulletin 124:372-422, 1998); no single length
 is fixed yet, and none is written in until it has a source.
 
+Carbon, checked after that:
+- Nuthmann, Smith, Engbert and Henderson, Psychological Review 117:382-405 (2010): "The
+  average fixation duration during scene viewing is about 300 ms"; "fixation durations
+  shorter than around 80 ms are frequently discarded from data analysis", because
+  "these fixation durations are too short to be controlled by the visual stimulus".
+- Rodriguez, Ousler, Johnston, Lane and Abelson, Clinical Ophthalmology 7:337-342 (2013):
+  "The relevant time scale for eyelid movements described as blinks is generally held
+  to be between 100 msec and 400 msec."
+
+Decided (mine to make):
+V5. The eye gives a reading when its shape changes, as the ear gives the room. Its shape
+    is only Lucent's own categories, never a measurement:
+      faces      how many faces are in view (Lucent reads at most two)
+      looking    the first face's gaze cell, one of AlphaVox's nine, or none
+      eyes       "open" or "closed" for the first face, or none
+      hands      which image sides have a hand
+      body       whether a body is in view
+      repeating  which parts are repeating now (Lucent's rhythm)
+    Every measurement (pose degrees, scores, ratios, landmarks, lip points, blinks,
+    rhythm rates and their local times) goes in what the eye gave, never in the shape.
+V6. A look counts once it holds 80 ms. The person in view looks in fixations; a change of
+    cell shorter than 80 ms is too short to be a look at anything (Nuthmann et al. 2010),
+    so the cell held before stays in the shape.
+V7. Eyes are "closed" in the shape only when they stay closed past 400 ms. Shorter is a
+    blink (Rodriguez et al. 2013); blinks are kept in what the eye gave (Lucent's blink log),
+    and a blink does not end a moment.
+V8. A face, hand or body counts as gone only after it is unseen for 500 ms: Lucent's own
+    rule for when a part has left (MAX_GAP_MS). It counts as there when it is seen.
+V9. Two files: eye_reading.py is Lucent's measuring rewritten (geometry, rhythm, blinks),
+    standard library only, tested against Lucent's own test cases, including the six
+    series whose answers came from behavior_capture.py itself. eye.py is the organ: the
+    landmarks, the camera, the shape and the hold rules, the reading to the Gateway.
+Still open: the room when no one is in view. Lucent reads people only. AlphaVox's
+behavior_capture.py measured the whole picture (the share of pixels that changed); it
+has not been read yet. Until it is, an empty view is given as no faces, no hands, no
+body, and nothing is said about the room's light.
+
 ## Carbon against silicon: the senses coming in (researched 15:25 to 15:28, 17 Nov)
 
 Everett, 15:24: "go back and do the research about how the human structure is and how
