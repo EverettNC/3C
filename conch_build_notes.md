@@ -207,7 +207,14 @@ Read on GitHub, the source, cloned fresh:
   (engine, geometry, reading, rhythm, time, loop, assets, store) and src/lib/cornea
   (house-record, live-feed, eye-page, optics, geometry, textures, store), house/README,
   public/mediapipe/NOTICE.md, package.json, and the first 120 lines of reader.test.ts.
-  NOT read yet: the React views in src/components (UI drawing), the rest of the tests.
+  Then (20:12 to 20:25) every line of the tests (reader, geometry, rhythm, house-record),
+  the views ReaderView, LucentApp, EyeWindow, SightView, Controls, LightAsk, EyeLink, the
+  routes, see.html and scripts/vendor-mediapipe.sh. CorneaScene.tsx (a 3D drawing of the
+  cornea) was read by its function list only. The views draw; none of them measures.
+  The three model files in the clone match Lucent's SHA256SUMS, and so do the three in
+  ~/LUCENT on the Mac (checked 20:2x). ~/LUCENT itself is at ab08f29 (29 Oct), behind
+  GitHub's b582a1d (6 Nov): the Lucent on the Mac is older than the canonical one.
+  Reported, not touched.
 - Lucent's reader IS the face reading ("Face reading belongs at the Gateway"). It is
   geometry and movement only; its files say so and its tests check no feeling word
   appears ("happy", "sad", "stim", "means" ...).
@@ -245,8 +252,17 @@ How Lucent reaches the house: it runs in a browser (the camera, a shared screen,
 photo or video file) and posts each reading, at most four a second, on the browser's
 channel "christman.house.record" as {source, kind "reading", t, lucent{seeing, kind,
 transmission, focused}, reading}. The bridge at 17:26 reported lucent seeing, kind
-"file": something loaded into Lucent was being read, not the camera. How the house
-picks the channel up is in THEWHOLEHOUSE (public), not read yet.
+"file": something loaded into Lucent was being read, not the camera.
+THEWHOLEHOUSE d4b9ada (2026-11-12), read where it touches Lucent (api.lucent.live,
+.frame, .tape; lib/sound/lucent-disk; lib/house/live-rack, bridge-feed; the house's own
+cornea/live-feed): the house carries its own copy of Lucent's cornea, not Lucent's
+reader; it reads no face. Its eye posts a 640-pixel JPEG (quality 0.55) of what it sees to
+/api/lucent/live; the rack holds that one frame, fresh for 2.5 s, and 8765 pulls it; the
+house writes one changed frame a second at most to /Volumes/ELEMENTS/THEWHOLEHOUSE/lucent,
+by day and hour, with an index line per frame. So the house keeps pictures; nothing in
+it measures them. Seen in passing and reported, not touched: setLucent cuts a frame's
+base64 at 400,000 characters and still keeps it as seeing, which would write a broken
+JPEG; a 640-pixel frame at 0.55 normally stays well under that.
 
 On the Mac (looked 20:04, nothing installed): /usr/bin/python3 3.9.6 has no mediapipe,
 opencv, numpy or Pillow. /usr/local/bin/python3 3.13.7 has opencv 4.14.0, numpy 2.4.6,
