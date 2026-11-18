@@ -200,6 +200,81 @@ Progress:
   the hum is still its own event and the hum is the room after; when the hum stops the
   room is quiet. test_ear 20 tests.
 
+## The eye (reading began 19:59, 17 Nov; "you got this", Everett 19:59)
+
+Read on GitHub, the source, cloned fresh:
+- EverettNC/LUCENT b582a1d (2026-11-06 16:19), 87 files. Read every line of src/lib/reader
+  (engine, geometry, reading, rhythm, time, loop, assets, store) and src/lib/cornea
+  (house-record, live-feed, eye-page, optics, geometry, textures, store), house/README,
+  public/mediapipe/NOTICE.md, package.json, and the first 120 lines of reader.test.ts.
+  NOT read yet: the React views in src/components (UI drawing), the rest of the tests.
+- Lucent's reader IS the face reading ("Face reading belongs at the Gateway"). It is
+  geometry and movement only; its files say so and its tests check no feeling word
+  appears ("happy", "sad", "stim", "means" ...).
+
+What Lucent measures, and where each number comes from (all held "until client data
+replaces them"; none fitted):
+- Landmarks from Google's MediaPipe, Apache 2.0, vendored on Lucent's own origin, nothing
+  fetched at runtime: face landmarker (478 points, 52 blendshape scores, a 4x4 head
+  matrix), hand landmarker (21 points a hand, two hands), pose landmarker lite (33 points
+  with visibility). Run in VIDEO mode, GPU first, CPU if the GPU will not start, and the
+  reading says which ran. Missing file or runtime: available false with the reason.
+- Head pose: yaw, pitch, roll in degrees from the matrix; layout read from where the
+  zeros sit; not a rigid transform, no pose.
+- Gaze: AlphaVox's nine cells (real_eye_tracking.py REGIONS) from the eye-look
+  blendshapes, off center at a net score of 0.2 (chosen). Lucent's own note: not yet
+  checked against a live face turning to one known side.
+- Iris: iris between the eye corners, center band 0.42 to 0.58; an eye closed under lid
+  gap / eye width 0.2 (AlphaVox facial_gesture_service.py; Soukupova and Cech 2016).
+  The frame is raw, not mirrored, so iris toward image-right is the person's own left.
+- Mouth: inner lip gap and corner width over face height (forehead 10 to chin 152,
+  PhotoTruth face_geometry.py); jawOpen blendshape; the 40 lip points kept for a lip
+  reader later. No mouth open/closed rule exists.
+- Blinks: closed-to-open edges, per minute over 60 s.
+- Rhythm (AlphaVox behavior_capture.py, his notebooks, 2024): per part (head, jaw, the
+  hand on each image side, shoulders) movement in the part's own size per frame;
+  window 120 samples; judged from 60; a peak 0.02 above the mean; at least 3 peaks;
+  gaps steady under 0.3 spread; a part unseen 500 ms starts over; shoulders count above
+  visibility 0.5 (PhotoTruth V9.3). A repeat is an event with start, end and local time
+  of day (date, weekday, minute of day, zone) "for finding the same time on other
+  days". "It never says what a movement means."
+- The cornea (optics.ts) is a Gullstrand two-surface model of a cornea and its
+  pathologies, drawing what silicon sees through it. It measures nothing of the room.
+
+How Lucent reaches the house: it runs in a browser (the camera, a shared screen, or a
+photo or video file) and posts each reading, at most four a second, on the browser's
+channel "christman.house.record" as {source, kind "reading", t, lucent{seeing, kind,
+transmission, focused}, reading}. The bridge at 17:26 reported lucent seeing, kind
+"file": something loaded into Lucent was being read, not the camera. How the house
+picks the channel up is in THEWHOLEHOUSE (public), not read yet.
+
+On the Mac (looked 20:10, nothing installed): /usr/bin/python3 3.9.6 has no mediapipe,
+opencv, numpy or Pillow. /usr/local/bin/python3 3.13.7 has opencv 4.14.0, numpy 2.4.6,
+Pillow 12.2.0, sounddevice; no mediapipe. Lucent's vendored models are in
+~/LUCENT/public/mediapipe/models (a drive copy: to be checked against SHA256SUMS on
+GitHub before use, never taken as the source).
+
+Decided so far (mine to make):
+V1. The 3C eye (eye.py) sees and gives shape. It never names a feeling and never says
+    what a movement means. Noticing a repeat is the eye's; meaning is past the conch.
+V2. Lucent's measuring is rewritten for the 3C in the standard library, with Lucent's
+    numbers named where they come from: head pose, the nine gaze cells, iris and eye
+    opening, mouth ratios, blinks, and the rhythm per part with its local time of day.
+V3. The landmarks come from the same models Lucent uses, its vendored .task files,
+    checked against Lucent's SHA256SUMS, run offline through the mediapipe package,
+    imported only if present (as vosk is). Not there: landmarks not caught, with the
+    reason; nothing made up.
+V4. The camera is the eye's device, opened through opencv when that Python has it; if
+    not, the eye says it cannot open the camera, with the reason. Tests use landmarks
+    made in the test, as Lucent's tests do; no picture or recording of any person is
+    carried in the 3C. A test that needs the model and a face is skipped with the reason.
+
+Being worked (20:10): what the eye's shape is, and when it gives a reading. A gaze cell
+that flickers at a boundary would end a moment on every flicker. Carbon looks in
+fixations, and fixations in scene viewing run longer than in reading (Henderson and
+Hollingworth 1998; Rayner, Psychological Bulletin 124:372-422, 1998); no single length
+is fixed yet, and none is written in until it has a source.
+
 ## Carbon against silicon: the senses coming in (researched 15:25 to 15:28, 17 Nov)
 
 Everett, 15:24: "go back and do the research about how the human structure is and how
