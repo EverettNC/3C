@@ -11,9 +11,11 @@ WHAT IT DOES  [build choices, the builder's to make on Everett's ruling of
 17 Nov 2026; each is in conch_build_notes.md, V1 to V9]
 
 - Landmarks come from Google's MediaPipe face, hand and pose landmarkers, the very
-  files Lucent vendors (Apache 2.0), checked byte for byte against Lucent's
-  SHA256SUMS and run offline. If mediapipe or a model is not there, the landmarks
-  are not caught and the reason is given. Nothing is made up.
+  files Lucent vendors (Apache 2.0), pulled from GitHub at Lucent b582a1d by
+  install_lucent_models.sh into organs/lucent, checked byte for byte against
+  Lucent's SHA256SUMS, and run offline. Never taken from a copy on a drive. If
+  mediapipe or a model is not there, the landmarks are not caught and the reason
+  is given. Nothing is made up.
 - The camera is the eye's device, opened through opencv when this Python has it.
   If not, the eye says it cannot open the camera, with the reason.
 - The shape is only Lucent's own categories: how many faces, where the first face
@@ -55,8 +57,10 @@ MODEL_SUMS = {
     "hand_landmarker.task": "fbc2a30080c3c557093b5ddfc334698132eb341044ccee322ccf8bcf3607cde1",
     "pose_landmarker_lite.task": "59929e1d1ee95287735ddd833b19cf4ac46d29bc7afddbbf6753c459690d574a",
 }
-MODEL_PLACES = (os.environ.get("LUCENT_MODELS"),
-                os.path.expanduser("~/LUCENT/public/mediapipe/models"))
+# One place only: the 3C's own, filled from GitHub by install_lucent_models.sh at
+# Lucent b582a1d. Never a copy on a drive, and no way to point it at one (Everett,
+# 17 Nov 2026: "You only pull from GitHub when you're installing something.").
+MODEL_PLACES = (os.path.join(os.path.dirname(os.path.abspath(__file__)), "organs", "lucent"),)
 
 # -- the hold rules (V6, V7, V8) ------------------------------------------------------
 LOOK_HOLD_MS = 80
@@ -94,10 +98,17 @@ class Landmarks:
         self.parts = {"face": None, "hands": None, "pose": None}
         self._tasks = {}
         self._last_ts = 0
+        here = os.path.dirname(os.path.abspath(__file__))
+        if model_dir is not None and not os.path.realpath(model_dir).startswith(
+                os.path.realpath(here) + os.sep):
+            self.why_not = (f"{model_dir} is outside the 3C. The eye's models come only from "
+                            "GitHub, through ./install_lucent_models.sh, never from a copy")
+            return
         places = [model_dir] if model_dir else [p for p in MODEL_PLACES if p]
         place = next((p for p in places if p and os.path.isdir(p)), None)
         if place is None:
-            self.why_not = "Lucent's models were not found at " + ", ".join(p for p in places if p)
+            self.why_not = ("Lucent's models were not found at " + ", ".join(p for p in places if p)
+                            + ". They are pulled from GitHub: ./install_lucent_models.sh")
             return
         for name, want in MODEL_SUMS.items():
             path = os.path.join(place, name)

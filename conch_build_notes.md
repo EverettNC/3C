@@ -283,7 +283,8 @@ V2. Lucent's measuring is rewritten for the 3C in the standard library, with Luc
     numbers named where they come from: head pose, the nine gaze cells, iris and eye
     opening, mouth ratios, blinks, and the rhythm per part with its local time of day.
 V3. The landmarks come from the same models Lucent uses, its vendored .task files,
-    checked against Lucent's SHA256SUMS, run offline through the mediapipe package,
+    pulled from GitHub at b582a1d into organs/lucent (never from a copy on a drive;
+    Everett's ruling 20:40), checked against Lucent's SHA256SUMS, run offline through the mediapipe package,
     imported only if present (as vosk is). Not there: landmarks not caught, with the
     reason; nothing made up.
 V4. The camera is the eye's device, opened through opencv when that Python has it; if
@@ -372,6 +373,20 @@ Progress (times from the Mac's clock, read at each save):
       /usr/bin/python3 -m pip install --user mediapipe==0.10.21
   Then the eye is seen working on the bench, not before: Lucent's .task files opened
   by 0.10.21, a face in front of the camera, the shape given.
+- 20:40 RULING (Everett): "You only pull from GitHub when you're installing something.
+  You don't pull parallel. That's how you get fucked up shit. GitHub is the canonical."
+  What was wrong: the eye's code was rewritten from GitHub (b582a1d), but eye.py looked
+  for the model files in ~/LUCENT/public/mediapipe/models, a copy on the Mac at ab08f29,
+  behind GitHub, and an environment setting could point it anywhere. Their bytes
+  matched GitHub's sums, but they would have been taken from the copy. Fixed: the eye
+  looks only in organs/lucent inside the 3C (git ignores it); install_lucent_models.sh
+  pulls the three files and SHA256SUMS from GitHub at b582a1d and stops if any file
+  does not match; any model folder outside the 3C is refused with the reason; the
+  environment setting is gone. Two tests added (a copy outside the 3C is never used;
+  the eye looks only in the 3C). test_eye 20: pass on 3.9.6 and 3.13.7, 1 skipped
+  until the models are installed, with that reason. The GitHub URLs answer (the face
+  model came back 3,758,596 bytes, its size in Lucent). Everett runs the install:
+      cd /Volumes/ELEMENTS/3C && ./install_lucent_models.sh
 Next for the eye: C6, senses whose events overlap in time are one moment, now that a
 second organ connects; then the room when no one is in view (behavior_capture.py).
 
@@ -628,7 +643,9 @@ code deletes them, so they pile up. Clearing them out is Everett's to say.
     eye_reading.py    Lucent's measuring, rewritten: pose, gaze, iris, mouth, blinks, rhythm
     test_eye_reading.py  31 tests: Lucent's own cases, and behavior_capture.py's answers
     eye.py            the 3C's eye: Lucent's models, the camera, the shape and its holds
-    test_eye.py       18 tests for the eye
+    test_eye.py       20 tests for the eye
+    install_lucent_models.sh  Lucent's three model files, pulled from GitHub at b582a1d
+    organs/lucent/    where that install puts them (git ignores it; GitHub keeps them)
     test_audio/       copies no longer used by any test; waiting on Everett to delete
 
 Python 3.9 or later, standard library only, no network, no call to any other system.

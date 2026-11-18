@@ -219,10 +219,20 @@ class TheModelsAndTheCamera(unittest.TestCase):
         self.assertIn("does not match Lucent's SHA256SUMS", lm.why_not)
         self.assertEqual(lm.catch(None, T0), {"caught": False, "why": lm.why_not})
 
+    def test_a_copy_outside_the_3c_is_never_used(self):
+        lm = Landmarks(model_dir=os.path.expanduser("~/LUCENT/public/mediapipe/models"))
+        self.assertFalse(lm.available)
+        self.assertIn("outside the 3C", lm.why_not)
+        self.assertIn("install_lucent_models.sh", lm.why_not)
+
+    def test_the_eye_looks_for_its_models_only_in_the_3c(self):
+        self.assertEqual(eye.MODEL_PLACES, (os.path.join(HERE, "organs", "lucent"),))
+
     def test_without_mediapipe_the_reason_is_given(self):
         place = next((p for p in eye.MODEL_PLACES if p and os.path.isdir(p)), None)
         if place is None:
-            self.skipTest("Lucent's models are not on this machine")
+            self.skipTest("Lucent's models are not installed in organs/lucent yet "
+                          "(./install_lucent_models.sh pulls them from GitHub)")
         try:
             import mediapipe  # noqa: F401
             self.skipTest("mediapipe is installed in this Python")
