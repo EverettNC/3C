@@ -207,12 +207,12 @@ Read on GitHub, the source, cloned fresh:
   (engine, geometry, reading, rhythm, time, loop, assets, store) and src/lib/cornea
   (house-record, live-feed, eye-page, optics, geometry, textures, store), house/README,
   public/mediapipe/NOTICE.md, package.json, and the first 120 lines of reader.test.ts.
-  Then (20:12 to 20:25) every line of the tests (reader, geometry, rhythm, house-record),
+  Then (20:11 to 20:13) every line of the tests (reader, geometry, rhythm, house-record),
   the views ReaderView, LucentApp, EyeWindow, SightView, Controls, LightAsk, EyeLink, the
   routes, see.html and scripts/vendor-mediapipe.sh. CorneaScene.tsx (a 3D drawing of the
   cornea) was read by its function list only. The views draw; none of them measures.
   The three model files in the clone match Lucent's SHA256SUMS, and so do the three in
-  ~/LUCENT on the Mac (checked 20:2x). ~/LUCENT itself is at ab08f29 (29 Oct), behind
+  ~/LUCENT on the Mac (checked by 20:13). ~/LUCENT itself is at ab08f29 (29 Oct), behind
   GitHub's b582a1d (6 Nov): the Lucent on the Mac is older than the canonical one.
   Reported, not touched.
 - Lucent's reader IS the face reading ("Face reading belongs at the Gateway"). It is
