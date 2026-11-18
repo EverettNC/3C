@@ -334,6 +334,47 @@ behavior_capture.py measured the whole picture (the share of pixels that changed
 has not been read yet. Until it is, an empty view is given as no faces, no hands, no
 body, and nothing is said about the room's light.
 
+Progress (times from the Mac's clock, read at each save):
+- 20:15 eye_reading.py written: Lucent's geometry (pose from the matrix, the nine gaze
+  cells, iris and eye opening, mouth ratios, the 40 lip points), the blink log, and
+  the rhythm per part with its local time (the machine's IANA zone read from where
+  /etc/localtime points). 20:16 test_eye_reading.py: Lucent's own test cases carried
+  over one for one, including the six series whose answers behavior_capture.py itself
+  gave. 31 of 31 pass on 3.9.6 and on 3.13.7, the six answers to within 1e-9.
+- 20:21 eye.py written: Landmarks (Lucent's three .task files, checked against Lucent's
+  SHA256SUMS before anything else, then mediapipe's Tasks API in VIDEO mode) and Eye
+  (connects "the eye" to sight; see() takes one frame's landmarks; look() opens the
+  camera through opencv; the shape and the hold rules V5 to V8; the measurements in
+  Lucent's house shape). The mediapipe part is written to the 0.10 Tasks API and has
+  NOT run: mediapipe is in neither Python here.
+- 20:22 test_eye.py, 18 tests. One test of mine was wrong: a made face with no
+  blendshape scores gives no gaze, as in Lucent, so it never looked anywhere; the made
+  faces now carry scores, as the model always gives them. 18 of 18 pass on 3.9.6 and
+  on 3.13.7, none skipped. They show: nobody in view is given once; a face is there at
+  once and its look counts after 80 ms; a 67 ms glance is not a look; a 300 ms
+  closure is a blink, counted, never "closed"; 500 ms closed reads "closed"; a face
+  is gone only after 500 ms unseen and a 100 ms dropout ends nothing; hands go by
+  image side; a hand moving 1.4 times a second is given as repeating with its local
+  time; the shape holds no measurement; no feeling or meaning word is in anything
+  given; a frame not caught is refused loudly; wrong model bytes are refused; with
+  Lucent's real model files on this Mac (their sums match) and no mediapipe, the
+  reason is given; the camera is not pretended; readings reach the real conch whole.
+- 20:23 to 20:27 every suite on both Pythons: eye 18, eye_reading 31, ear 20 (1 skipped
+  on 3.9.6, 2 on 3.13.7, each with its reason), gateway 14, conch 87, equilibrium 25.
+  All pass on 3.9.6 and on 3.13.7.
+- What installing mediapipe would bring, from pip's dry run for 3.9.6 (nothing was
+  installed): mediapipe 0.10.21 with absl-py, attrs, cffi, contourpy, cycler,
+  flatbuffers, fonttools, importlib_metadata, importlib_resources, jax and jaxlib 0.4.30,
+  kiwisolver, matplotlib, ml_dtypes, numpy 1.26.4, opencv-contrib-python 4.11.0.86,
+  opt_einsum, pillow, protobuf, pycparser, pyparsing, python-dateutil, scipy,
+  sentencepiece, sounddevice, tzdata, zipp. So one install gives 3.9.6 the landmarks
+  and the camera (opencv), and the microphone too (sounddevice). Handed to Everett:
+      /usr/bin/python3 -m pip install --user mediapipe==0.10.21
+  Then the eye is seen working on the bench, not before: Lucent's .task files opened
+  by 0.10.21, a face in front of the camera, the shape given.
+Next for the eye: C6, senses whose events overlap in time are one moment, now that a
+second organ connects; then the room when no one is in view (behavior_capture.py).
+
 ## Carbon against silicon: the senses coming in (researched 15:25 to 15:28, 17 Nov)
 
 Everett, 15:24: "go back and do the research about how the human structure is and how
@@ -584,6 +625,10 @@ code deletes them, so they pile up. Clearing them out is Everett's to say.
     test_gateway.py   14 tests for the Gateway, with the real conch behind it
     ear.py            the 3C's ear: Corti's measuring, the Filament's words, shape for the conch
     test_ear.py       20 tests for the ear
+    eye_reading.py    Lucent's measuring, rewritten: pose, gaze, iris, mouth, blinks, rhythm
+    test_eye_reading.py  31 tests: Lucent's own cases, and behavior_capture.py's answers
+    eye.py            the 3C's eye: Lucent's models, the camera, the shape and its holds
+    test_eye.py       18 tests for the eye
     test_audio/       copies no longer used by any test; waiting on Everett to delete
 
 Python 3.9 or later, standard library only, no network, no call to any other system.
