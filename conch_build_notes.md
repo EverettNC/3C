@@ -248,7 +248,7 @@ transmission, focused}, reading}. The bridge at 17:26 reported lucent seeing, ki
 "file": something loaded into Lucent was being read, not the camera. How the house
 picks the channel up is in THEWHOLEHOUSE (public), not read yet.
 
-On the Mac (looked 20:10, nothing installed): /usr/bin/python3 3.9.6 has no mediapipe,
+On the Mac (looked 20:04, nothing installed): /usr/bin/python3 3.9.6 has no mediapipe,
 opencv, numpy or Pillow. /usr/local/bin/python3 3.13.7 has opencv 4.14.0, numpy 2.4.6,
 Pillow 12.2.0, sounddevice; no mediapipe. Lucent's vendored models are in
 ~/LUCENT/public/mediapipe/models (a drive copy: to be checked against SHA256SUMS on
@@ -269,7 +269,7 @@ V4. The camera is the eye's device, opened through opencv when that Python has i
     made in the test, as Lucent's tests do; no picture or recording of any person is
     carried in the 3C. A test that needs the model and a face is skipped with the reason.
 
-Being worked (20:10): what the eye's shape is, and when it gives a reading. A gaze cell
+Being worked (20:05): what the eye's shape is, and when it gives a reading. A gaze cell
 that flickers at a boundary would end a moment on every flicker. Carbon looks in
 fixations, and fixations in scene viewing run longer than in reading (Henderson and
 Hollingworth 1998; Rayner, Psychological Bulletin 124:372-422, 1998); no single length
